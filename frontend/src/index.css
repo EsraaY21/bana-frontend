@@ -5,12 +5,27 @@
   --light-pink: #fef1e6;
   --text-gray: #696969;
   --blue-dark: #1d2a3a;
+  --brown: #cb997e;
 }
 
 * {
   font-family: 'Poppins', sans-serif;
+  /* transition: all 2s ease-in-out; */
+  max-width: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+/* HOME -------------------------------------------- */
+
+/* HERO ---- */
 .home-hero {
   background-color: var(--dark-pink);
 }
@@ -21,6 +36,18 @@
 }
 
 .home-hero a {
-  text-decoration: none;
   color: white;
 }
+
+/* Services ---- */
+.services {
+  text-align: center;
+}
+
+.services svg {
+  fill: var(--brown);
+  width: 4rem;
+  height: 4rem;
+}
+
+/* SHOP -------------------------------------------- */
