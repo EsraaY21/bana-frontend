@@ -26,16 +26,18 @@ const services = [
 
 const Services = () => {
   return (
-    <div className="row services">
-      {services.map((service) => (
-        <div className="col-lg-4">
-          <Link to={service.link}>
-            {service.icon}
-            <h2>{service.title}</h2>
-            <p>{service.description}</p>
-          </Link>
-        </div>
-      ))}
+    <div className="services container py-5">
+      <div className="row center-section">
+        {services.map((service) => (
+          <div key={service.title} className="col-lg-4">
+            <Link to={service.link}>
+              {service.icon}
+              <h2>{service.title}</h2>
+              <p>{service.description}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
