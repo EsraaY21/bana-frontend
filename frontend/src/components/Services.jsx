@@ -27,7 +27,7 @@ const services = [
 const Services = () => {
   return (
     <div className="services container py-5">
-      <div className="row center-section">
+      <div className="row text-center">
         {services.map((service) => (
           <div key={service.title} className="col-lg-4">
             <Link to={service.link}>
