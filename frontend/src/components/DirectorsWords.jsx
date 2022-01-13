@@ -1,36 +1,37 @@
+import director from '../images/director.png';
+
 const DirectorsWords = () => {
   return (
-    <div class="container py-5">
-      <div class="row align-items-md-stretch">
+    <section class="director py-5 bg-light-gray">
+      <div class="row">
         <div class="col-md-6">
-          <div class="h-100 p-5 text-white bg-dark rounded-3">
-            <h2>Change the background</h2>
-            <p>
-              Swap the background-color utility and add a `.text-*` color
-              utility to mix up the jumbotron look. Then, mix and match with
-              additional component themes and more.
-            </p>
-            <button class="btn btn-outline-light" type="button">
-              Example button
-            </button>
+          <div class="h-100 ">
+            <div className="container">
+              <h2 className="cursive-title">Director’s Words</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                sagittis eget sapien in congue. Nullam vitae posuere diam, vel
+                suscipit lorem. Maecenas magna augue, pulvinar vel ligula nec,
+                gravida tempor
+              </p>
+            </div>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="h-100 p-5 bg-light border rounded-3">
-            <h2>Add borders</h2>
-            <p>
-              Or, keep it light and add a border for some added definition to
-              the boundaries of your content. Be sure to look under the hood at
-              the source HTML here as we've adjusted the alignment and sizing of
-              both column's content for equal-height.
-            </p>
-            <button class="btn btn-outline-secondary" type="button">
-              Example button
-            </button>
+          <div class="h-100 p-5 bg-dark rounded-4">
+            {/* <img
+            src={director}
+            class="img-fluid"
+            alt="director"
+            width="240"
+            height="240"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          /> */}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

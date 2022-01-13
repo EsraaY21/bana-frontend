@@ -3,13 +3,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 :root {
-  --dark-pink: #f5ebe5;
-  --light-pink: #fef1e6;
-  --light-gray: #f5f5f5;
-  --text-gray: #696969;
+  --pink-dark: #f5ebe5;
+  --pink-light: #fef1e6;
+  --gray-light: #f5f5f5;
+  --gray-text: #696969;
   --blue-dark: #1d2a3a;
   --brown: #cb997e;
   --brown-shade2: #a27a65;
+  --thin: 100;
+  --extra-light: 200;
+  --light: 300;
+  --regular: 400;
+  --medium: 500;
+  --semi-bold: 600;
+  --extra-bold: 700;
 }
 
 * {
@@ -32,15 +39,31 @@ a:hover {
   font-family: 'Pacifico', cursive;
 }
 
+.bg-gray-light {
+  background: var(--gray-light);
+}
+
+.bg-blue-dark {
+  background: var(--blue-dark);
+}
+
+.color-blue-dark {
+  color: var(--blue-dark);
+}
+
+.section-y-padding {
+  padding: 4% 0;
+}
+
+.text-gray-light {
+  color: var(--gray-text);
+}
+
 /* HOME -------------------------------------------- */
 
 /* HERO ---- */
 .home-hero {
-  background-color: var(--dark-pink);
-}
-
-.home-hero button {
-  background-color: var(--blue-dark);
+  background-color: var(--pink-dark);
 }
 
 .home-hero a {
@@ -50,8 +73,18 @@ a:hover {
 /* Services ---- */
 .services svg {
   fill: var(--brown);
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* Categories ---- */
+.categories h4 {
+  font-weight: 600;
+}
+
+/* Director ---- */
+.director {
+  padding-left: 6%;
 }
 
 /* SHOP -------------------------------------------- */

@@ -8,7 +8,7 @@ const ProductCard = () => {
           height="225"
           role="img"
         >
-          <rect width="100%" height="100%" fill="#55595c" />
+          <rect width="100%" height="100%" fill="#f5f5f5" />
         </svg>
 
         <div className="card-body">

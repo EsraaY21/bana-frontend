@@ -26,19 +26,19 @@ const services = [
 
 const Services = () => {
   return (
-    <div className="services container py-5">
+    <section className="services container section-y-padding">
       <div className="row text-center">
         {services.map((service) => (
-          <div key={service.title} className="col-lg-4">
+          <div key={service.title} className="col-lg-4 px-5">
             <Link to={service.link}>
               {service.icon}
-              <h2>{service.title}</h2>
-              <p>{service.description}</p>
+              <h3 className="color-blue-dark">{service.title}</h3>
+              <p className="text-gray-light">{service.description}</p>
             </Link>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
