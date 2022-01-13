@@ -20,7 +20,7 @@ const HeroHome = () => {
             <h1 className="display-4 fw-bold lh-sm mb-3 color-blue-dark">
               Love Your Skin Naturally
             </h1>
-            <p className="lead fs-5 mb-4 text-gray-light">
+            <p className="lead fs-5 mb-4">
               Made using clean,non-toxic ingredients, our products are designed
               for everyone
             </p>

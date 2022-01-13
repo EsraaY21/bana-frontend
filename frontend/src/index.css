@@ -6,7 +6,7 @@
   --pink-dark: #f5ebe5;
   --pink-light: #fef1e6;
   --gray-light: #f5f5f5;
-  --gray-text: #696969;
+  /* --gray-text: #696969; */
   --blue-dark: #1d2a3a;
   --brown: #cb997e;
   --brown-shade2: #a27a65;
@@ -45,6 +45,7 @@ a:hover {
 
 .bg-blue-dark {
   background: var(--blue-dark);
+  color: var(--gray-light);
 }
 
 .color-blue-dark {
@@ -53,10 +54,6 @@ a:hover {
 
 .section-y-padding {
   padding: 4% 0;
-}
-
-.text-gray-light {
-  color: var(--gray-text);
 }
 
 /* HOME -------------------------------------------- */
@@ -88,3 +85,6 @@ a:hover {
 }
 
 /* SHOP -------------------------------------------- */
+button {
+  /* width: 100%; */
+}
