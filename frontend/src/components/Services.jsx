@@ -33,7 +33,7 @@ const Services = () => {
             <Link to={service.link}>
               {service.icon}
               <h3 className="color-blue-dark">{service.title}</h3>
-              <p className="text-gray-light">{service.description}</p>
+              <p>{service.description}</p>
             </Link>
           </div>
         ))}

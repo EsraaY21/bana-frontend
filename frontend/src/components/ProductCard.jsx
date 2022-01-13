@@ -12,14 +12,12 @@ const ProductCard = () => {
         </svg>
 
         <div className="card-body">
-          <h4 className="card-text">Natural Day Cream</h4>
-          <small className="text-muted">150 $</small>
+          <h5 className="card-text">Natural Day Cream</h5>
+          <p className="text-muted">150 $</p>
 
-          <div className="">
-            <button type="button" className="btn btn-sm btn-outline-secondary">
-              Add to Cart
-            </button>
-          </div>
+          <button type="button" className="btn bg-blue-dark text-white w-100">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
