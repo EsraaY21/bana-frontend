@@ -10,15 +10,15 @@ const categories = [
 
 const Categories = () => {
   return (
-    <div className="categories container py-5">
-      <div className="row center-section">
-        <h3>Discover</h3>
-        <h1>Categories</h1>
+    <section className="categories container section-y-padding">
+      <div className="row text-center">
+        <h2 className="cursive-title">Discover</h2>
+        <h1 className="color-blue-dark fw-bold mb-5">Categories</h1>
         {categories.map((category) => (
           <div key={category.title} className="col-lg-3">
             <Link to={`shop/${category.title.toLowerCase()}`}>
               <svg
-                class="bd-placeholder-img rounded-circle"
+                className="bd-placeholder-img rounded-circle"
                 width="140"
                 height="140"
                 role="img"
@@ -26,18 +26,14 @@ const Categories = () => {
                 preserveAspectRatio="xMidYMid slice"
                 focusable="false"
               >
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#777" />
-                <text x="50%" y="50%" fill="#777" dy=".3em">
-                  140x140
-                </text>
+                <rect width="100%" height="100%" fill="#F5F5F5" />
               </svg>
-              <h2>{category.title}</h2>
+              <h4 className="color-blue-dark mt-3">{category.title}</h4>
             </Link>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
