@@ -28,8 +28,8 @@ const Header = () => {
 				>
 					<ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
 						{["Home", "Shop", "Services", "About", "Contact"].map(
-							(pageName) => (
-								<li className="nav-item">
+							(pageName, index) => (
+								<li className="nav-item" key={index}>
 									<NavLink
 										className="nav-link color-blue-dark"
 										to={
@@ -43,24 +43,20 @@ const Header = () => {
 						)}
 					</ul>
 					<div className="d-flex align-items-center">
+						{/* Search */}
 						<form>
-							<div className="input-group">
-								<span
-									className="input-group-text bg-gray-light rounded-4"
-									id="basic-addon1"
-									style={{ cursor: "pointer" }}
-								>
-									<FaSearch />
-								</span>
+							<div className="d-flex align-items-center" id="navbar_search">
+								<FaSearch className="navbar_search_icon" />
 								<input
 									type="text"
-									className="form-control border-start-0 rounded-4 "
+									className="form-control border-0 rounded-4 "
 									placeholder="Search Products ..."
-									aria-describedby="basic-addon1"
 								/>
 							</div>
 						</form>
-						<FaShoppingBag className="ms-3 fs-5" />
+						<button className="btn">
+							<FaShoppingBag className="fs-5" />
+						</button>
 					</div>
 				</div>
 			</div>

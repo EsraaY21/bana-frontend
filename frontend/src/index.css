@@ -57,6 +57,7 @@ a:hover {
 }
 
 /* NAVBAR -------------------------------------------- */
+/* center logo */
 @media (min-width: 768px) {
 	.navbar-brand {
 		position: absolute;
@@ -65,6 +66,29 @@ a:hover {
 		transform: translateX(-50%);
 		text-align: center;
 	}
+}
+
+/* links hover */
+.navbar-nav .nav-item {
+	border-bottom: 2px solid transparent;
+}
+.navbar-nav .nav-item:hover {
+	border-bottom: 2px solid var(--brown);
+	color: var(--blue-dark);
+}
+.navbar-nav .nav-item:hover a {
+	color: var(--blue-dark);
+}
+
+/* Search */
+#navbar_search input {
+	background-color: var(--gray-light);
+	padding-left: 30px;
+}
+.navbar_search_icon {
+	color: #6c757d;
+	margin-right: -25px;
+	z-index: 1;
 }
 
 /* HOME -------------------------------------------- */
