@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Cart = () => {
   return (
@@ -60,6 +61,7 @@ const Cart = () => {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 };

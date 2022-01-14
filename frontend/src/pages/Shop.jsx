@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Shop = () => {
   return (
@@ -28,6 +29,7 @@ const Shop = () => {
           <p className="mt-5">Loading...</p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -9,6 +9,7 @@ import Invest from '../components/Invest';
 import Download from '../components/Download';
 
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <DirectorsWords />
       <Invest />
       <Download />
+      <Footer />
     </div>
   );
 };
