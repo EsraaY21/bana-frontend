@@ -25,6 +25,10 @@
 	max-width: 100%;
 }
 
+.row {
+	margin: 0;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;
@@ -53,7 +57,7 @@ a:hover {
 }
 
 .section-y-padding {
-	padding: 4% 0;
+	padding: 4% 0 2% 0;
 }
 
 .socials-border {
@@ -80,9 +84,8 @@ a:hover {
 .btn-blue-dark:hover,
 .btn-blue-dark:hover a,
 .btn-blue-dark a {
-	-webkit-transition-duration: 0.4s; /* Safari */
-	transition-duration: 0.4s;
-	transition: all 0.5s;
+	transition-timing-function: ease-in-out;
+	transition: all 0.4s;
 }
 
 /* NAVBAR -------------------------------------------- */
@@ -136,6 +139,17 @@ a:hover {
 	fill: var(--brown);
 	width: 3.5rem;
 	height: 3.5rem;
+}
+
+.service-box {
+	border-radius: 4px;
+	transition-timing-function: ease-in-out;
+	transition: all 0.4s;
+}
+.service-box:hover {
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+	/* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
 }
 
 /* Categories ---- */
