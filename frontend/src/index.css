@@ -57,10 +57,32 @@ a:hover {
 }
 
 .socials-border {
-  border: 1px solid var(--brown);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+	border: 1px solid var(--brown);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+}
+
+/* Buttons -------------------------------------------- */
+.btn-blue-dark {
+	border: 1px solid var(--blue-dark);
+	background-color: var(--blue-dark);
+}
+.btn-blue-dark:hover {
+	background-color: transparent;
+}
+.btn-blue-dark:hover a {
+	color: var(--blue-dark);
+}
+
+/* transition effect on hover */
+.btn-blue-dark,
+.btn-blue-dark:hover,
+.btn-blue-dark:hover a,
+.btn-blue-dark a {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	transition: all 0.5s;
 }
 
 /* NAVBAR -------------------------------------------- */
@@ -130,6 +152,6 @@ a:hover {
 
 /* COPYRIGHT -------------------------------------------- */
 .copyright {
-  font-size: 14px;
-  color: #b7b4b4;
+	font-size: 14px;
+	color: #b7b4b4;
 }
