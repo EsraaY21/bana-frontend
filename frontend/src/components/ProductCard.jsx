@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom';
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
+  const {
+    id,
+    name,
+    image,
+    price,
+    brand,
+    category,
+    countInStock,
+    short_description,
+    long_description,
+  } = product;
+  console.log(product);
+
   return (
     <div className="col">
       <div className="card shadow-sm">
@@ -16,8 +29,8 @@ const ProductCard = () => {
         </Link>
 
         <div className="card-body">
-          <h5 className="card-text">Natural Day Cream</h5>
-          <p className="text-muted">150 $</p>
+          <h5 className="card-text">{name}</h5>
+          <p className="text-muted">{price} $</p>
 
           <button type="button" className="btn bg-blue-dark text-white w-100">
             Add to Cart

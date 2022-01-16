@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import Services from './pages/Services';
-import About from './pages/About';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import Contact from './pages/Contact';
-import Home from './pages/Home';
-import ProductDetails from './pages/ProductDetails';
-import Shop from './pages/Shop';
+import Services from './screens/Services';
+import About from './screens/About';
+import Cart from './screens/Cart';
+import Checkout from './screens/Checkout';
+import Contact from './screens/Contact';
+import Home from './screens/Home';
+import ProductDetails from './screens/ProductDetails';
+import Shop from './screens/Shop';
 
 function App() {
   return (
