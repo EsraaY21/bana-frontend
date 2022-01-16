@@ -1,15 +1,19 @@
+import { Link } from 'react-router-dom';
+
 const ProductCard = () => {
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <svg
-          className="bd-placeholder-img card-img-top"
-          width="100%"
-          height="225"
-          role="img"
-        >
-          <rect width="100%" height="100%" fill="#f5f5f5" />
-        </svg>
+        <Link to="/product/1">
+          <svg
+            className="bd-placeholder-img card-img-top"
+            width="100%"
+            height="225"
+            role="img"
+          >
+            <rect width="100%" height="100%" fill="#f5f5f5" />
+          </svg>
+        </Link>
 
         <div className="card-body">
           <h5 className="card-text">Natural Day Cream</h5>
