@@ -12,12 +12,11 @@ const ProductCard = ({ product }) => {
     short_description,
     long_description,
   } = product;
-  console.log(product);
 
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <Link to="/product/1">
+        <Link to={`/product/${id}`}>
           <svg
             className="bd-placeholder-img card-img-top"
             width="100%"

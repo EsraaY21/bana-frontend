@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { products } from '../products';
 
 const Shop = () => {
   return (
@@ -22,8 +23,8 @@ const Shop = () => {
         </div>
         <div className="py-5">
           <div className="row center-section row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5 mx-auto">
-            {['', '', '', ''].map((product) => (
-              <ProductCard />
+            {products.map((product) => (
+              <ProductCard product={product} key={product.id} />
             ))}
           </div>
           <p className="mt-5">Loading...</p>

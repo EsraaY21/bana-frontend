@@ -19,7 +19,7 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="services" element={<Services />} />
-        <Route path="product/:id" element={<ProductDetails />} />
+        <Route path="product/:productId" element={<ProductDetails />} />
       </Routes>
     </div>
   );

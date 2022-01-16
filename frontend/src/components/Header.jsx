@@ -29,9 +29,13 @@ const Header = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
             {['Home', 'Shop', 'Services', 'About', 'Contact'].map(
               (pageName, index) => (
-                <li className="nav-item" key={index}>
+                <li className="nav-item pb-0" key={index}>
                   <NavLink
-                    className="nav-link color-blue-dark"
+                    className={(navData) =>
+                      navData.isActive
+                        ? 'nav-link color-blue-dark active-link'
+                        : 'nav-link color-blue-dark'
+                    }
                     to={
                       pageName === 'Home' ? '/' : `/${pageName.toLowerCase()}`
                     }
