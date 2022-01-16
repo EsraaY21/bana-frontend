@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   return (
@@ -18,7 +19,7 @@ const Cart = () => {
                 Shipping calculated at Checkout
               </span>
               <button className="bg-blue-dark rounded-4">
-                Proceed to Checkout
+                <Link to="/checkout">Proceed to Checkout</Link>
               </button>
             </div>
           </div>
