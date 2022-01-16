@@ -1,7 +1,7 @@
-const productsDummyData = [
+export const products = [
   {
     id: 1,
-    name: 'Natural Day Cream',
+    name: 'Natural 1 Cream',
     image:
       'https://image.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg',
     price: 30,
@@ -16,7 +16,7 @@ const productsDummyData = [
 
   {
     id: 2,
-    name: 'Natural Day Cream',
+    name: 'Natural 2 Cream',
     image:
       'https://image.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg',
     price: 30,
@@ -31,7 +31,7 @@ const productsDummyData = [
 
   {
     id: 3,
-    name: 'Natural Day Cream',
+    name: 'Natural 3 Cream',
     image:
       'https://images.pexels.com/photos/6663469/pexels-photo-6663469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     price: 30,
@@ -46,7 +46,7 @@ const productsDummyData = [
 
   {
     id: 4,
-    name: 'Second Day Cream',
+    name: 'Second 4 Cream',
     image:
       'https://images.pexels.com/photos/6417953/pexels-photo-6417953.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     price: 30,

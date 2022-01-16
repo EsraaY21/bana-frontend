@@ -15,7 +15,7 @@ const TrustedBrands = () => {
           <div key={brand} className="col-lg-3">
             <img
               src={brand}
-              class="img-fluid"
+              className="img-fluid"
               alt="brand"
               width="240"
               height="240"

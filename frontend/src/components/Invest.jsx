@@ -1,16 +1,16 @@
 const Invest = () => {
   return (
-    <section class="container py-5">
-      <div class="row">
-        <div class="col-md-7">
-          <h2 class="">
+    <section className="container py-5">
+      <div className="row">
+        <div className="col-md-7">
+          <h2 className="">
             “Invest in your skin. It is going to represent you for a very long
             time. “
           </h2>
         </div>
-        <div class="col-md-5">
+        <div className="col-md-5">
           <svg
-            class="bd-placeholder-img bd-placeholder-img-lg img-fluid mx-auto"
+            className="bd-placeholder-img bd-placeholder-img-lg img-fluid mx-auto"
             width="200"
             height="200"
             role="img"
