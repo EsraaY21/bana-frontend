@@ -25,6 +25,10 @@
   max-width: 100%;
 }
 
+.row {
+	margin: 0;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -53,14 +57,35 @@ a:hover {
 }
 
 .section-y-padding {
-  padding: 4% 0;
+	padding: 4% 0 2% 0;
 }
 
 .socials-border {
-  border: 1px solid var(--brown);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+	border: 1px solid var(--brown);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+}
+
+/* Buttons -------------------------------------------- */
+.btn-blue-dark {
+	border: 1px solid var(--blue-dark);
+	background-color: var(--blue-dark);
+}
+.btn-blue-dark:hover {
+	background-color: transparent;
+}
+.btn-blue-dark:hover a {
+	color: var(--blue-dark);
+}
+
+/* transition effect on hover */
+.btn-blue-dark,
+.btn-blue-dark:hover,
+.btn-blue-dark:hover a,
+.btn-blue-dark a {
+	transition-timing-function: ease-in-out;
+	transition: all 0.4s;
 }
 
 /* NAVBAR -------------------------------------------- */
@@ -116,6 +141,17 @@ a:hover {
   height: 3.5rem;
 }
 
+.service-box {
+	border-radius: 4px;
+	transition-timing-function: ease-in-out;
+	transition: all 0.4s;
+}
+.service-box:hover {
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+	/* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+}
+
 /* Categories ---- */
 .categories h4 {
   font-weight: 600;
@@ -130,8 +166,8 @@ a:hover {
 
 /* COPYRIGHT ---- */
 .copyright {
-  font-size: 14px;
-  color: #b7b4b4;
+	font-size: 14px;
+	color: #b7b4b4;
 }
 
 /* PRODUCT DETAILS -------------------------------------------- */
