@@ -1,8 +1,16 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import category from '../images/category.png';
+import { useParams } from 'react-router-dom';
+import { products } from '../products';
 
 const ProductDetails = () => {
+  const { productId } = useParams();
+
+  const product = products.find(
+    (product) => product.id === parseInt(productId)
+  );
+
   return (
     <>
       <Header />
@@ -11,8 +19,8 @@ const ProductDetails = () => {
           <div className="col-12 col-sm-12 col-lg-5 text-center ">
             <div className="bg-gray-light text-center product-col py-2 mb-4">
               <img
-                src={category}
-                alt="product"
+                src={product.image}
+                alt={product.name}
                 className="img-fluid product-image"
               />
             </div>
@@ -21,8 +29,8 @@ const ProductDetails = () => {
               {['', '', '', ''].map((item) => (
                 <div className="small-img-col col-3">
                   <img
-                    src={category}
-                    alt="product"
+                    src={product.image}
+                    alt={product.name}
                     className="img-fluid small-image"
                     width="100%"
                   />
@@ -33,14 +41,18 @@ const ProductDetails = () => {
           <div className="col-10 col-sm-12 col-lg-7 text-start">
             <p className="">$20</p>
             <p className="">17%</p>
-            <h1>Product Name</h1>
-            <p>
-              orem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              ut vestibulum lorem. Morbi porttitor feugiat
-            </p>
+            <h1>{product.name}</h1>
+            <p>{product.short_description}</p>
             <p>Quantity</p>
             <input type="text" name="" id="" placeholder="1" />
-            <button>Add to Cart</button>
+            <button
+              className={
+                product.countInStock === 0 ? '' : 'btn-blue-dark bg-blue-dark'
+              }
+              disabled={product.countInStock === 0}
+            >
+              {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}
+            </button>
             <hr />
             <p>SKU:</p>
             <p>
