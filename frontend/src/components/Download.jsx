@@ -1,14 +1,33 @@
+import google from "../images/google.png";
+import ios from "../images/ios.svg";
+
+const apps = [google, ios];
+
 const Download = () => {
-  return (
-    <section className="download container py-5">
-      <div className="row text-center">
-        <h1>download bana care mobile app</h1>
-        <h5 className="card-title placeholder-glow">
-          <span className="placeholder col-12 bg-primary"></span>
-        </h5>
-      </div>
-    </section>
-  );
+	return (
+		<section className="download section-y-padding">
+			<div className="container py-5 text-center">
+				<h1 className="color-blue-dark fw-bold mb-5">
+					Download Bana Care Mobile App
+				</h1>
+				<div className="d-flex justify-content-center pt-3">
+					{apps.map((apps) => (
+						<img
+							key={apps}
+							src={apps}
+							className="img-fluid px-2"
+							alt={apps}
+							width="200"
+							// height="240"
+							preserveAspectRatio="xMidYMid slice"
+							focusable="false"
+						/>
+					))}
+				</div>
+				<div className="row text-center"></div>
+			</div>
+		</section>
+	);
 };
 
 export default Download;
