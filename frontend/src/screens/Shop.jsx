@@ -1,10 +1,23 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { products } from '../products';
+import { useSelector, useDispatch } from 'react-redux';
+import { successFetchProducts } from '../features/product/productSlice';
 
 const Shop = () => {
+  const products = useSelector((state) => state.product.value);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(products);
+
+    console.log('start');
+    dispatch(successFetchProducts());
+    console.log('success');
+    console.log(products);
+  }, []);
+
   return (
     <>
       <Header />
