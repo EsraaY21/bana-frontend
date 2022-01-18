@@ -161,8 +161,8 @@ a:hover {
 }
 .service-box:hover {
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
-	/* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+	-webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+	-moz-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
 }
 
 /* Categories ---- */
@@ -219,5 +219,18 @@ a:hover {
 }
 
 .product-image {
-	object-fit: contain;
+	object-fit: cover;
+	max-height: 350px;
+	min-height: 350px;
+}
+
+.small-image {
+	padding: 2px;
+	cursor: pointer;
+	min-height: 90px;
+	max-height: 90px;
+	object-fit: cover;
+}
+.image-active {
+	border-color: var(--brown) !important;
 }
