@@ -1,13 +1,5 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-
 const Checkout = () => {
-  return (
-    <div>
-      <Header />
-      <Footer />
-    </div>
-  );
+  return <div>Checkout</div>;
 };
 
 export default Checkout;

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import category from "../images/category.png";
-import { useParams } from "react-router-dom";
 import { products } from "../products";
 
 const ProductDetails = () => {
@@ -21,7 +21,6 @@ const ProductDetails = () => {
 
 	return (
 		<>
-			<Header />
 			<div className="container my-5">
 				<div className="row container text-center">
 					<div className="col-12 col-sm-12 col-lg-5 text-center ">
@@ -119,7 +118,6 @@ const ProductDetails = () => {
 					<h2>Related Products</h2>
 				</div>
 			</div>
-			<Footer />
 		</>
 	);
 };

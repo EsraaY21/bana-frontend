@@ -8,13 +8,9 @@ import DirectorsWords from '../components/DirectorsWords';
 import Invest from '../components/Invest';
 import Download from '../components/Download';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-
 const Home = () => {
   return (
     <div className="home">
-      <Header />
       <HeroHome />
       <Services />
       <Categories />
@@ -23,7 +19,6 @@ const Home = () => {
       <DirectorsWords />
       <Invest />
       <Download />
-      <Footer />
     </div>
   );
 };

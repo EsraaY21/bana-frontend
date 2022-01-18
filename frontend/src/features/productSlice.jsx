@@ -1,12 +1,18 @@
-import axios from 'axios';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import productApi from '../productApi';
 
-const API_URL = 'https://fakestoreapi.com/products';
+export const fetchAsyncProducts = createAsyncThunk(
+  'products/fetchAsyncProducts',
+  async (dispatch, getState) => {
+    const response = await productApi.get('/products');
+    return response.data;
+  }
+);
 
 const initialState = {
-  loading: false,
-  error: false,
-  data: [],
+  products: [],
+  status: null,
+  search: '',
 };
 
 // REDUCERS -------------------------------------------------------------
@@ -14,41 +20,21 @@ const initialState = {
 export const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    initFetchProducts: (state) => {
-      state = { loading: true, error: false, data: [] };
+  reducers: {},
+  extraReducers: {
+    [fetchAsyncProducts.pending]: (state, action) => {
+      state.status = 'loading';
     },
 
-    successFetchProducts: (state, action) => {
-      state.data = action.payload;
+    [fetchAsyncProducts.fulfilled]: (state, action) => {
+      state.status = 'success';
+      state.products = action.payload;
     },
 
-    errorFetchProducts: () => {},
-
-    addNewProduct: (state, action) => {
-      state.data.push(action.payload);
+    [fetchAsyncProducts.rejected]: (state, action) => {
+      state.status = 'failed';
     },
-
-    removeProduct: () => {},
-
-    updateProduct: () => {},
   },
 });
-
-// ACTIONS -------------------------------------------------------------
-
-export const getAllProducts = (state) => state.products.data;
-
-// EXPORT -------------------------------------------------------------
-
-// Action creators are generated for each case reducer function
-export const {
-  initFetchProducts,
-  successFetchProducts,
-  errorFetchProducts,
-  addNewProduct,
-  removeProduct,
-  updateProduct,
-} = productSlice.actions;
 
 export default productSlice.reducer;
