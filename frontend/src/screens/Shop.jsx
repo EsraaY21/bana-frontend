@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const Shop = () => {
   const products = useSelector((state) => state.products.products);
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchValue, setSearchValue] = useState('');
   const [sortValue, setSortValue] = useState('name');
+  const { urlSearchKey } = useParams();
 
   return (
     <div className="shop container text-center">
@@ -14,15 +16,15 @@ const Shop = () => {
       {products && (
         <main>
           <div className="d-flex justify-content-between px-4">
-            <p className="fs-6">Showing 1–9 of 14 results</p>
-            <input
+            <p className="fs-6">[100] Results</p>
+            {/* <input
               placeholder="Search Product.."
               type="text"
               value={searchValue}
               onChange={(e) => {
                 setSearchValue(e.target.value);
               }}
-            />
+            /> */}
             <div className="d-flex">
               <span className="">Sort by: </span>
               <select
@@ -43,14 +45,14 @@ const Shop = () => {
                 .filter((product) =>
                   product.title
                     .toLowerCase()
-                    .includes(searchValue.toLowerCase())
+                    .includes(urlSearchKey ? urlSearchKey.toLowerCase() : '')
                 )
                 .sort((productA, productB) => {
                   switch (sortValue) {
                     case 'price':
                       return productA.price - productB.price;
                     case 'date':
-                      break;
+                      return 0;
                     default:
                       return productA.title
                         .toLowerCase()
