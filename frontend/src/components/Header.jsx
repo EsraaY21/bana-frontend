@@ -14,6 +14,7 @@ const Header = () => {
     navigate({
       pathname: `/shop/${searchValue}`,
     });
+    setSearchValue('');
   };
 
   return (
