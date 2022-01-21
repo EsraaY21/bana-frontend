@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 const Shop = () => {
   const products = useSelector((state) => state.products.products);
   const [searchValue, setSearchValue] = useState('');
+  const [sortValue, setSortValue] = useState('name');
 
   return (
     <div className="shop container text-center">
@@ -15,6 +16,7 @@ const Shop = () => {
           <div className="d-flex justify-content-between px-4">
             <p className="fs-6">Showing 1–9 of 14 results</p>
             <input
+              placeholder="Search Product.."
               type="text"
               value={searchValue}
               onChange={(e) => {
@@ -23,9 +25,13 @@ const Shop = () => {
             />
             <div className="d-flex">
               <span className="">Sort by: </span>
-              <select className="form-select">
-                <option value="newest">Newest</option>
+              <select
+                className="form-select"
+                value={sortValue}
+                onChange={(e) => setSortValue(e.target.value)}
+              >
                 <option value="name">Name</option>
+                <option value="date">Date</option>
                 <option value="price">Price</option>
               </select>
               <p className="">Filter </p>
@@ -39,6 +45,18 @@ const Shop = () => {
                     .toLowerCase()
                     .includes(searchValue.toLowerCase())
                 )
+                .sort((productA, productB) => {
+                  switch (sortValue) {
+                    case 'price':
+                      return productA.price - productB.price;
+                    case 'date':
+                      break;
+                    default:
+                      return productA.title
+                        .toLowerCase()
+                        .localeCompare(productB.title.toLowerCase());
+                  }
+                })
                 .map((product) => (
                   <ProductCard product={product} key={product.id} />
                 ))}
