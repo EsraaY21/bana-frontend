@@ -27,12 +27,14 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<Layout search={'search'} setSearch={'setSearch'} />}
+        element={<Layout />}
+        // element={<Layout search={'search'} setSearch={'setSearch'} />}
       >
         <Route index path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="shop" element={<Shop />} />
+        <Route path="shop/:urlSearchKey" element={<Shop />} />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="services" element={<Services />} />
