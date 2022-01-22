@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         <div className="card-body">
-          <h5 className="card-text">{title}</h5>
+          <p className="card-text">{title}</p>
           <p className="text-muted">{price} $</p>
 
           <button type="button" className="btn bg-blue-dark text-white w-100">

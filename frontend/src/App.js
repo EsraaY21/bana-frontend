@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 // REDUX TOOLKIT ----
 import { fetchAsyncProducts } from './features/productSlice';
+import { fetchAsyncCategories } from './features/categorySlice';
 import { useDispatch } from 'react-redux';
 // SCREENS ----
 import Services from './screens/Services';
@@ -23,13 +24,13 @@ function App() {
     dispatch(fetchAsyncProducts());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(fetchAsyncCategories());
+  // }, [dispatch]);
+
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Layout />}
-        // element={<Layout search={'search'} setSearch={'setSearch'} />}
-      >
+      <Route path="/" element={<Layout />}>
         <Route index path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
