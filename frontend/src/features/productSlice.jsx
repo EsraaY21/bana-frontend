@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import productApi from '../productApi';
+import baseAPI from '../baseAPI';
 
 export const fetchAsyncProducts = createAsyncThunk(
   'products/fetchAsyncProducts',
   async (dispatch, getState) => {
-    const response = await productApi.get('/products');
+    const response = await baseAPI.get('/products');
     return response.data;
   }
 );
@@ -12,7 +12,6 @@ export const fetchAsyncProducts = createAsyncThunk(
 const initialState = {
   products: [],
   status: null,
-  search: '',
 };
 
 // REDUCERS -------------------------------------------------------------
