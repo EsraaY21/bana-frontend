@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ product }) => {
   const {
     id,
-    title,
+    name,
     image,
     price,
     brand,
@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <Link to={`/product/${id}`}>
+        <Link to={`/products/${id}`}>
           <svg
             className="bd-placeholder-img card-img-top"
             width="100%"
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         <div className="card-body">
-          <p className="card-text">{title}</p>
+          <p className="card-text">{name}</p>
           <p className="text-muted">{price} $</p>
 
           <button type="button" className="btn bg-blue-dark text-white w-100">
