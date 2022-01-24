@@ -1,6 +1,6 @@
 products = [
     {
-        'id': 1,
+        'id': '1',
         'name': 'Natural 1 Cream',
         'images': [
             'https://image.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg',
@@ -20,7 +20,7 @@ products = [
     },
 
     {
-        'id': 2,
+        'id': '2',
         'name': 'Natural 2 Cream',
         'images': [
             'https://image.freepik.com/free-psd/cosmetic-product-packaging-mockup_1150-40284.jpg',

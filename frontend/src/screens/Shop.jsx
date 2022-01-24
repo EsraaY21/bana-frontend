@@ -49,7 +49,7 @@ const Shop = () => {
                   <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 mx-auto">
                     {products
                       .filter((product) =>
-                        product.title
+                        product.name
                           .toLowerCase()
                           .includes(
                             urlSearchKey ? urlSearchKey.toLowerCase() : ''
@@ -68,9 +68,9 @@ const Shop = () => {
                           case 'date':
                             return 0;
                           default:
-                            return productA.title
+                            return productA.name
                               .toLowerCase()
-                              .localeCompare(productB.title.toLowerCase());
+                              .localeCompare(productB.name.toLowerCase());
                         }
                       })
                       .map((product) => (
