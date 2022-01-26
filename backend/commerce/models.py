@@ -20,6 +20,7 @@ class Product(Entity):
     discounted_price = models.DecimalField(
         'discounted price', max_digits=10, decimal_places=2)
     countInStock = models.IntegerField('count in stock', default=0)
+    image_main = models.ImageField(null=True, blank=True)
     # brand =
     # category =
     # tags =
