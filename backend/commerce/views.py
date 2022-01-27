@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from .products import products
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Product
@@ -21,9 +20,6 @@ def getProducts(request):
 
 @api_view(['GET'])
 def getProduct(request, pk):
-    product = None
-    for i in products:
-        if i['id'] == pk:
-            product = i
-            break
-    return Response(product)
+    product = Product.objects.get(id=int(pk))
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data)

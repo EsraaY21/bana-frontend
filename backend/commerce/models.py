@@ -5,9 +5,9 @@ class Entity(models.Model):
     class Meta:
         abstract = True
 
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date_created = models.DateTimeField(editable=False, auto_now_add=True)
     date_updated = models.DateTimeField(editable=False, auto_now=True)
+    id = models.AutoField(primary_key=True, editable=False)
 
 
 class Product(Entity):
@@ -18,7 +18,7 @@ class Product(Entity):
         'long description', null=True, blank=True)
     price = models.DecimalField('price', max_digits=10, decimal_places=2)
     discounted_price = models.DecimalField(
-        'discounted price', max_digits=10, decimal_places=2)
+        'discounted price', max_digits=10, decimal_places=2, null=True, blank=True)
     countInStock = models.IntegerField('count in stock', default=0)
     image_main = models.ImageField(null=True, blank=True)
     # brand =

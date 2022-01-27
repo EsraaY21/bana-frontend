@@ -2,10 +2,12 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { baseAPI } from '../baseAPI';
 import axios from 'axios';
+import { Form } from 'react-bootstrap';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState('');
+  const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
@@ -28,13 +30,13 @@ const ProductDetails = () => {
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
               <div className="bg-gray-lightx text-center product-col pb-2 ">
                 <img
-                  src={product.images[selectedImage]}
+                  // src={product.images[selectedImage]}
                   alt={product.name}
                   className="img-fluid product-image"
                 />
               </div>
 
-              <div className="small-img-group bg-gray-lightx text-center py-2 row">
+              {/* <div className="small-img-group bg-gray-lightx text-center py-2 row">
                 {product.images.map((item, index) => (
                   <div className="small-img-col col-3 p-1" key={index}>
                     <img
@@ -48,25 +50,29 @@ const ProductDetails = () => {
                     />
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
-            <div className="col-10 col-sm-12 col-lg-7 text-start">
+            <div className="col-10 col-sm-12 col-lg-7 text-start pe-5">
               <p className="fs-3 fw-bold color-blue-dark">$20</p>
               {/* <p className="">17%</p> */}
               <h1>{product.name}</h1>
               <p>{product.short_description}</p>
-              <p>Quantity</p>
+              <p className="mt-5">Quantity</p>
               <div className="row">
-                <div className="col p-0">
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder="1"
-                    className="form-control"
-                  />
+                <div className="col-lg-3 p-0">
+                  <Form.Control
+                    as="select"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  >
+                    {[...Array(product.countInStock).keys()].map((count) => (
+                      <option key={count + 1} value={count + 1}>
+                        {count + 1}
+                      </option>
+                    ))}
+                  </Form.Control>
                 </div>
-                <div className="col ">
+                <div className="col-lg-8 ">
                   <button
                     className={
                       product.countInStock === 0 ? '' : 'btn-blue-dark btn'
@@ -96,27 +102,7 @@ const ProductDetails = () => {
           <div>
             <hr className="mt-5 mb-4" />
             <h2 className="mb-4">Description</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-              turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus
-              nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum
-              tellus elit sed risus. Maecenas eget condimentum velit, sit amet
-              feugiat lectus. Class aptent taciti sociosqu ad litora torquent
-              per conubia nostra, per inceptos himenaeos. Praesent auctor purus
-              luctus enim egestas, ac scelerisque ante pulvinar. Donec ut
-              rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur
-              vel bibendum lorem. Morbi convallis convallis diam sit amet
-              lacinia. Aliquam in elementum tellus. Curabitur tempor quis eros
-              tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut
-              vulputate nisi. Integer in felis sed leo vestibulum venenatis.
-              Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum
-              vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu
-              mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula
-              vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam
-              eget mi in purus lobortis eleifend. Sed nec ante dictum sem
-              condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis
-              nisi, ac posuere leo.
-            </p>
+            <p>{product.long_description}</p>
             <hr className="mt-5 mb-4" />
             <h2>Related Products</h2>
           </div>
