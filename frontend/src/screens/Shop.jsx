@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import FilterColumn from '../components/FilterColumn';
 
 const Shop = () => {
-  const products = useSelector((state) => state.products.products);
+  const products = useSelector((state) => state.products.value);
   const [sortValue, setSortValue] = useState('name');
   const { urlSearchKey } = useParams();
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -57,7 +57,8 @@ const Shop = () => {
                       )
                       .filter((product) =>
                         categoryFilter.toLowerCase() === 'all' ||
-                        categoryFilter.toLowerCase() === product.category
+                        categoryFilter.toLowerCase() ===
+                          product.category.toLowerCase()
                           ? product
                           : ''
                       )

@@ -7,23 +7,23 @@ const FilterColumn = ({
   brandFilter,
   setBrandFilter,
 }) => {
-  const categories = useSelector((state) => state.categories.categories);
+  const categories = useSelector((state) => state.categories.value);
 
   return (
     <div className="container">
       <h3>Filter</h3>
       <h4>Categories</h4>
-      {['All', 'Electronics', 'Jewelery'].map((category) => (
+      {categories.map((category) => (
         <p
-          key={category}
+          key={category.name}
           className={
-            categoryFilter.toLowerCase() === category.toLowerCase()
+            categoryFilter.toLowerCase() === category.name.toLowerCase()
               ? 'shop-filter-active'
               : 'shop-filter'
           }
-          onClick={() => setCategoryFilter(category)}
+          onClick={() => setCategoryFilter(category.name)}
         >
-          {category}
+          {category.name}
         </p>
       ))}
 

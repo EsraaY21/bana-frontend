@@ -3,7 +3,7 @@ import ProductCard from './ProductCard';
 import { useSelector } from 'react-redux';
 
 const LatestProducts = () => {
-  const products = useSelector((state) => state.products.products);
+  const products = useSelector((state) => state.products.value);
 
   return (
     <section className="latest bg-gray-light">
