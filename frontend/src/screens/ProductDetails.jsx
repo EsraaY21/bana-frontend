@@ -2,13 +2,17 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { baseAPI } from '../baseAPI';
 import axios from 'axios';
-import { Form } from 'react-bootstrap';
+import { cart_add_item } from '../features/cartSlice';
+import { addToCart } from '../features/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -20,6 +24,18 @@ const ProductDetails = () => {
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
+  };
+
+  const addToCartHandler = () => {
+    // const newProduct = { product: product, quantity: quantity };
+    dispatch(() =>
+      cart_add_item({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity,
+      })
+    );
   };
 
   return (
@@ -60,26 +76,28 @@ const ProductDetails = () => {
               <p className="mt-5">Quantity</p>
               <div className="row">
                 <div className="col-lg-3 p-0">
-                  <Form.Control
-                    as="select"
+                  <select
+                    disabled={product.countInStock === 0}
+                    className="form-select"
                     value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
                   >
                     {[...Array(product.countInStock).keys()].map((count) => (
                       <option key={count + 1} value={count + 1}>
                         {count + 1}
                       </option>
                     ))}
-                  </Form.Control>
+                  </select>
                 </div>
                 <div className="col-lg-8 ">
                   <button
+                    onClick={addToCartHandler}
                     className={
                       product.countInStock === 0 ? '' : 'btn-blue-dark btn'
                     }
                     disabled={product.countInStock === 0}
                   >
-                    {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}
+                    {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}{' '}
                   </button>
                 </div>
               </div>

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 // REDUX TOOLKIT ----
 import { fetchAsyncProducts } from './features/productSlice';
-import { fetchAsyncCategories } from './features/categorySlice';
 import { useDispatch } from 'react-redux';
 // SCREENS ----
 import Services from './screens/Services';
