@@ -2,7 +2,7 @@ const DirectorsWords = () => {
   return (
     <section className="director py-5">
       <div className="row align-items-center">
-        <div className="col-md-6 bg-gray-light p-5">
+        <div className="col-md-7 bg-gray-light p-5">
           <div className="h-100x ">
             <div className="container py-5 director_quote">
               <h2 className="cursive-title pb-3">Director’s Words</h2>
@@ -15,8 +15,8 @@ const DirectorsWords = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-6 image_container">
-          <div className="director_image"></div>
+        <div className="col-md-5 image_container">
+          <div className="director_image" style={{ maxHeight: '600px' }}></div>
           <div className="h-100x p-5x "></div>
         </div>
       </div>
