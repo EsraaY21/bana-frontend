@@ -1,17 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
-  const {
-    id,
-    name,
-    image,
-    price,
-    brand,
-    category,
-    countInStock,
-    short_description,
-    long_description,
-  } = product;
+  const { id, name, image, price } = product;
 
   return (
     <div className="col">
@@ -30,7 +20,6 @@ const ProductCard = ({ product }) => {
         <div className="card-body">
           <p className="card-text">{name}</p>
           <p className="text-muted">{price} $</p>
-
           <button type="button" className="btn bg-blue-dark text-white w-100">
             Add to Cart
           </button>

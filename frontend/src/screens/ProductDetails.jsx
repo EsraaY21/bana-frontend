@@ -1,43 +1,24 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { baseAPI } from '../baseAPI';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../features/cartSlice';
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.value);
   const { productId } = useParams(); // productId is a string since it is from the url
-  // const [product, setProduct] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.value);
 
-  // useEffect(() => {
-  //   const fetchProductDetails = async () => {
-  //     const { data } = await axios.get(`${baseAPI}products/${productId}`);
-  //     setProduct(data);
-  //   };
-  //   fetchProductDetails();
-  // }, [productId]);
+  const addToCartHandler = () => {
+    dispatch(addToCart(product));
+  };
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
   };
 
   const product = products.filter((x) => x.id === parseInt(productId))[0];
-
-  const addToCartHandler = () => {
-    // const newProduct = { product: product, quantity: quantity };
-    // dispatch(() =>
-    //   cart_add_item({
-    //     id: product.id,
-    //     name: product.name,
-    //     price: product.price,
-    //     quantity: quantity,
-    //   })
-    // );
-  };
 
   return (
     <>
