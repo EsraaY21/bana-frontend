@@ -2,40 +2,41 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { baseAPI } from '../baseAPI';
 import axios from 'axios';
-import { cart_add_item } from '../features/cartSlice';
-import { addToCart } from '../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState('');
+  const products = useSelector((state) => state.products.value);
+  const { productId } = useParams(); // productId is a string since it is from the url
+  // const [product, setProduct] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart.value);
 
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      const { data } = await axios.get(`${baseAPI}products/${productId}`);
-      setProduct(data);
-    };
-    fetchProductDetails();
-  }, [productId]);
+  // useEffect(() => {
+  //   const fetchProductDetails = async () => {
+  //     const { data } = await axios.get(`${baseAPI}products/${productId}`);
+  //     setProduct(data);
+  //   };
+  //   fetchProductDetails();
+  // }, [productId]);
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
   };
 
+  const product = products.filter((x) => x.id === parseInt(productId))[0];
+
   const addToCartHandler = () => {
     // const newProduct = { product: product, quantity: quantity };
-    dispatch(() =>
-      cart_add_item({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: quantity,
-      })
-    );
+    // dispatch(() =>
+    //   cart_add_item({
+    //     id: product.id,
+    //     name: product.name,
+    //     price: product.price,
+    //     quantity: quantity,
+    //   })
+    // );
   };
 
   return (
@@ -46,13 +47,13 @@ const ProductDetails = () => {
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
               <div className="bg-gray-lightx text-center product-col pb-2 ">
                 <img
-                  // src={product.images[selectedImage]}
+                  src={product.images[selectedImage]}
                   alt={product.name}
                   className="img-fluid product-image"
                 />
               </div>
 
-              {/* <div className="small-img-group bg-gray-lightx text-center py-2 row">
+              <div className="small-img-group bg-gray-lightx text-center py-2 row">
                 {product.images.map((item, index) => (
                   <div className="small-img-col col-3 p-1" key={index}>
                     <img
@@ -66,11 +67,11 @@ const ProductDetails = () => {
                     />
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
             <div className="col-10 col-sm-12 col-lg-7 text-start pe-5">
               <p className="fs-3 fw-bold color-blue-dark">$20</p>
-              {/* <p className="">17%</p> */}
+              <p className="">17%</p>
               <h1>{product.name}</h1>
               <p>{product.short_description}</p>
               <p className="mt-5">Quantity</p>
