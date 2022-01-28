@@ -14,6 +14,9 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    addToCart: (state, action) => {
+      state.value.push(action.payload);
+    },
     // cart_add_item(state, action) {
     //   const item = action.payload;
     //   if (state.cartItems.length > 0) {
@@ -32,6 +35,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addCartItem } = cartSlice.actions;
+export const { addToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

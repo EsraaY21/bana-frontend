@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = () => {
+  const cartItems = useSelector((state) => state.products.value);
+
   return (
     <div className="cart container text-center">
       <h1 className="my-5">Cart</h1>
@@ -32,19 +35,22 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row"></th>
-                  <td></td>
-                  <td className="d-flex justify-content-around">
-                    <div className="d-flex align-items-center">
-                      <button>+</button>
-                      <span className="mx-2">2</span>
-                      <button>-</button>
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>x</td>
-                </tr>
+                {cartItems.map((cartItem) => (
+                  <tr>
+                    {/* <th scope="row">{cartItem.name}</th> */}
+                    <td className="text-start">{cartItem.name}</td>
+                    <td>{cartItem.price}</td>
+                    <td className="d-flex justify-content-around">
+                      <div className="d-flex align-items-center">
+                        <button>+</button>
+                        <span className="mx-2">2</span>
+                        <button>-</button>
+                      </div>
+                    </td>
+                    <td></td>
+                    <td>x</td>
+                  </tr>
+                ))}
                 <tr>
                   <th scope="row"></th>
                   <td></td>
