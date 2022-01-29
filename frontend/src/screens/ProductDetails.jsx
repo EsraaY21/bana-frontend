@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../features/cartSlice';
+import AddToCartButton from '../components/AddToCartButton';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -71,8 +72,8 @@ const ProductDetails = () => {
                     ))}
                   </select>
                 </div>
-                <div className="col-lg-8 ">
-                  <button
+                <div className="col-lg-5">
+                  {/* <button
                     onClick={addToCartHandler}
                     className={
                       product.countInStock === 0 ? '' : 'btn-blue-dark btn'
@@ -80,20 +81,23 @@ const ProductDetails = () => {
                     disabled={product.countInStock === 0}
                   >
                     {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}{' '}
-                  </button>
+                  </button> */}
+
+                  <AddToCartButton product={product} />
                 </div>
               </div>
 
               <hr className="mt-5 mb-4" />
               <p>
-                <strong>SKU:</strong>
+                <strong>SKU: </strong>
+                <span>{product.id}</span>
               </p>
               <p>
-                <strong>Category:</strong>
+                <strong>Category: </strong>
                 <span>Hair-Care</span>
               </p>
               <p>
-                <strong>Tags:</strong>
+                <strong>Tags: </strong>
                 <span>Cleanse,Scrub</span>
               </p>
             </div>

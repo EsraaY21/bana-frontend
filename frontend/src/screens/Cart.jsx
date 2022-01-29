@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { TiDelete } from 'react-icons/ti';
+import { removeFromCart } from '../features/cartSlice';
 
 const Cart = () => {
-  const cartItems = useSelector((state) => state.products.value);
+  const cartItems = useSelector((state) => state.cart.value);
+  const dispatch = useDispatch();
+
+  const handleDelete = (cartItem) => {
+    dispatch(removeFromCart(cartItem));
+  };
 
   return (
     <div className="cart container text-center">
@@ -48,16 +55,18 @@ const Cart = () => {
                       </div>
                     </td>
                     <td></td>
-                    <td>x</td>
+                    <td>
+                      <span>
+                        <TiDelete
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            handleDelete(cartItem);
+                          }}
+                        />
+                      </span>
+                    </td>
                   </tr>
                 ))}
-                <tr>
-                  <th scope="row"></th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
           </div>

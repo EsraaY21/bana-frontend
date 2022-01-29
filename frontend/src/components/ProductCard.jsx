@@ -1,7 +1,15 @@
 import { Link } from 'react-router-dom';
+import { addToCart } from '../features/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import AddToCartButton from './AddToCartButton';
 
 const ProductCard = ({ product }) => {
   const { id, name, image, price } = product;
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <div className="col">
@@ -20,9 +28,14 @@ const ProductCard = ({ product }) => {
         <div className="card-body">
           <p className="card-text">{name}</p>
           <p className="text-muted">{price} $</p>
-          <button type="button" className="btn bg-blue-dark text-white w-100">
+          {/* <button
+            type="button"
+            className="btn bg-blue-dark text-white w-100"
+            onClick={addToCartHandler}
+          >
             Add to Cart
-          </button>
+          </button> */}
+          <AddToCartButton product={product} />
         </div>
       </div>
     </div>
