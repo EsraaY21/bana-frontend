@@ -1,19 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../features/cartSlice';
+import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 
 const ProductDetails = () => {
-  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.value);
   const { productId } = useParams(); // productId is a string since it is from the url
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-
-  const addToCartHandler = () => {
-    dispatch(addToCart(product));
-  };
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
@@ -83,7 +77,9 @@ const ProductDetails = () => {
                     {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}{' '}
                   </button> */}
 
-                  <AddToCartButton product={product} />
+                  <AddToCartButton
+                    product={{ ...product, quantity: quantity }}
+                  />
                 </div>
               </div>
 

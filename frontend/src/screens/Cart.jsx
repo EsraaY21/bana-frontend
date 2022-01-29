@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
 import { removeFromCart } from '../features/cartSlice';
+import { useState } from 'react';
 
 const Cart = () => {
+  const [quantity, setQuantity] = useState(1);
   const cartItems = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
 
@@ -50,7 +52,7 @@ const Cart = () => {
                     <td className="d-flex justify-content-around">
                       <div className="d-flex align-items-center">
                         <button>+</button>
-                        <span className="mx-2">2</span>
+                        <span className="mx-2">{cartItem.quantity}</span>
                         <button>-</button>
                       </div>
                     </td>
