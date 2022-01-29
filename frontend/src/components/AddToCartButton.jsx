@@ -1,8 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cartSlice';
 
 const AddToCartButton = ({ product }) => {
   const dispatch = useDispatch();
+
+  console.log(product);
 
   const addToCartHandler = () => {
     dispatch(addToCart(product));
@@ -16,7 +18,7 @@ const AddToCartButton = ({ product }) => {
       }
       disabled={product.countInStock === 0}
     >
-      {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}{' '}
+      {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}
     </button>
   );
 };
