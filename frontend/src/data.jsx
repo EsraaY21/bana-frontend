@@ -13,7 +13,7 @@ export const products = [
     price: 30,
     brand: 'CeraVe',
     category: 'Soaps',
-    countInStock: 10,
+    countInStock: 0,
     short_description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut vestibulum lorem. Morbi porttitor feugiat',
     long_description:
