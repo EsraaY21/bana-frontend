@@ -67,3 +67,9 @@ export const categories = [
   { name: 'Hair', image: categoryImage },
   { name: 'Skin', image: categoryImage },
 ];
+
+export const cities = [
+  { name: 'Baghdad', shipping_cost: 5 },
+  { name: 'Basrah', shipping_cost: 10 },
+  { name: 'Najaf', shipping_cost: 8 },
+];
