@@ -74,7 +74,7 @@ const ProductDetails = () => {
                     }
                     disabled={product.countInStock === 0}
                   >
-                    {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}{' '}
+                    {product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}
                   </button> */}
 
                   <AddToCartButton
