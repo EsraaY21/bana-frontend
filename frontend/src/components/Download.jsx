@@ -24,7 +24,6 @@ const Download = () => {
 						/>
 					))}
 				</div>
-				<div className="row text-center"></div>
 			</div>
 		</section>
 	);
