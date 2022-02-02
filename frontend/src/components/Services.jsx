@@ -13,7 +13,7 @@ const services = [
 		title: "Nutrition Coach",
 		description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 		icon: <FaAppleAlt />,
-		link: "nutrition",
+		link: "https://www.instagram.com/",
 	},
 
 	{
@@ -29,7 +29,7 @@ const Services = () => {
 		<section className="services container section-y-padding">
 			<div className="row text-center">
 				{services.map((service) => (
-					<div key={service.title} className="col-lg-4 px-5">
+					<div key={service.title} className="col-lg-4 px-2">
 						<div className="p-3 service-box">
 							<Link to={service.link}>
 								<div className="pb-3">{service.icon}</div>
