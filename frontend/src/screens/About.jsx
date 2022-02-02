@@ -2,6 +2,7 @@ import logo from "../images/bana-care-logo.svg";
 import mask from "../images/mask.png";
 import products from "../images/about.png";
 import app from "../images/app-interfaces.png";
+import LocationBar from "../components/LocationBar";
 
 import google from "../images/google.png";
 import ios from "../images/ios.svg";
@@ -11,6 +12,7 @@ const apps = [google, ios];
 const About = () => {
 	return (
 		<div>
+			<LocationBar />
 			{/* Hero */}
 			<section className="subpage-hero about">
 				<div className="container py-5">

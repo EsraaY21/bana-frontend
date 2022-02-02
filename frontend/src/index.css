@@ -306,3 +306,29 @@ a:hover {
 	background-position: center;
 	background-repeat: no-repeat;
 }
+
+/* Contact Page */
+.contact {
+	background: var(--brown-shade2); /* fallback for old browsers */
+	background: linear-gradient(rgb(0, 0, 0, 0.8), rgb(0, 0, 0, 0.6)),
+		url("/src/images/hero-contact.jpg"); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(rgb(0, 0, 0, 0.8), rgb(0, 0, 0, 0.6)),
+		url("/src/images/hero-contact.jpg"); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.contact-box {
+	border-radius: 4px;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+	-webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+	-moz-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+}
+
+.contacts svg {
+	fill: var(--brown);
+	width: 3.5rem;
+	height: 3.5rem;
+}
