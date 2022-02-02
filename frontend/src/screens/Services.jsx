@@ -1,9 +1,11 @@
+import ComingSoon from "../components/ComingSoon";
+
 const Services = () => {
-  return (
-    <div>
-      <div>Coming Soon</div>
-    </div>
-  );
+	return (
+		<div>
+			<ComingSoon />
+		</div>
+	);
 };
 
 export default Services;

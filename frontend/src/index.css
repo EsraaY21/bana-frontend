@@ -332,3 +332,11 @@ a:hover {
 	width: 3.5rem;
 	height: 3.5rem;
 }
+
+.coming-soon {
+	background-image: url("/src/images/coming-soon.png");
+
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
