@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingBag, FaSearch } from 'react-icons/fa';
 import logo from '../images/bana-care-logo.svg';
 import LocationBar from './LocationBar';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState('');
-  // const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +17,13 @@ const Header = () => {
     });
     setSearchValue('');
   };
+
+  let sumOfItems = 0;
+
+  const totalQuantityOfItems = cartItems.map((x) => {
+    sumOfItems += x.quantity;
+    return sumOfItems;
+  });
 
   return (
     <>
@@ -79,7 +87,12 @@ const Header = () => {
               </form>
               <button className="btn">
                 <NavLink to="/cart">
-                  <FaShoppingBag className="fs-5" />
+                  <div>
+                    <FaShoppingBag className="fs-5" />
+                    <span>
+                      {totalQuantityOfItems > 0 ? totalQuantityOfItems : 0}
+                    </span>
+                  </div>
                 </NavLink>
               </button>
             </div>

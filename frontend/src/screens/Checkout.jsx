@@ -1,10 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { cities } from '../data';
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState('');
+
+  console.log(cartItems);
 
   const handleChangeCity = (e) => {
     const selectedCity = cities.filter(
