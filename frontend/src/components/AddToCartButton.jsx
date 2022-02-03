@@ -4,8 +4,6 @@ import { addToCart } from '../features/cartSlice';
 const AddToCartButton = ({ product }) => {
   const dispatch = useDispatch();
 
-  console.log(product);
-
   const addToCartHandler = () => {
     dispatch(addToCart(product));
   };

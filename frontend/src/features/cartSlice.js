@@ -15,30 +15,49 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.value.push(action.payload);
+      const newItem = action.payload;
+      // find will return the object if it is found, but if it is not found then it will return undefined
+      const itemInCart = state.value.find((x) => x.id === newItem.id);
+      if (itemInCart) {
+        state.value.map((item) =>
+          item.id === newItem.id
+            ? (item.quantity = item.quantity + newItem.quantity)
+            : item
+        );
+      } else {
+        state.value.push(action.payload);
+      }
     },
 
     removeFromCart: (state, action) => {
       state.value = state.value.filter((item) => item.id !== action.payload.id);
     },
-    // cart_add_item(state, action) {
-    //   const item = action.payload;
-    //   if (state.cartItems.length > 0) {
-    //     const itemAvailable = state.cartItems.find((x) => x.id === item.id);
-    //     if (itemAvailable) {
-    //       console.log('exist');
-    //     } else {
-    //       state.cartItems.push(action.payload);
-    //     }
-    //   } else {
-    //     state.cartItems.push(action.payload);
-    //     localStorage.setItem('cartItems', state.cartItems);
-    //   }
-    //   console.log(state.cartItems);
-    // },
+
+    changeQuantityByOne: (state, action) => {
+      switch (action.payload.operation) {
+        case 'add':
+          state.value.map((item) =>
+            item.id === action.payload.productId ? (item.quantity += 1) : item
+          );
+          break;
+
+        case 'subtract':
+          if (action.payload.currentQuantity > 0) {
+            state.value.map((item) =>
+              item.id === action.payload.productId ? (item.quantity -= 1) : item
+            );
+          }
+
+          break;
+
+        default:
+          break;
+      }
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, changeQuantityByOne } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

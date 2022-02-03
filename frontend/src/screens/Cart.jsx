@@ -1,16 +1,28 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
-import { removeFromCart } from '../features/cartSlice';
-import { useState } from 'react';
+import { removeFromCart, changeQuantityByOne } from '../features/cartSlice';
 
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1);
   const cartItems = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
 
   const handleDelete = (cartItem) => {
     dispatch(removeFromCart(cartItem));
+  };
+
+  const changeQuantityByOneHandler = (
+    operation,
+    productId,
+    currentQuantity
+  ) => {
+    dispatch(
+      changeQuantityByOne({
+        operation: operation,
+        productId: productId,
+        currentQuantity: currentQuantity,
+      })
+    );
   };
 
   return (
@@ -51,9 +63,29 @@ const Cart = () => {
                     <td>{cartItem.price}</td>
                     <td className="d-flex justify-content-around">
                       <div className="d-flex align-items-center">
-                        <button>+</button>
+                        <button
+                          onClick={() =>
+                            changeQuantityByOneHandler(
+                              'add',
+                              cartItem.id,
+                              cartItem.quantity
+                            )
+                          }
+                        >
+                          +
+                        </button>
                         <span className="mx-2">{cartItem.quantity}</span>
-                        <button>-</button>
+                        <button
+                          onClick={() =>
+                            changeQuantityByOneHandler(
+                              'subtract',
+                              cartItem.id,
+                              cartItem.quantity
+                            )
+                          }
+                        >
+                          -
+                        </button>
                       </div>
                     </td>
                     <td></td>
