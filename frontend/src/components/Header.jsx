@@ -10,13 +10,15 @@ const Header = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.value);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate({
-      pathname: `/shop/${searchValue}`,
-    });
-    setSearchValue('');
-  };
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		navigate({
+			pathname: `/shop/${searchValue}`,
+		});
+		setSearchValue("");
+	};
+
 
   let sumOfItems = 0;
 
@@ -102,6 +104,7 @@ const Header = () => {
       <LocationBar />
     </>
   );
+
 };
 
 export default Header;
