@@ -1,21 +1,19 @@
 import { Link } from 'react-router-dom';
 import AddToCartButton from './AddToCartButton';
+import mainImage from '../images/mainImage.jpg';
 
 const ProductCard = ({ product }) => {
-  const { id, name, image, price } = product;
+  const { id, name, images, price } = product;
 
   return (
-    <div className="col">
+    <div className="col px-4">
       <div className="card shadow-sm">
         <Link to={`/products/${id}`}>
-          <svg
-            className="bd-placeholder-img card-img-top"
-            width="100%"
-            height="225"
-            role="img"
-          >
-            <rect width="100%" height="100%" fill="#f5f5f5" />
-          </svg>
+          <img
+            src={mainImage}
+            alt={product.name}
+            style={{ width: '100%', height: '250px', objectFit: 'cover' }}
+          />
         </Link>
         <div className="card-body">
           <p className="card-text">{name}</p>

@@ -10,7 +10,7 @@ const LatestProducts = () => {
       <div className="container text-center section-y-padding">
         <h2 className="cursive-title">New Collection</h2>
         <h1 className="color-blue-dark fw-bold mb-5">Latest Products</h1>
-        <div className="row center-section row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5 mx-auto">
+        <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
