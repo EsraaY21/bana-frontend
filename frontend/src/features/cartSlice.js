@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseAPI } from '../baseAPI';
 import axios from 'axios';
-import getState from 'react';
+
+const cartItemsFromLocalStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : [];
 
 const initialState = {
-  value: [],
+  value: cartItemsFromLocalStorage,
   status: null,
 };
 
@@ -47,7 +50,6 @@ export const cartSlice = createSlice({
               item.id === action.payload.productId ? (item.quantity -= 1) : item
             );
           }
-
           break;
 
         default:

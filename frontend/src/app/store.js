@@ -3,6 +3,7 @@ import productReducer from '../features/productSlice';
 import categoryReducer from '../features/categorySlice';
 import cartReducer from '../features/cartSlice';
 import brandReducer from '../features/brandSlice';
+import notificationReducer from '../features/notificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     categories: categoryReducer,
     brands: brandReducer,
     cart: cartReducer,
+    notifications: notificationReducer,
   },
 });

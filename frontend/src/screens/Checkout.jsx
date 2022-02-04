@@ -6,8 +6,6 @@ const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState('');
 
-  console.log(cartItems);
-
   const handleChangeCity = (e) => {
     const selectedCity = cities.filter(
       (city) => city.name === e.target.value
