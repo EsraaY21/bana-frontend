@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const FilterColumn = ({
@@ -8,11 +7,23 @@ const FilterColumn = ({
   setBrandFilter,
 }) => {
   const categories = useSelector((state) => state.categories.value);
+  const brands = useSelector((state) => state.brands.value);
 
   return (
     <div className="container">
       <h3>Filter</h3>
       <h4>Categories</h4>
+      <p
+        key="all"
+        className={
+          categoryFilter.toLowerCase() === 'all'
+            ? 'shop-filter-active'
+            : 'shop-filter'
+        }
+        onClick={() => setCategoryFilter('all')}
+      >
+        All
+      </p>
       {categories.map((category) => (
         <p
           key={category.name}
@@ -28,17 +39,28 @@ const FilterColumn = ({
       ))}
 
       <h4>Brands</h4>
-      {['All', 'NaturalBrand', 'CeraVe'].map((brand) => (
+      <p
+        key="all"
+        className={
+          brandFilter.toLowerCase() === 'all'
+            ? 'shop-filter-active'
+            : 'shop-filter'
+        }
+        onClick={() => setBrandFilter('all')}
+      >
+        All
+      </p>
+      {brands.map((brand) => (
         <p
-          key={brand}
+          key={brand.name}
           className={
-            brandFilter.toLowerCase() === brand.toLowerCase()
+            categoryFilter.toLowerCase() === brand.name.toLowerCase()
               ? 'shop-filter-active'
               : 'shop-filter'
           }
-          onClick={() => setBrandFilter(brand)}
+          onClick={() => setBrandFilter(brand.name)}
         >
-          {brand}
+          {brand.name}
         </p>
       ))}
 

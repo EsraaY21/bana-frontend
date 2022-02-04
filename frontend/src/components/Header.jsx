@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingBag, FaSearch } from 'react-icons/fa';
 import logo from '../images/bana-care-logo.svg';
@@ -10,30 +10,21 @@ const Header = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.value);
 
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		navigate({
-			pathname: `/shop/${searchValue}`,
-		});
-		setSearchValue("");
-	};
-
-
-  let sumOfItems = 0;
-
-  const totalQuantityOfItems = cartItems.map((x) => {
-    sumOfItems += x.quantity;
-    return sumOfItems;
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate({
+      pathname: `/shop/${searchValue}`,
+    });
+    setSearchValue('');
+  };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid px-4 py-3">
+        <div className="container-fluid px-5 py-3">
           {/* logo */}
           <NavLink className="navbar-brand" to="/">
-            <img src={logo} alt="logo" width="80" className="img-fluid" />
+            <img src={logo} alt="logo" width="75" className="img-fluid" />
           </NavLink>
 
           <button
@@ -92,7 +83,9 @@ const Header = () => {
                   <div>
                     <FaShoppingBag className="fs-5" />
                     <span>
-                      {totalQuantityOfItems > 0 ? totalQuantityOfItems : 0}
+                      {cartItems
+                        .map((item) => item.quantity)
+                        .reduce((prev, curr) => prev + curr, 0)}
                     </span>
                   </div>
                 </NavLink>
@@ -104,7 +97,6 @@ const Header = () => {
       <LocationBar />
     </>
   );
-
 };
 
 export default Header;
