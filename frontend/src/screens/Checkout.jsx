@@ -21,7 +21,11 @@ const Checkout = () => {
           <h4 className="d-flex justify-content-between align-items-center mb-3">
             <span className="">Your cart</span>
             <span className="badge bg-info rounded-pill">
-              {cartItems.length}
+              <span>
+                {cartItems
+                  .map((item) => item.quantity)
+                  .reduce((prev, curr) => prev + curr, 0)}
+              </span>
             </span>
           </h4>
           <ul className="list-group mb-3">
@@ -48,11 +52,12 @@ const Checkout = () => {
         </div>
 
         <div className="col-md-7 col-lg-6">
+          <h2 className="">BANA CARE</h2>
           <h4 className="mb-3">Contact Information</h4>
           <form>
             <div className="row">
               <div className="col-sm-6">
-                <label for="firstName" className="form-label">
+                <label htmlFor="firstName" className="form-label">
                   First name
                 </label>
                 <input
@@ -68,7 +73,7 @@ const Checkout = () => {
                 </div>
               </div>
               <div className="col-sm-6">
-                <label for="lastName" className="form-label">
+                <label htmlFor="lastName" className="form-label">
                   Last name
                 </label>
                 <input
@@ -86,7 +91,7 @@ const Checkout = () => {
             </div>
 
             <div className="phone">
-              <label for="phone" className="form-label">
+              <label htmlFor="phone" className="form-label">
                 Phone Number
               </label>
               <input
@@ -103,7 +108,7 @@ const Checkout = () => {
             </div>
 
             <div className="phoneTwo">
-              <label for="phoneTwo" className="form-label">
+              <label htmlFor="phoneTwo" className="form-label">
                 Phone Number 2 (Optional)
               </label>
               <input
@@ -120,7 +125,7 @@ const Checkout = () => {
             </div>
 
             <div className="email">
-              <label for="email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 email
               </label>
               <input
@@ -139,7 +144,7 @@ const Checkout = () => {
             <h4 className="mb-3">Shipping Address</h4>
 
             <div className="col-md-5">
-              <label for="country" className="form-label">
+              <label htmlFor="country" className="form-label">
                 City
               </label>
               <select
@@ -157,7 +162,7 @@ const Checkout = () => {
             </div>
 
             <div className="">
-              <label for="firstName" className="form-label">
+              <label htmlFor="firstName" className="form-label">
                 Street
               </label>
               <input
@@ -174,7 +179,7 @@ const Checkout = () => {
             </div>
 
             <div className="">
-              <label for="firstName" className="form-label">
+              <label htmlFor="firstName" className="form-label">
                 Detailed Address Description
               </label>
               <input
