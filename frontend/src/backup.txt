@@ -1,0 +1,71 @@
+          <div className="card">
+            <table className="table table-borderless">
+              <thead className="table-light">
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">SubTotal</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map((cartItem) => (
+                  <tr>
+                    {/* <th scope="row">{cartItem.name}</th> */}
+                    <td className="text-start">
+                      <Link to={`/products/${cartItem.id}`}>
+                        <div className="row">
+                          <div className="col-lg-3 ">
+                            <img src={cartItem.images[1]} alt={cartItem.name} />
+                          </div>
+                          <div className="col-lg-9">
+                            <span>{cartItem.name}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </td>
+                    <td>{cartItem.price}$</td>
+                    <td className="d-flex justify-content-around align-t">
+                      <div className="d-flex align-items-center">
+                        <button
+                          onClick={() =>
+                            changeQuantityByOneHandler(
+                              'add',
+                              cartItem.id,
+                              cartItem.quantity
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                        <span className="mx-2">{cartItem.quantity}</span>
+                        <button
+                          onClick={() =>
+                            changeQuantityByOneHandler(
+                              'subtract',
+                              cartItem.id,
+                              cartItem.quantity
+                            )
+                          }
+                        >
+                          -
+                        </button>
+                      </div>
+                    </td>
+                    <td></td>
+                    <td>
+                      <span>
+                        <TiDelete
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            handleDelete(cartItem);
+                          }}
+                        />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
