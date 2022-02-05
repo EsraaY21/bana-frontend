@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProductCard from '../components/ProductCard';
+import LocationBar from '../components/LocationBar';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import FilterColumn from '../components/FilterColumn';

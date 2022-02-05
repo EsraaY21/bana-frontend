@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingBag, FaSearch } from 'react-icons/fa';
 import logo from '../images/bana-care-logo.svg';

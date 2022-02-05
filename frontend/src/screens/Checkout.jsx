@@ -5,12 +5,32 @@ import { cities } from '../data';
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState('');
+  const [orderData, setOrderData] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumberOne: '',
+    phoneNumberTwo: '',
+    email: '',
+    city: '',
+    street: '',
+    detailedAddress: '',
+    additional: '',
+  });
 
   const handleChangeCity = (e) => {
     const selectedCity = cities.filter(
       (city) => city.name === e.target.value
     )[0];
     setCity(selectedCity);
+  };
+
+  const handleValueChange = (e) => {
+    setOrderData((prevOrderData) => {
+      return { ...prevOrderData, [e.target.id]: e.target.value };
+    });
+    // console.log(orderData);
+    // console.log(e.target.value);
+    // console.log(e.target.id);
   };
 
   return (
@@ -31,8 +51,13 @@ const Checkout = () => {
           <ul className="list-group mb-3">
             {cartItems.map((cartItem) => (
               <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">{cartItem.name}</h6>
+                <div className="row">
+                  <div className="col-lg-3 ">
+                    <img src={cartItem.images[1]} alt={cartItem.name} />
+                  </div>
+                  <div className="col-lg-9 text-start d-flex align-items-center">
+                    <span>{cartItem.name}</span>
+                  </div>
                 </div>
                 <span className="text-muted">${cartItem.price}</span>
               </li>
@@ -45,8 +70,13 @@ const Checkout = () => {
               <span className="text-success">${city.shipping_cost}</span>
             </li>
             <li className="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
+              <span>Total</span>
+              <strong>
+                {cartItems
+                  .map((item) => item)
+                  .reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
+                $
+              </strong>
             </li>
           </ul>
         </div>
@@ -63,9 +93,12 @@ const Checkout = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
                   placeholder=""
-                  value=""
+                  id="firstName"
+                  value={orderData.firstName}
+                  onChange={(e) => {
+                    handleValueChange(e);
+                  }}
                   required
                 />
                 <div className="invalid-feedback">
@@ -81,7 +114,10 @@ const Checkout = () => {
                   className="form-control"
                   id="lastName"
                   placeholder=""
-                  value=""
+                  value={orderData.lastName}
+                  onChange={(e) => {
+                    handleValueChange(e);
+                  }}
                   required
                 />
                 <div className="invalid-feedback">
@@ -90,16 +126,19 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className="phone">
-              <label htmlFor="phone" className="form-label">
+            <div className="phoneNumberOne">
+              <label htmlFor="phoneNumberOne" className="form-label">
                 Phone Number
               </label>
               <input
                 type="number"
                 className="form-control"
-                id="phone"
+                id="phoneNumberOne"
                 placeholder=""
-                value=""
+                value={orderData.phoneNumberOne}
+                onChange={(e) => {
+                  handleValueChange(e);
+                }}
                 required
               />
               <div className="invalid-feedback">
@@ -107,16 +146,19 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className="phoneTwo">
-              <label htmlFor="phoneTwo" className="form-label">
+            <div className="phoneNumberTwo">
+              <label htmlFor="phoneNumberTwo" className="form-label">
                 Phone Number 2 (Optional)
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="phoneTwo"
+                id="phoneNumberTwo"
                 placeholder=""
-                value=""
+                value={orderData.phoneNumberTwo}
+                onChange={(e) => {
+                  handleValueChange(e);
+                }}
                 required
               />
               <div className="invalid-feedback">
@@ -126,14 +168,17 @@ const Checkout = () => {
 
             <div className="email">
               <label htmlFor="email" className="form-label">
-                email
+                Email
               </label>
               <input
                 type="email"
                 className="form-control"
                 id="email"
                 placeholder=""
-                value=""
+                value={orderData.email}
+                onChange={(e) => {
+                  handleValueChange(e);
+                }}
                 required
               />
               <div className="invalid-feedback">
@@ -144,10 +189,11 @@ const Checkout = () => {
             <h4 className="mb-3">Shipping Address</h4>
 
             <div className="col-md-5">
-              <label htmlFor="country" className="form-label">
+              <label htmlFor="city" className="form-label">
                 City
               </label>
               <select
+                value={orderData.city}
                 className="form-select"
                 id="city"
                 required
@@ -170,7 +216,7 @@ const Checkout = () => {
                 className="form-control"
                 id="city"
                 placeholder=""
-                value=""
+                value={orderData.street}
                 required
               />
               <div className="invalid-feedback">
@@ -185,10 +231,9 @@ const Checkout = () => {
               <input
                 type="text"
                 className="form-control"
-                id="city"
+                id="detailedAddress"
                 placeholder=""
-                value=""
-                required
+                value={orderData.detailedAddress}
               />
               <div className="invalid-feedback">
                 Valid first name is required.
@@ -200,6 +245,7 @@ const Checkout = () => {
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
+                value={orderData.additional}
               ></textarea>
             </div>
           </form>
