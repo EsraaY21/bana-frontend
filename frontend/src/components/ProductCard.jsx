@@ -12,12 +12,12 @@ const ProductCard = ({ product }) => {
           <img
             src={mainImage}
             alt={product.name}
-            style={{ width: '100%', height: '250px', objectFit: 'cover' }}
+            style={{ width: '100%', height: '240px', objectFit: 'cover' }}
           />
         </Link>
-        <div className="card-body">
-          <p className="card-text">{name}</p>
-          <p className="text-muted">{price} $</p>
+        <div className="card-body text-center">
+          <p className="card-text my-1">{name}</p>
+          <p className="text-muted mt-1 mb-2">{price} $</p>
           <AddToCartButton product={{ ...product, quantity: 1 }} />
         </div>
       </div>
