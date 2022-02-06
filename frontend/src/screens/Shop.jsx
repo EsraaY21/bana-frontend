@@ -9,7 +9,7 @@ const Shop = () => {
   const products = useSelector((state) => state.products.value);
   const [sortValue, setSortValue] = useState('name');
   const { urlSearchKey } = useParams();
-  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState('all');
 
   return (
@@ -55,13 +55,16 @@ const Shop = () => {
                             urlSearchKey ? urlSearchKey.toLowerCase() : ''
                           )
                       )
+
                       .filter((product) =>
-                        categoryFilter.toLowerCase() === 'all' ||
-                        categoryFilter.toLowerCase() ===
-                          product.category.toLowerCase()
+                        categoryFilter.length < 1 ||
+                        categoryFilter.find(
+                          (category) => category === product.category
+                        )
                           ? product
                           : ''
                       )
+
                       .filter((product) =>
                         brandFilter.toLowerCase() === 'all' ||
                         brandFilter.toLowerCase() ===

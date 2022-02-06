@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { FaShoppingBag, FaSearch } from 'react-icons/fa';
 import logo from '../images/bana-care-logo.svg';
 import LocationBar from './LocationBar';
 import { useSelector } from 'react-redux';
+import { Popover, Button, OverlayTrigger, ListGroup } from 'react-bootstrap';
 
 const Header = () => {
+  const products = useSelector((state) => state.products.value);
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.value);
@@ -64,20 +66,51 @@ const Header = () => {
             </ul>
             <div className="d-flex align-items-center">
               {/* Search */}
-              <form onSubmit={handleSubmit}>
-                <div className="d-flex align-items-center" id="navbar_search">
-                  <FaSearch className="navbar_search_icon" />
-                  <input
-                    value={searchValue}
-                    onChange={(e) => {
-                      setSearchValue(e.target.value);
-                    }}
-                    type="text"
-                    className="form-control border-0 rounded-4 "
-                    placeholder="Search Products ..."
-                  />
-                </div>
-              </form>
+
+              <OverlayTrigger
+                trigger="click"
+                key="bottom"
+                placement="bottom"
+                overlay={
+                  <Popover id="popover-positioned-bottom">
+                    <Popover.Header as="h3">Suggestions</Popover.Header>
+                    <Popover.Body>
+                      {products
+                        .filter((product) =>
+                          product.name
+                            .toLowerCase()
+                            .includes(
+                              searchValue ? searchValue.toLowerCase() : ''
+                            )
+                        )
+                        .map((product) => (
+                          <Link to={`/products/${product.id}`}>
+                            <p className="mb-3">{product.name}</p>
+                          </Link>
+                        ))}
+                      <Link to={`/shop/${searchValue}`}>
+                        <strong>View all results</strong>
+                      </Link>
+                    </Popover.Body>
+                  </Popover>
+                }
+              >
+                <form onSubmit={handleSubmit}>
+                  <div className="d-flex align-items-center" id="navbar_search">
+                    <FaSearch className="navbar_search_icon" />
+                    <input
+                      value={searchValue}
+                      onChange={(e) => {
+                        setSearchValue(e.target.value);
+                      }}
+                      type="text"
+                      className="form-control border-0 rounded-4 "
+                      placeholder="Search Products ..."
+                    />
+                  </div>
+                </form>
+              </OverlayTrigger>
+
               <button className="btn">
                 <NavLink to="/cart">
                   <div>

@@ -2,12 +2,14 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
+import ProductCard from '../components/ProductCard';
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.products.value);
   const { productId } = useParams(); // productId is a string since it is from the url
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const cartItems = useSelector((state) => state.cart.value);
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
@@ -46,7 +48,9 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="col-10 col-sm-12 col-lg-7 text-start pe-5">
-              <p className="fs-3 fw-bold color-blue-dark">$20</p>
+              <p className="fs-3 fw-bold color-blue-dark">
+                ${product.price * quantity}
+              </p>
               {/* <p className="">17%</p> */}
               <h1>{product.name}</h1>
               <p>{product.short_description}</p>
@@ -95,6 +99,15 @@ const ProductDetails = () => {
             <p>{product.long_description}</p>
             <hr className="mt-5 mb-4" />
             <h2>Related Products</h2>
+            <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
+              {products
+                .filter(
+                  (x) => x.category === product.category && x.id !== product.id
+                )
+                .map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+            </div>
           </div>
         </div>
       )}
