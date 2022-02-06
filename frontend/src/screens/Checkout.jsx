@@ -1,6 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { cities } from '../data';
+import {
+  InputGroup,
+  FormControl,
+  Form,
+  Row,
+  Col,
+  FloatingLabel,
+} from 'react-bootstrap';
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
@@ -28,9 +36,6 @@ const Checkout = () => {
     setOrderData((prevOrderData) => {
       return { ...prevOrderData, [e.target.id]: e.target.value };
     });
-    // console.log(orderData);
-    // console.log(e.target.value);
-    // console.log(e.target.id);
   };
 
   return (
@@ -85,56 +90,44 @@ const Checkout = () => {
           <h2 className="">BANA CARE</h2>
           <h4 className="mb-3">Contact Information</h4>
           <form>
-            <div className="row">
-              <div className="col-sm-6">
-                <label htmlFor="firstName" className="form-label">
-                  First name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder=""
-                  id="firstName"
-                  value={orderData.firstName}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
-                  required
-                />
-                <div className="invalid-feedback">
-                  Valid first name is required.
-                </div>
+            <div className="d-flex">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First Name"
+                id="firstName"
+                value={orderData.firstName}
+                onChange={(e) => {
+                  handleValueChange(e);
+                }}
+                required
+              />
+              <div className="invalid-feedback">
+                Valid first name is required.
               </div>
-              <div className="col-sm-6">
-                <label htmlFor="lastName" className="form-label">
-                  Last name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  placeholder=""
-                  value={orderData.lastName}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
-                  required
-                />
-                <div className="invalid-feedback">
-                  Valid last name is required.
-                </div>
+
+              <input
+                type="text"
+                className="form-control"
+                id="lastName"
+                placeholder="Last Name"
+                value={orderData.lastName}
+                onChange={(e) => {
+                  handleValueChange(e);
+                }}
+                required
+              />
+              <div className="invalid-feedback">
+                Valid last name is required.
               </div>
             </div>
 
             <div className="phoneNumberOne">
-              <label htmlFor="phoneNumberOne" className="form-label">
-                Phone Number
-              </label>
               <input
-                type="number"
+                type="tel"
                 className="form-control"
                 id="phoneNumberOne"
-                placeholder=""
+                placeholder="Phone Number"
                 value={orderData.phoneNumberOne}
                 onChange={(e) => {
                   handleValueChange(e);
@@ -147,14 +140,11 @@ const Checkout = () => {
             </div>
 
             <div className="phoneNumberTwo">
-              <label htmlFor="phoneNumberTwo" className="form-label">
-                Phone Number 2 (Optional)
-              </label>
               <input
                 type="text"
                 className="form-control"
                 id="phoneNumberTwo"
-                placeholder=""
+                placeholder="Phone Number 2 (Optional)"
                 value={orderData.phoneNumberTwo}
                 onChange={(e) => {
                   handleValueChange(e);
@@ -167,14 +157,11 @@ const Checkout = () => {
             </div>
 
             <div className="email">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
               <input
                 type="email"
                 className="form-control"
                 id="email"
-                placeholder=""
+                placeholder="Email"
                 value={orderData.email}
                 onChange={(e) => {
                   handleValueChange(e);

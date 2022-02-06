@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTrash } from 'react-icons/fa';
 import { removeFromCart, changeQuantityByOne } from '../features/cartSlice';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, CloseButton as DeleteIcon } from 'react-bootstrap';
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.value);
@@ -117,16 +117,19 @@ const Cart = () => {
 
                     <td>{cartItem.price * cartItem.quantity}$</td>
                     <td>
-                      <span>
-                        <FaTrash
+                      {/* <FaTrash
                           style={{
                             cursor: 'pointer',
                           }}
                           onClick={() => {
                             handleDelete(cartItem);
                           }}
-                        />
-                      </span>
+                        /> */}
+                      <DeleteIcon
+                        onClick={() => {
+                          handleDelete(cartItem);
+                        }}
+                      />
                     </td>
                   </tr>
                 ))}
