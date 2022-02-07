@@ -60,11 +60,18 @@ const Cart = () => {
             <Table responsive>
               <thead>
                 <tr>
-                  {['Product', 'Quantity', 'Price', 'SubTotal', ''].map(
+                  {/* {['Product', 'Quantity', 'Price', 'SubTotal', ''].map(
                     (title, index) => (
-                      <th key={index}>{title}</th>
+                      <th key={index} style={{ width: '40%' }}>
+                        {title}
+                      </th>
                     )
-                  )}
+                  )} */}
+                  <th style={{ width: '61%' }}>Product</th>
+                  <th style={{ width: '11%' }}>Quantity</th>
+                  <th style={{ width: '11%' }}>Price</th>
+                  <th style={{ width: '11%' }}>SubTotal</th>
+                  <th style={{ width: '6%' }}></th>
                 </tr>
               </thead>
               <tbody>
