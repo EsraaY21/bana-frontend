@@ -4,7 +4,7 @@ import { FaShoppingBag, FaSearch } from 'react-icons/fa';
 import logo from '../images/bana-care-logo.svg';
 import LocationBar from './LocationBar';
 import { useSelector } from 'react-redux';
-import { Popover, Button, OverlayTrigger, ListGroup } from 'react-bootstrap';
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 const Header = () => {
   const products = useSelector((state) => state.products.value);
@@ -113,9 +113,10 @@ const Header = () => {
 
               <button className="btn">
                 <NavLink to="/cart">
-                  <div>
+                  <div className="badge-container">
                     <FaShoppingBag className="fs-5" />
-                    <span>
+
+                    <span className="badge-count badge">
                       {cartItems
                         .map((item) => item.quantity)
                         .reduce((prev, curr) => prev + curr, 0)}

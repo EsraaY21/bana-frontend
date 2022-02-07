@@ -65,13 +65,13 @@ const Shop = () => {
                           : ''
                       )
 
-                      .filter((product) =>
-                        brandFilter.toLowerCase() === 'all' ||
-                        brandFilter.toLowerCase() ===
-                          product.brand.toLowerCase()
-                          ? product
-                          : ''
-                      )
+                      // .filter((product) =>
+                      //   brandFilter.toLowerCase() === 'all' ||
+                      //   brandFilter.toLowerCase() ===
+                      //     product.brand.toLowerCase()
+                      //     ? product
+                      //     : ''
+                      // )
                       .sort((productA, productB) => {
                         switch (sortValue) {
                           case 'price':

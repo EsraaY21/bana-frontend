@@ -194,7 +194,7 @@ a:hover {
   background-image: url('/src/images/director.png');
   height: 850px;
   width: 100%;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -340,4 +340,22 @@ a:hover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* CHECKOUT -------------------------------------------- */
+.badge-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.badge-container .badge-count {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: var(--pink-light);
+  color: black;
 }

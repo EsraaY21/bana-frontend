@@ -56,7 +56,7 @@ const FilterColumn = ({
           </div>
         </Form>
       ))}
-
+      {/* 
       <h4>Brands</h4>
       <p
         key="all"
@@ -81,7 +81,7 @@ const FilterColumn = ({
         >
           {brand.name}
         </p>
-      ))}
+      ))} */}
 
       <h4>Price</h4>
       <p>All</p>
