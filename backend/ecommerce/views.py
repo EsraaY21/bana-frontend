@@ -11,3 +11,9 @@ def getRoutes(request):
 @api_view(['GET'])
 def getProducts(request):
     return Response({"message": "Hello, world!"})
+
+
+@api_view(['GET'])
+def getProduct(request, pk):
+    product = None
+    return Response(product)
