@@ -10,7 +10,6 @@ const ProductDetails = () => {
   const { productId } = useParams(); // productId is a string since it is from the url
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  // const cartItems = useSelector((state) => state.cart.value);
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
@@ -18,8 +17,6 @@ const ProductDetails = () => {
 
   const product = products.filter((x) => x.id === parseInt(productId))[0];
   const categories = useSelector((state) => state.categories.value);
-
-  console.log(product.category);
 
   return (
     <>
@@ -73,7 +70,7 @@ const ProductDetails = () => {
               <p>{product.short_description}</p>
               <p className="mt-4">Quantity</p>
               <div className="row">
-                <div className="col-lg-3 p-0">
+                <div className="col-lg-3 p-0 mb-4">
                   <select
                     disabled={product.countInStock === 0}
                     className="form-select"
@@ -94,19 +91,25 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <hr className="mt-5 mb-4" />
+              <hr className="mt-3" />
               <p>
                 <strong>SKU: </strong>
                 <span>{product.id}</span>
               </p>
               <p>
                 <strong>Category: </strong>
-                <span>Hair-Care</span>
+                <span>
+                  {
+                    categories.filter(
+                      (category) => category.id === product.category
+                    )[0].name
+                  }
+                </span>
               </p>
-              <p>
+              {/* <p>
                 <strong>Tags: </strong>
                 <span>Cleanse,Scrub</span>
-              </p>
+              </p> */}
             </div>
           </div>
 

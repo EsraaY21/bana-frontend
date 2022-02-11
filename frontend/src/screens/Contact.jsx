@@ -1,27 +1,26 @@
 import { FaFacebookSquare, FaPhoneAlt } from 'react-icons/fa';
 import { AiFillInstagram } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 
 const contacts = [
   {
     title: 'Call Us',
     description: '964 123 123 1234',
     icon: <FaPhoneAlt />,
-    link: 'shop',
+    link: 'tel:124fd',
   },
 
   {
     title: 'Instagram',
     description: '@bana-care',
     icon: <AiFillInstagram />,
-    link: 'nutrition',
+    link: 'https://www.instagram.com/',
   },
 
   {
     title: 'Facebook',
     description: '@bana-care',
     icon: <FaFacebookSquare />,
-    link: 'psychotherapy',
+    link: 'https://www.facebook.com/',
   },
 ];
 
@@ -43,12 +42,12 @@ const Contact = () => {
           {contacts.map((contact) => (
             <div key={contact.title} className="col-lg-4 px-2">
               <div className="p-3 contact-box">
-                <Link to={contact.link}>
+                <a href={contact.link} target="_blank" rel="noreferrer">
                   <div className="pb-3">{contact.icon}</div>
 
                   <h3 className="color-blue-dark">{contact.title}</h3>
                   <p>{contact.description}</p>
-                </Link>
+                </a>
               </div>
             </div>
           ))}

@@ -4,11 +4,12 @@ import { Form } from 'react-bootstrap';
 const FilterColumn = ({
   categoryFilter,
   setCategoryFilter,
-  brandFilter,
-  setBrandFilter,
+  priceSet,
+  setPriceSet,
+  setApplyPriceFilter,
 }) => {
   const categories = useSelector((state) => state.categories.value);
-  //   const brands = useSelector((state) => state.brands.value);
+  const products = useSelector((state) => state.products.value);
 
   const handleAddFilter = (e) => {
     const newCategory = e.target.id;
@@ -23,73 +24,129 @@ const FilterColumn = ({
     }
   };
 
+  const handlePriceChange = (e) => {
+    const newValue = e.target.value.length > 0 ? parseInt(e.target.value) : '';
+    setPriceSet((prevPriceSet) => {
+      return {
+        ...prevPriceSet,
+        [e.target.id]: newValue,
+      };
+    });
+  };
+
+  const handlePriceFilter = (e) => {
+    e.preventDefault();
+    if (priceSet.min.length < 1 && priceSet.max < 1) {
+      setApplyPriceFilter(false);
+    } else {
+      setApplyPriceFilter(true);
+    }
+  };
+
   return (
     <div className="container">
-      <h2 className="mb-4">Filter</h2>
-      <div className="d-flex mb-3 align-items-center justify-content-between">
-        <h4 className="mb-0">Categories</h4>
-        <span
-          className="badge bg-secondary"
-          onClick={() => setCategoryFilter([])}
-          style={{ cursor: 'pointer' }}
-        >
-          Clear
-        </span>
+      <h3 className="mb-4 color-gray-dark">Filter</h3>
+      <div className="categories ">
+        <div className="d-flex mb-3 align-items-center justify-content-between">
+          <h4 className="mb-0">Categories</h4>
+          <span
+            className="badge bg-secondary"
+            onClick={() => setCategoryFilter([])}
+            style={{ cursor: 'pointer' }}
+          >
+            Clear
+          </span>
+        </div>
+
+        {categories.map((category) => (
+          <Form key={category.name}>
+            <div className="mb-3">
+              <Form.Check
+                type="checkbox"
+                className="d-inline-block"
+                id={category.id}
+                value={category.id}
+                label={category.name}
+                onClick={(e) => handleAddFilter(e)}
+                checked={
+                  categoryFilter.find(
+                    (x) => parseInt(x) === parseInt(category.id)
+                  )
+                    ? true
+                    : false
+                }
+                onChange={(e) => console.log(e.target.value)}
+              />
+              <span className="ms-2 color-gray-dark">
+                <small>
+                  (
+                  {
+                    products.filter(
+                      (product) => product.category === category.id
+                    ).length
+                  }
+                  )
+                </small>
+              </span>
+            </div>
+          </Form>
+        ))}
       </div>
 
-      {categories.map((category) => (
-        <Form key={category.name}>
-          <div className="mb-3" key={category.name}>
-            <Form.Check
-              type="checkbox"
-              className="d-inline-block"
-              id={category.id}
-              value={category.id}
-              label={category.name}
-              onClick={(e) => handleAddFilter(e)}
-              checked={
-                categoryFilter.find(
-                  (x) => parseInt(x) === parseInt(category.id)
-                )
-                  ? true
-                  : false
-              }
-              onChange={(e) => console.log(e.target.value)}
-            />
-            <span>(4)</span>
-          </div>
-        </Form>
-      ))}
-      {/* 
-      <h4>Brands</h4>
-      <p
-        key="all"
-        className={
-          brandFilter.toLowerCase() === 'all'
-            ? 'shop-filter-active'
-            : 'shop-filter'
-        }
-        onClick={() => setBrandFilter('all')}
-      >
-        All
-      </p>
-      {brands.map((brand) => (
-        <p
-          key={brand.name}
-          className={
-            brandFilter.toLowerCase() === brand.name.toLowerCase()
-              ? 'shop-filter-active'
-              : 'shop-filter'
-          }
-          onClick={() => setBrandFilter(brand.name)}
-        >
-          {brand.name}
-        </p>
-      ))} */}
+      <hr className="my-5" style={{ color: '#8f8989' }} />
 
-      <h4 className="mb-3 pt-3">Price</h4>
-      <p>All</p>
-      <p>20$</p>
+      {/* PRICE FILTER --------------------- */}
+      <div className="price">
+        <div className="d-flex mb-3 align-items-center justify-content-between">
+          <h4 className="mb-0">Price</h4>
+          <span
+            className="badge bg-secondary"
+            onClick={() => {
+              setPriceSet({ min: '', max: '' });
+              setApplyPriceFilter(false);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            Clear
+          </span>
+        </div>
+        <form onSubmit={handlePriceFilter}>
+          <div className="row g-2">
+            {/* First and Last Name ---- */}
+            <div className="col-md-6">
+              <input
+                type="number"
+                className="form-control"
+                id="min"
+                placeholder="$ Min"
+                value={priceSet.min}
+                onChange={(e) => {
+                  handlePriceChange(e);
+                }}
+              />
+            </div>
+
+            <div className="col-md-6">
+              <input
+                type="number"
+                className="form-control"
+                id="max"
+                placeholder="$ Max"
+                value={priceSet.max}
+                onChange={(e) => {
+                  handlePriceChange(e);
+                }}
+              />
+            </div>
+
+            <div className=" text-start">
+              <button type="submit" className="btn bg-gray-light">
+                Apply
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

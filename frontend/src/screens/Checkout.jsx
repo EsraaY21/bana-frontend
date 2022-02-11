@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import { cities } from '../data';
+import { useState, useEffect } from 'react';
 import { imageUrl } from '../baseAPI';
+import axios from 'axios';
+import { baseAPI } from '../baseAPI';
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState('');
+  const [cities, setCities] = useState([]);
   const [orderData, setOrderData] = useState({
     firstName: '',
     lastName: '',
@@ -20,6 +22,15 @@ const Checkout = () => {
     shipping_cost: 0,
     items: [],
   });
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const response = await axios.get(`${baseAPI}cities/`);
+      setCities(response.data);
+      console.log(cities);
+    };
+    fetchCities();
+  }, []);
 
   const handleChangeCity = (e) => {
     let selectedCity;
@@ -38,8 +49,6 @@ const Checkout = () => {
         shipping_cost: selectedCity.shipping_cost,
       };
     });
-
-    console.log(selectedCity);
   };
 
   const handleValueChange = (e) => {
@@ -73,7 +82,10 @@ const Checkout = () => {
             </h4>
             <ul className="list-group mb-3">
               {cartItems.map((cartItem) => (
-                <li className="list-group-item d-flex justify-content-between lh-sm">
+                <li
+                  key={cartItem.name}
+                  className="list-group-item d-flex justify-content-between lh-sm"
+                >
                   <div className="row">
                     <div className="col-lg-3">
                       <div className="badge-container">
@@ -204,7 +216,6 @@ const Checkout = () => {
                   type="email"
                   className="form-control"
                   id="email"
-                  placeholder="Email"
                   value={orderData.email}
                   onChange={(e) => {
                     handleValueChange(e);
@@ -231,9 +242,12 @@ const Checkout = () => {
                   onChange={handleChangeCity}
                 >
                   <option value="">Choose...</option>
-                  {cities.map((city) => (
-                    <option value={city.name}>{city.name}</option>
-                  ))}
+                  {cities.length > 0 &&
+                    cities.map((city) => (
+                      <option key={city.name} value={city.name}>
+                        {city.name}
+                      </option>
+                    ))}
                 </select>
               </div>
 
@@ -263,7 +277,6 @@ const Checkout = () => {
                   type="text"
                   className="form-control"
                   id="detailedAddress"
-                  placeholder="Detailed Address"
                   value={orderData.detailedAddress}
                   onChange={(e) => {
                     handleValueChange(e);

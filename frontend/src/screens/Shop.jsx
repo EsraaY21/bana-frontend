@@ -9,27 +9,78 @@ const Shop = () => {
   const [sortValue, setSortValue] = useState('date');
   const { urlSearchKey } = useParams();
   const [categoryFilter, setCategoryFilter] = useState([]);
-  const [brandFilter, setBrandFilter] = useState('all');
+  const [priceSet, setPriceSet] = useState({ min: '', max: '' });
+  const [applyPriceFilter, setApplyPriceFilter] = useState(false);
+
+  const filterAndSortedProducts = products
+    .filter((product) =>
+      product.name
+        .toLowerCase()
+        .includes(urlSearchKey ? urlSearchKey.toLowerCase() : '')
+    )
+
+    .filter((product) =>
+      categoryFilter.length < 1 ||
+      categoryFilter.find(
+        (categoryId) => parseInt(categoryId) === product.category
+      )
+        ? product
+        : ''
+    )
+    .filter((currentElement) => {
+      if (applyPriceFilter) {
+        if (
+          parseInt(currentElement.price) >= priceSet.min &&
+          parseInt(currentElement.price) <= priceSet.max
+        ) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    })
+    .sort((productA, productB) => {
+      switch (sortValue) {
+        case 'price':
+          return productA.price - productB.price;
+        case 'date':
+          return (
+            new Date(productB.dateCreated) - new Date(productA.dateCreated)
+          );
+
+        default:
+          return productA.name
+            .toLowerCase()
+            .localeCompare(productB.name.toLowerCase());
+      }
+    })
+    .map((product) => <ProductCard product={product} key={product.id} />);
 
   return (
     <>
-      <div className="row text-center">
+      <div className="row text-center mb-5">
         <h1 className="my-5">Shop</h1>
 
         <div className="col-lg-3 text-start px-5">
           <FilterColumn
             categoryFilter={categoryFilter}
             setCategoryFilter={setCategoryFilter}
-            brandFilter={brandFilter}
-            setBrandFilter={setBrandFilter}
+            priceSet={priceSet}
+            setPriceSet={setPriceSet}
+            setApplyPriceFilter={setApplyPriceFilter}
           />
         </div>
         <div className="col-lg-9">
-          <div className="">
+          <div className="products">
             {products && (
               <main>
                 <div className="d-flex justify-content-between align-items-center px-4">
-                  <p className="fs-6 mb-0">{products.length} Results</p>
+                  <p className="fs-6 mb-0">
+                    {filterAndSortedProducts.length}{' '}
+                    {filterAndSortedProducts.length === 1
+                      ? 'Result'
+                      : 'Results'}
+                  </p>
 
                   <div className="row align-items-center">
                     <div className="col">
@@ -49,60 +100,8 @@ const Shop = () => {
                   </div>
                 </div>
                 <div className=" pb-5">
-                  <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-5 mx-auto">
-                    {products
-                      .filter((product) =>
-                        product.name
-                          .toLowerCase()
-                          .includes(
-                            urlSearchKey ? urlSearchKey.toLowerCase() : ''
-                          )
-                      )
-
-                      //   .filter((product) =>
-                      //     categoryFilter.length < 1 ||
-                      //     categoryFilter.find(
-                      //       (category) => category === product.category
-                      //     )
-                      //       ? product
-                      //       : ''
-                      //   )
-                      .filter((product) =>
-                        categoryFilter.length < 1 ||
-                        categoryFilter.find(
-                          (categoryId) =>
-                            parseInt(categoryId) === product.category
-                        )
-                          ? product
-                          : ''
-                      )
-
-                      // .filter((product) =>
-                      //   brandFilter.toLowerCase() === 'all' ||
-                      //   brandFilter.toLowerCase() ===
-                      //     product.brand.toLowerCase()
-                      //     ? product
-                      //     : ''
-                      // )
-                      .sort((productA, productB) => {
-                        switch (sortValue) {
-                          case 'price':
-                            return productA.price - productB.price;
-                          case 'date':
-                            return (
-                              new Date(productB.dateCreated) -
-                              new Date(productA.dateCreated)
-                            );
-
-                          default:
-                            return productA.name
-                              .toLowerCase()
-                              .localeCompare(productB.name.toLowerCase());
-                        }
-                      })
-                      .map((product) => (
-                        <ProductCard product={product} key={product.id} />
-                      ))}
+                  <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4 mx-auto">
+                    {filterAndSortedProducts}
                   </div>
                 </div>
               </main>
