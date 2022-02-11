@@ -33,15 +33,6 @@ class Product(Entity):
         return self.name
 
 
-# class ProductImage(Entity):
-#     product = models.ForeignKey(
-#         Product, default=None, on_delete=models.CASCADE)
-#     images = models.FileField(upload_to='')
-
-#     def __str__(self):
-#         return self.product.name
-
-
 class Category(Entity):
     # parent = models.ForeignKey(
     #     'self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
@@ -55,6 +46,15 @@ class Category(Entity):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+
+
+# class ProductImage(Entity):
+#     product = models.ForeignKey(
+#         Product, default=None, on_delete=models.CASCADE)
+#     images = models.FileField(upload_to='')
+
+#     def __str__(self):
+#         return self.product.name
 
 
 # ADD PLACEHOLDER --------------------------------------------

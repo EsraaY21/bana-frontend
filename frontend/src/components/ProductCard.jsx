@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import AddToCartButton from './AddToCartButton';
-import mainImage from '../images/mainImage.jpg';
+import { imageUrl } from '../baseAPI';
 
 const ProductCard = ({ product }) => {
-  const { id, name, images, price } = product;
+  const { id, name, imageOne, price } = product;
 
   return (
     <div className="col px-4">
       <div className="card shadow-sm">
         <Link to={`/products/${id}`}>
           <img
-            src={mainImage}
+            src={`${imageUrl}${imageOne}`}
             alt={product.name}
             style={{ width: '100%', height: '240px', objectFit: 'cover' }}
           />
