@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import categoryImage from '../images/category.png';
+import { imageUrl } from '../baseAPI';
 
 const Categories = () => {
   const categories = useSelector((state) => state.categories.value);
@@ -18,12 +18,14 @@ const Categories = () => {
                 style={{ width: '200px', height: '200px' }}
               >
                 <img
-                  src={categoryImage}
+                  className="rounded-circle mx-auto"
+                  src={`${imageUrl}${category.image}`}
                   alt={category.name}
                   style={{
-                    width: '100%',
-                    maxHeight: '180px',
-                    objectFit: 'contain',
+                    width: '200px',
+                    height: '200px',
+                    objectFit: 'cover',
+                    objectPosition: 'center center',
                   }}
                 />
               </div>

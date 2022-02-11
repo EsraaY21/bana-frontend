@@ -3,19 +3,23 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 import ProductCard from '../components/ProductCard';
+import { imageUrl } from '../baseAPI';
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.products.value);
   const { productId } = useParams(); // productId is a string since it is from the url
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  const cartItems = useSelector((state) => state.cart.value);
+  // const cartItems = useSelector((state) => state.cart.value);
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
   };
 
   const product = products.filter((x) => x.id === parseInt(productId))[0];
+  const categories = useSelector((state) => state.categories.value);
+
+  console.log(product.category);
 
   return (
     <>
@@ -25,17 +29,30 @@ const ProductDetails = () => {
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
               <div className="bg-gray-lightx text-center product-col pb-2 ">
                 <img
-                  src={product.images[selectedImage]}
+                  src={`${imageUrl}${
+                    [
+                      product.imageOne,
+                      product.imageTwo,
+                      product.imageThree,
+                      product.imageFour,
+                    ][selectedImage]
+                  }`}
                   alt={product.name}
                   className="img-fluid product-image"
+                  style={{ width: '100%', objectFit: 'cover' }}
                 />
               </div>
 
               <div className="small-img-group bg-gray-lightx text-center py-2 row">
-                {product.images.map((item, index) => (
+                {[
+                  product.imageOne,
+                  product.imageTwo,
+                  product.imageThree,
+                  product.imageFour,
+                ].map((item, index) => (
                   <div className="small-img-col col-3 p-1" key={index}>
                     <img
-                      src={item}
+                      src={`${imageUrl}${item}`}
                       alt={product.name}
                       className={`img-fluid small-image border border-2 ${
                         selectedImage === index ? 'image-active' : ''

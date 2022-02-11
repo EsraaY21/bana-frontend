@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 // REDUX TOOLKIT ----
 import { fetchAsyncProducts } from './features/productSlice';
+import { fetchAsyncCategories } from './features/categorySlice';
 import { useDispatch } from 'react-redux';
 // SCREENS ----
 import Services from './screens/Services';
@@ -21,13 +22,13 @@ import Layout from './components/Layout';
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchAsyncProducts());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAsyncProducts());
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(fetchAsyncCategories());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAsyncCategories());
+  }, [dispatch]);
 
   return (
     <Routes>

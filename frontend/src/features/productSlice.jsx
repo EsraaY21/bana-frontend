@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseAPI } from '../baseAPI';
 import axios from 'axios';
-import { products } from '../data';
 
 export const fetchAsyncProducts = createAsyncThunk(
   'products/fetchAsyncProducts',
@@ -12,7 +11,7 @@ export const fetchAsyncProducts = createAsyncThunk(
 );
 
 const initialState = {
-  value: products,
+  value: [],
   status: null,
 };
 
@@ -33,7 +32,7 @@ export const productSlice = createSlice({
 
     [fetchAsyncProducts.fulfilled]: (state, action) => {
       state.status = 'success';
-      state.products = action.payload;
+      state.value = action.payload;
     },
 
     [fetchAsyncProducts.rejected]: (state, action) => {
