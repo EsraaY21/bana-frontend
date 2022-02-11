@@ -8,6 +8,14 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
 
+  const headerTitles = [
+    { title: 'Product', width: '61%' },
+    { title: 'Price', width: '11%' },
+    { title: 'Quantity', width: '11%' },
+    { title: 'SubTotal', width: '11%' },
+    { title: '', width: '6%' },
+  ];
+
   const handleDelete = (cartItem) => {
     dispatch(removeFromCart(cartItem));
   };
@@ -31,13 +39,12 @@ const Cart = () => {
       <h1 className="mt-5 mb-2">Cart</h1>
       <main className="row g-5">
         <div className="col-md-5 col-lg-3 order-md-last">
-          <div className="card rounded-4 text-start p-3">
+          <div className="card rounded-4 text-start p-3 ">
             <h4>Cart Totals</h4>
             <hr className="my-0" style={{ color: '#8f8989' }} />
             <div className="d-flex justify-content-between mt-3">
               <p className="mt-3x">Total</p>
               <span className="color-brown fw-bold">
-                {' '}
                 {cartItems
                   .map((item) => item)
                   .reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
@@ -57,20 +64,23 @@ const Cart = () => {
 
         {/* TABLE */}
         <div className="col-md-7 col-lg-9">
-          <div className="card">
+          <div className="card border-bottom-0">
             <Table responsive>
               <thead className="table-light">
                 <tr>
-                  <th style={{ width: '61%' }}>Product</th>
-                  <th style={{ width: '11%' }}>Price</th>
-                  <th style={{ width: '11%' }}>Quantity</th>
-                  <th style={{ width: '11%' }}>SubTotal</th>
-                  <th style={{ width: '6%' }}></th>
+                  {headerTitles.map((title) => (
+                    <th
+                      style={{ width: title.width }}
+                      className="border-bottom-0"
+                    >
+                      {title.title}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {cartItems.map((cartItem) => (
-                  <tr>
+                  <tr key={cartItem.id}>
                     <td>
                       <Link to={`/products/${cartItem.id}`}>
                         <div className="row">

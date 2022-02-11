@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Product, Category
-from .serializers import ProductSerializer, CategorySerializer
+from .models import Product, Category, City
+from .serializers import ProductSerializer, CategorySerializer, CitySerializer
 
 
 def getRoutes(request):
@@ -28,4 +28,11 @@ def getProduct(request, pk):
 def getCategories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getCities(request):
+    cities = City.objects.all()
+    serializer = CitySerializer(cities, many=True)
     return Response(serializer.data)

@@ -38,7 +38,7 @@ const About = () => {
               arcu ac blandit facilisis, magna risus bibendum felis, non laoreet
               dolor tellus id ante. Lorem ipsum dolor sit amet, consectetur
               adipiscing elit. Ut vivers auctor, quis efficitur arcu dictum.
-              Curabitur{' '}
+              Curabitur
             </p>
           </div>
         </div>

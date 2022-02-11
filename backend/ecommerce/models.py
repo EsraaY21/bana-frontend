@@ -34,9 +34,6 @@ class Product(Entity):
 
 
 class Category(Entity):
-    # parent = models.ForeignKey(
-    #     'self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
-
     name = models.CharField('name', max_length=255)
     image = models.ImageField(null=True, blank=True)
 
@@ -46,6 +43,18 @@ class Category(Entity):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+
+
+class City(Entity):
+    name = models.CharField('name', max_length=255)
+    shipping_cost = models.IntegerField('shipping cost')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'City'
+        verbose_name_plural = 'Cities'
 
 
 # class ProductImage(Entity):

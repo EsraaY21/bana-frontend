@@ -72,7 +72,10 @@ const Header = () => {
                 key="bottom"
                 placement="bottom"
                 overlay={
-                  <Popover id="popover-positioned-bottom">
+                  <Popover
+                    id="popover-positioned-bottom"
+                    style={{ width: '245px' }}
+                  >
                     <Popover.Header as="h3">Suggestions</Popover.Header>
                     <Popover.Body>
                       {products
@@ -83,6 +86,7 @@ const Header = () => {
                               searchValue ? searchValue.toLowerCase() : ''
                             )
                         )
+                        .slice(0, 4)
                         .map((product) => (
                           <Link key={product.id} to={`/products/${product.id}`}>
                             <p className="mb-3">{product.name}</p>
