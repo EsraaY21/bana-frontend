@@ -1,13 +1,12 @@
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { imageUrl } from '../baseAPI';
+import { useSelector } from 'react-redux';
+import { baseAPI, imageUrl } from '../baseAPI';
 import axios from 'axios';
-import { baseAPI } from '../baseAPI';
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
-  const [city, setCity] = useState('');
-  const [cities, setCities] = useState([]);
+  const [city, setCity] = useState(''); // current chosen city
+  const [cities, setCities] = useState([]); // all cities fetched from the backend
   const [orderData, setOrderData] = useState({
     firstName: '',
     lastName: '',
@@ -17,21 +16,28 @@ const Checkout = () => {
     city: '',
     street: '',
     detailedAddress: '',
-    additional: '',
+    additionalInformation: '',
     totalCost: 0,
     shipping_cost: 0,
     items: [],
   });
 
+  // Count Total Cost of the items including shipping -----------------------------
+  const totalCost =
+    cartItems
+      .map((item) => item)
+      .reduce((prev, curr) => prev + curr.quantity * curr.price, 0) +
+    (city.shipping_cost ? city.shipping_cost : 0);
+
   useEffect(() => {
     const fetchCities = async () => {
       const response = await axios.get(`${baseAPI}cities/`);
       setCities(response.data);
-      console.log(cities);
     };
     fetchCities();
   }, []);
 
+  // when a city is chosen, it's shipping cost will be displayed and update the order data -----
   const handleChangeCity = (e) => {
     let selectedCity;
 
@@ -47,20 +53,37 @@ const Checkout = () => {
         ...prevOrderData,
         city: selectedCity.name,
         shipping_cost: selectedCity.shipping_cost,
+        totalCost: totalCost,
       };
     });
   };
 
+  // when an input value is changed, then the order data will be changed ----------------------
   const handleValueChange = (e) => {
     setOrderData((prevOrderData) => {
       return { ...prevOrderData, [e.target.id]: e.target.value };
     });
   };
 
+  // after submitting, the order will be sent to the backend ----------------------
   const handleSubmit = (e) => {
-    // send new order to backend
     e.preventDefault();
-    console.log(orderData);
+
+    const createOrder = () => async () => {
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(`/api/orders/add/`, orderData, config);
+
+      // clean cart items
+
+      localStorage.removeItem('cartItems');
+    };
+
+    createOrder();
   };
 
   return (
@@ -122,15 +145,7 @@ const Checkout = () => {
               </li>
               <li className="list-group-item d-flex justify-content-between">
                 <span>Total</span>
-                <strong>
-                  {cartItems
-                    .map((item) => item)
-                    .reduce(
-                      (prev, curr) => prev + curr.quantity * curr.price,
-                      0
-                    ) + (city.shipping_cost ? city.shipping_cost : 0)}
-                  $
-                </strong>
+                <strong>{totalCost}$</strong>
               </li>
             </ul>
           </div>
@@ -154,7 +169,7 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
+                  required
                 />
               </div>
 
@@ -170,7 +185,7 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
+                  required
                 />
               </div>
 
@@ -187,7 +202,7 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
+                  required
                 />
               </div>
 
@@ -196,21 +211,20 @@ const Checkout = () => {
                   Phone Number 2 (Optional)
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   className="form-control"
                   id="phoneNumberTwo"
                   value={orderData.phoneNumberTwo}
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
                 />
               </div>
 
               {/* Email ---- */}
               <div className="col-md-6">
                 <label htmlFor="email" className="form-label">
-                  Email
+                  Email (Optional)
                 </label>
                 <input
                   type="email"
@@ -220,12 +234,11 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
                 />
               </div>
             </div>
-            {/* row */}
 
+            {/* row */}
             <h4 className="mb-3 mt-5">Shipping Address</h4>
 
             <div className="row g-3">
@@ -238,8 +251,8 @@ const Checkout = () => {
                   value={orderData.city}
                   className="form-select"
                   id="city"
-                  // required
                   onChange={handleChangeCity}
+                  required
                 >
                   <option value="">Choose...</option>
                   {cities.length > 0 &&
@@ -264,7 +277,7 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  // required
+                  required
                 />
               </div>
 
@@ -281,6 +294,7 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
+                  required
                 />
               </div>
             </div>
@@ -296,7 +310,7 @@ const Checkout = () => {
                   className="form-control"
                   id="additional"
                   rows="3"
-                  value={orderData.additional}
+                  value={orderData.additionalInformation}
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
