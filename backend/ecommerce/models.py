@@ -6,7 +6,8 @@ class Entity(models.Model):
         abstract = True
 
     id = models.AutoField(primary_key=True, editable=False)
-    dateCreated = models.DateTimeField(editable=False, auto_now_add=True)
+    dateCreated = models.DateTimeField(
+        editable=False, auto_now_add=True)
     dataUpdated = models.DateTimeField(editable=False, auto_now=True)
 
 
@@ -24,8 +25,10 @@ class Product(Entity):
                                  on_delete=models.SET_NULL)
 
     countInStock = models.IntegerField('Count In Stock', default=0)
+
     short_description = models.TextField(
         'Short Description', null=True, blank=True, max_length=500)
+
     long_description = models.TextField(
         'Long Description', null=True, blank=True)
 
@@ -57,31 +60,47 @@ class City(Entity):
         verbose_name_plural = 'Cities'
 
 
-# class ProductImage(Entity):
-#     product = models.ForeignKey(
-#         Product, default=None, on_delete=models.CASCADE)
-#     images = models.FileField(upload_to='')
-
-#     def __str__(self):
-#         return self.product.name
-
-
-# ADD PLACEHOLDER --------------------------------------------
-    # image = models.ImageField(null=True, blank=True,
-   #                           default='/placeholder.png')
-
-
-# class Order(Entity):
-#     isDeliverd: models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return str(self.id)
+class Order(Entity):
+    shipping_cost = models.DecimalField(
+        max_digits=4, decimal_places=2)
+    totalPrice = models.DecimalField(
+        max_digits=7, decimal_places=2)
 
 
 # class OrderItem(Entity):
-#     product = models.ForeignKey(Product,
-#                                 on_delete=models.CASCADE)
-#     quantity = models.IntegerField('Quantity')
+#     name = models.CharField(max_length=200, null=True, blank=True)
+#     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+#     quantity = models.IntegerField(null=True, blank=True, default=0)
+#     price = models.DecimalField(
+#         max_digits=7, decimal_places=2, null=True, blank=True)
+#     image = models.CharField(max_length=200, null=True, blank=True)
+#     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
 
 #     def __str__(self):
-#         return self.product.name
+#         return str(self.name)
+
+
+# class ShippingAddress(Entity):
+#     order = models.OneToOneField(
+#         Order, on_delete=models.CASCADE, null=True, blank=True)
+#     address = models.CharField(max_length=200, null=True, blank=True)
+#     city = models.CharField(max_length=200, null=True, blank=True)
+#     shippingPrice = models.DecimalField(
+#         max_digits=7, decimal_places=2, null=True, blank=True)
+
+#     # def __str__(self):
+#     #     return str(self.address)
+
+
+# # class ProductImage(Entity):
+# #     product = models.ForeignKey(
+# #         Product, default=None, on_delete=models.CASCADE)
+# #     images = models.FileField(upload_to='')
+
+# #     def __str__(self):
+# #         return self.product.name
+
+
+# # ADD PLACEHOLDER --------------------------------------------
+#     # image = models.ImageField(null=True, blank=True,
+#    #                           default='/placeholder.png')

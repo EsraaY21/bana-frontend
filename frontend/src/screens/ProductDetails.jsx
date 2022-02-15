@@ -20,7 +20,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      {product && (
+      {products.length > 0 && (
         <div className="container my-5">
           <div className="row container text-center">
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
@@ -106,10 +106,6 @@ const ProductDetails = () => {
                   }
                 </span>
               </p>
-              {/* <p>
-                <strong>Tags: </strong>
-                <span>Cleanse,Scrub</span>
-              </p> */}
             </div>
           </div>
 
