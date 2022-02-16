@@ -1,3 +1,4 @@
+from ctypes import addressof
 from django.db import models
 
 
@@ -62,9 +63,16 @@ class City(Entity):
 
 class Order(Entity):
     shipping_cost = models.DecimalField(
-        max_digits=4, decimal_places=2)
-    totalPrice = models.DecimalField(
-        max_digits=7, decimal_places=2)
+        max_digits=4, decimal_places=2, null=True, blank=True)
+
+    totalCost = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+
+    # address  firstName  lastName  phoneNumberOne  phoneNumberTwo  email  city  street  detailedAddress  additionalInformation
+
+    # orderitem product
+
+    # order   shipping_cost  totalCost  items
 
 
 # class OrderItem(Entity):
