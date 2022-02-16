@@ -68,7 +68,20 @@ class Order(Entity):
     totalCost = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
 
-    # address  firstName  lastName  phoneNumberOne  phoneNumberTwo  email  city  street  detailedAddress  additionalInformation
+
+class ShippingAddress(Entity):
+    # order = models.OneToOneField(
+    #     Order, on_delete=models.CASCADE, null=True, blank=True)
+    firstName = models.CharField(max_length=200, null=True, blank=True)
+    lastName = models.CharField(max_length=200, null=True, blank=True)
+    phoneNumberOne = models.CharField(max_length=200, null=True, blank=True)
+    phoneNumberTwo = models.CharField(max_length=200, null=True, blank=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    street = models.CharField(max_length=200, null=True, blank=True)
+    detailedAddress = models.CharField(max_length=200, null=True, blank=True)
+    additionalInformation = models.CharField(
+        max_length=200, null=True, blank=True)
 
     # orderitem product
 
@@ -86,18 +99,6 @@ class Order(Entity):
 
 #     def __str__(self):
 #         return str(self.name)
-
-
-# class ShippingAddress(Entity):
-#     order = models.OneToOneField(
-#         Order, on_delete=models.CASCADE, null=True, blank=True)
-#     address = models.CharField(max_length=200, null=True, blank=True)
-#     city = models.CharField(max_length=200, null=True, blank=True)
-#     shippingPrice = models.DecimalField(
-#         max_digits=7, decimal_places=2, null=True, blank=True)
-
-#     # def __str__(self):
-#     #     return str(self.address)
 
 
 # # class ProductImage(Entity):
