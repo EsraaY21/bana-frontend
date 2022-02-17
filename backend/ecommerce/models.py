@@ -70,8 +70,8 @@ class Order(Entity):
 
 
 class ShippingAddress(Entity):
-    # order = models.OneToOneField(
-    #     Order, on_delete=models.CASCADE, null=True, blank=True)
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, null=True, blank=True)
     firstName = models.CharField(max_length=200, null=True, blank=True)
     lastName = models.CharField(max_length=200, null=True, blank=True)
     phoneNumberOne = models.CharField(max_length=200, null=True, blank=True)
@@ -83,22 +83,17 @@ class ShippingAddress(Entity):
     additionalInformation = models.CharField(
         max_length=200, null=True, blank=True)
 
-    # orderitem product
+    class Meta:
+        verbose_name = 'Shipping Address'
+        verbose_name_plural = 'Shipping Addresses'
 
-    # order   shipping_cost  totalCost  items
 
-
-# class OrderItem(Entity):
-#     name = models.CharField(max_length=200, null=True, blank=True)
-#     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-#     quantity = models.IntegerField(null=True, blank=True, default=0)
-#     price = models.DecimalField(
-#         max_digits=7, decimal_places=2, null=True, blank=True)
-#     image = models.CharField(max_length=200, null=True, blank=True)
-#     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-
-#     def __str__(self):
-#         return str(self.name)
+class OrderItem(Entity):
+    product = models.ForeignKey(
+        Product, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(
+        Order, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.IntegerField(null=True, blank=True, default=0)
 
 
 # # class ProductImage(Entity):

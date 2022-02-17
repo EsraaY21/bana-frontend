@@ -17,8 +17,10 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
+
       // find will return the object if it is found, but if it is not found then it will return undefined
       const itemInCart = state.value.find((x) => x.id === newItem.id);
+
       if (itemInCart) {
         state.value.map((item) =>
           item.id === newItem.id

@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from rest_framework.response import Response
 from .models import Product, Category, City, Order
-from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer
+from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, ShippingAddress
 
 
 def getRoutes(request):
@@ -39,20 +39,74 @@ def getCities(request):
 
 
 # ORDER - -------------------------------------------------------
+# @api_view(['GET', 'POST'])
+# def createOrder(request):
+
+#     orderData = request.data
+
+#     print(request.data['shipping_cost'])
+#     # Create order
+#     serializer = OrderSerializer(data=request.data)
+
+#     if serializer.is_valid():
+#         serializer.save()
+
+#         return Response(serializer.data)
+
+#     # Create order items
+
+#     # Update stock
+
+#     return Response(serializer.data)
+
+
+# ORDER - -------------------------------------------------------
 @api_view(['GET', 'POST'])
 def createOrder(request):
+
+    print(request.data, 'this is my data')
+
+    orderData = request.data
+
     # Create order
-    serializer = OrderSerializer(data=request.data)
 
-    if serializer.is_valid():
-        serializer.save()
-
-        return Response(serializer.data)
+    order = Order.objects.create(
+        shipping_cost=orderData['shipping_cost'],
+        totalCost=orderData['totalCost'],
+    )
 
     # Create shipping address
 
-    # Create order items
+    shipping = ShippingAddress.objects.create(
+        order=order,
+        firstName=orderData['firstName'],
+        lastName=orderData['lastName'],
+        phoneNumberOne=orderData['phoneNumberOne'],
+        phoneNumberTwo=orderData['phoneNumberTwo'],
+        email=orderData['email'],
+        city=orderData['city'],
+        street=orderData['street'],
+        detailedAddress=orderData['detailedAddress'],
+        additionalInformation=orderData['additionalInformation'],
+    )
 
-    # Update stock
+    # # (3) Create order items adn set order to orderItem relationship
+    # for i in orderItems:
+    #     product = Product.objects.get(_id=i['product'])
 
+    #     item = OrderItem.objects.create(
+    #         product=product,
+    #         order=order,
+    #         name=product.name,
+    #         qty=i['qty'],
+    #         price=i['price'],
+    #         image=product.image.url,
+    #     )
+
+    #     # (4) Update stock
+
+    #     product.countInStock -= item.qty
+    #     product.save()
+
+    serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)

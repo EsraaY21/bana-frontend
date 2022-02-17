@@ -59,6 +59,7 @@ const Checkout = () => {
         city: selectedCity.name,
         shipping_cost: selectedCity.shipping_cost,
         totalCost: totalCost,
+        items: cartItems,
       };
     });
   };
@@ -74,6 +75,8 @@ const Checkout = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    console.log(orderData.items);
+
     var url = `${baseAPI}orders/`;
 
     fetch(url, {
@@ -84,6 +87,17 @@ const Checkout = () => {
       body: JSON.stringify({
         shipping_cost: orderData.shipping_cost,
         totalCost: orderData.totalCost,
+
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
+        phoneNumberOne: orderData.phoneNumberOne,
+        phoneNumberTwo: orderData.phoneNumberTwo,
+        email: orderData.email,
+        city: orderData.city,
+        street: orderData.street,
+        detailedAddress: orderData.detailedAddress,
+        additionalInformation: orderData.additionalInformation,
+        items: orderData.items,
       }),
     });
 
