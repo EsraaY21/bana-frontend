@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { baseAPI, imageUrl } from '../baseAPI';
 import axios from 'axios';
+import { removeAllCartItems } from '../features/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-  const cartItems = useSelector((state) => state.cart.value);
-  const [city, setCity] = useState(''); // current chosen city
-  const [cities, setCities] = useState([]); // all cities fetched from the backend
-  const [orderData, setOrderData] = useState({
+  const initialOrderState = {
     firstName: '',
     lastName: '',
     phoneNumberOne: '',
@@ -20,7 +19,13 @@ const Checkout = () => {
     totalCost: 0,
     shipping_cost: 0,
     items: [],
-  });
+  };
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.value);
+  const [city, setCity] = useState(''); // current chosen city
+  const [cities, setCities] = useState([]); // all cities fetched from the backend
+  const [orderData, setOrderData] = useState(initialOrderState);
+  const navigate = useNavigate();
 
   // Count Total Cost of the items including shipping -----------------------------
   const totalCost =
@@ -54,6 +59,7 @@ const Checkout = () => {
         city: selectedCity.name,
         shipping_cost: selectedCity.shipping_cost,
         totalCost: totalCost,
+        items: cartItems,
       };
     });
   };
@@ -66,25 +72,41 @@ const Checkout = () => {
   };
 
   // after submitting, the order will be sent to the backend ----------------------
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
-    const createOrder = () => async () => {
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
+    var url = `${baseAPI}orders/`;
 
-      const { data } = await axios.post(`/api/orders/add/`, orderData, config);
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        shipping_cost: orderData.shipping_cost,
+        totalCost: orderData.totalCost,
 
-      // clean cart items
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
+        phoneNumberOne: orderData.phoneNumberOne,
+        phoneNumberTwo: orderData.phoneNumberTwo,
+        email: orderData.email,
+        city: orderData.city,
+        street: orderData.street,
+        detailedAddress: orderData.detailedAddress,
+        additionalInformation: orderData.additionalInformation,
 
-      localStorage.removeItem('cartItems');
-    };
+        items: orderData.items,
+      }),
+    });
 
-    createOrder();
-  };
+    localStorage.removeItem('cartItems');
+    dispatch(removeAllCartItems());
+    setOrderData(initialOrderState);
+    navigate({
+      pathname: '/',
+    });
+  }
 
   return (
     <div className="checkout container">
@@ -169,7 +191,6 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  required
                 />
               </div>
 
@@ -185,7 +206,6 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  required
                 />
               </div>
 
@@ -202,7 +222,6 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  required
                 />
               </div>
 
@@ -252,7 +271,6 @@ const Checkout = () => {
                   className="form-select"
                   id="city"
                   onChange={handleChangeCity}
-                  required
                 >
                   <option value="">Choose...</option>
                   {cities.length > 0 &&
@@ -277,7 +295,6 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  required
                 />
               </div>
 
@@ -294,7 +311,6 @@ const Checkout = () => {
                   onChange={(e) => {
                     handleValueChange(e);
                   }}
-                  required
                 />
               </div>
             </div>
@@ -308,7 +324,7 @@ const Checkout = () => {
                 </label>
                 <textarea
                   className="form-control"
-                  id="additional"
+                  id="additionalInformation"
                   rows="3"
                   value={orderData.additionalInformation}
                   onChange={(e) => {

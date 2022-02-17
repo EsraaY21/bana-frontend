@@ -1,3 +1,4 @@
+from ctypes import addressof
 from django.db import models
 
 
@@ -62,34 +63,37 @@ class City(Entity):
 
 class Order(Entity):
     shipping_cost = models.DecimalField(
-        max_digits=4, decimal_places=2)
-    totalPrice = models.DecimalField(
-        max_digits=7, decimal_places=2)
+        max_digits=4, decimal_places=2, null=True, blank=True)
+
+    totalCost = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
 
 
-# class OrderItem(Entity):
-#     name = models.CharField(max_length=200, null=True, blank=True)
-#     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-#     quantity = models.IntegerField(null=True, blank=True, default=0)
-#     price = models.DecimalField(
-#         max_digits=7, decimal_places=2, null=True, blank=True)
-#     image = models.CharField(max_length=200, null=True, blank=True)
-#     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+class ShippingAddress(Entity):
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, null=True, blank=True)
+    firstName = models.CharField(max_length=200, null=True, blank=True)
+    lastName = models.CharField(max_length=200, null=True, blank=True)
+    phoneNumberOne = models.CharField(max_length=200, null=True, blank=True)
+    phoneNumberTwo = models.CharField(max_length=200, null=True, blank=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    street = models.CharField(max_length=200, null=True, blank=True)
+    detailedAddress = models.CharField(max_length=200, null=True, blank=True)
+    additionalInformation = models.CharField(
+        max_length=200, null=True, blank=True)
 
-#     def __str__(self):
-#         return str(self.name)
+    class Meta:
+        verbose_name = 'Shipping Address'
+        verbose_name_plural = 'Shipping Addresses'
 
 
-# class ShippingAddress(Entity):
-#     order = models.OneToOneField(
-#         Order, on_delete=models.CASCADE, null=True, blank=True)
-#     address = models.CharField(max_length=200, null=True, blank=True)
-#     city = models.CharField(max_length=200, null=True, blank=True)
-#     shippingPrice = models.DecimalField(
-#         max_digits=7, decimal_places=2, null=True, blank=True)
-
-#     # def __str__(self):
-#     #     return str(self.address)
+class OrderItem(Entity):
+    product = models.ForeignKey(
+        Product, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(
+        Order, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.IntegerField(null=True, blank=True, default=0)
 
 
 # # class ProductImage(Entity):

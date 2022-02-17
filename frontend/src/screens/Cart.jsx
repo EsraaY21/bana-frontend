@@ -70,7 +70,7 @@ const Cart = () => {
                 <tr>
                   {headerTitles.map((title) => (
                     <th
-                      key={title}
+                      key={title.title}
                       style={{ width: title.width }}
                       className="border-bottom-0"
                     >

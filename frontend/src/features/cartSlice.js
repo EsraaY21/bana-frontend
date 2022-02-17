@@ -17,8 +17,10 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
+
       // find will return the object if it is found, but if it is not found then it will return undefined
       const itemInCart = state.value.find((x) => x.id === newItem.id);
+
       if (itemInCart) {
         state.value.map((item) =>
           item.id === newItem.id
@@ -32,6 +34,10 @@ export const cartSlice = createSlice({
 
     removeFromCart: (state, action) => {
       state.value = state.value.filter((item) => item.id !== action.payload.id);
+    },
+
+    removeAllCartItems: (state, action) => {
+      state.value = [];
     },
 
     changeQuantityByOne: (state, action) => {
@@ -57,7 +63,11 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, changeQuantityByOne } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  changeQuantityByOne,
+  removeAllCartItems,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
