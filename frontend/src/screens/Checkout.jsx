@@ -75,8 +75,6 @@ const Checkout = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(orderData.items);
-
     var url = `${baseAPI}orders/`;
 
     fetch(url, {
@@ -97,6 +95,7 @@ const Checkout = () => {
         street: orderData.street,
         detailedAddress: orderData.detailedAddress,
         additionalInformation: orderData.additionalInformation,
+
         items: orderData.items,
       }),
     });

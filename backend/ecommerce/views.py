@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from rest_framework.response import Response
 from .models import Product, Category, City, Order
-from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, ShippingAddress
+from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, ShippingAddress, OrderItem
 
 
 def getRoutes(request):
@@ -39,28 +39,6 @@ def getCities(request):
 
 
 # ORDER - -------------------------------------------------------
-# @api_view(['GET', 'POST'])
-# def createOrder(request):
-
-#     orderData = request.data
-
-#     print(request.data['shipping_cost'])
-#     # Create order
-#     serializer = OrderSerializer(data=request.data)
-
-#     if serializer.is_valid():
-#         serializer.save()
-
-#         return Response(serializer.data)
-
-#     # Create order items
-
-#     # Update stock
-
-#     return Response(serializer.data)
-
-
-# ORDER - -------------------------------------------------------
 @api_view(['GET', 'POST'])
 def createOrder(request):
 
@@ -90,23 +68,24 @@ def createOrder(request):
         additionalInformation=orderData['additionalInformation'],
     )
 
-    # # (3) Create order items adn set order to orderItem relationship
-    # for i in orderItems:
-    #     product = Product.objects.get(_id=i['product'])
+    # Create order items
+    orderItems = request.data['items']
 
-    #     item = OrderItem.objects.create(
-    #         product=product,
-    #         order=order,
-    #         name=product.name,
-    #         qty=i['qty'],
-    #         price=i['price'],
-    #         image=product.image.url,
-    #     )
+    for i in orderItems:
 
-    #     # (4) Update stock
+        # get the product with the same id as the order item
+        product = Product.objects.get(id=i['id'])
 
-    #     product.countInStock -= item.qty
-    #     product.save()
+        item = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity=i['quantity'],
+        )
+
+        # Update stock
+
+        product.countInStock -= item.quantity
+        product.save()
 
     serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)
