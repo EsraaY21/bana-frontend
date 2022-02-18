@@ -8,20 +8,27 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const Checkout = () => {
-  const initialOrderState = {
-    firstName: '',
-    lastName: '',
-    phoneNumberOne: '',
-    phoneNumberTwo: '',
-    email: '',
-    city: '',
-    street: '',
-    detailedAddress: '',
-    additionalInformation: '',
-    totalCost: 0,
-    shipping_cost: 0,
-    items: [],
-  };
+  let selectedCity;
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.value);
+  const [city, setCity] = useState(''); // current chosen city
+  const [cities, setCities] = useState([]); // all cities fetched from the backend
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const response = await axios.get(`${baseAPI}cities/`);
+      setCities(response.data);
+    };
+    fetchCities();
+  }, []);
+
+  // Count Total Cost of the items including shipping -----------------------------
+  const totalCost =
+    cartItems
+      .map((item) => item)
+      .reduce((prev, curr) => prev + curr.quantity * curr.price, 0) +
+    (city.shipping_cost ? city.shipping_cost : 0);
 
   const formik = useFormik({
     initialValues: {
@@ -35,6 +42,7 @@ const Checkout = () => {
       detailedAddress: '',
       additionalInformation: '',
     },
+
     validationSchema: Yup.object({
       firstName: Yup.string()
         .max(30, 'Must be 30 characters or less.')
@@ -69,90 +77,50 @@ const Checkout = () => {
       ),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      var url = `${baseAPI}orders/`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          shipping_cost: city.shipping_cost,
+          totalCost: totalCost,
+
+          firstName: values.firstName,
+          lastName: values.lastName,
+          phoneNumberOne: values.phoneNumberOne,
+          phoneNumberTwo: values.phoneNumberTwo,
+          email: values.email,
+          city: values.city,
+          street: values.street,
+          detailedAddress: values.detailedAddress,
+          additionalInformation: values.additionalInformation,
+
+          items: cartItems,
+        }),
+      });
+
+      localStorage.removeItem('cartItems');
+      dispatch(removeAllCartItems());
+      navigate({
+        pathname: '/',
+      });
     },
   });
 
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.value);
-  const [city, setCity] = useState(''); // current chosen city
-  const [cities, setCities] = useState([]); // all cities fetched from the backend
-  const [orderData, setOrderData] = useState(initialOrderState);
-  const navigate = useNavigate();
-
-  // Count Total Cost of the items including shipping -----------------------------
-  const totalCost =
-    cartItems
-      .map((item) => item)
-      .reduce((prev, curr) => prev + curr.quantity * curr.price, 0) +
-    (city.shipping_cost ? city.shipping_cost : 0);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      const response = await axios.get(`${baseAPI}cities/`);
-      setCities(response.data);
-    };
-    fetchCities();
-  }, []);
-
   // when a city is chosen, it's shipping cost will be displayed and update the order data -----
-  const handleChangeCity = (e) => {
-    let selectedCity;
-
-    if (e.target.value.length < 1) {
+  useEffect(() => {
+    if (formik.values.city.length < 1) {
       selectedCity = { name: '', shipping_cost: 0 };
     } else {
-      selectedCity = cities.filter((city) => city.name === e.target.value)[0];
+      selectedCity = cities.filter(
+        (city) => city.name === formik.values.city
+      )[0];
     }
     setCity(selectedCity);
-
-    setOrderData((prevOrderData) => {
-      return {
-        ...prevOrderData,
-        city: selectedCity.name,
-        shipping_cost: selectedCity.shipping_cost,
-        totalCost: totalCost,
-        items: cartItems,
-      };
-    });
-  };
-
-  // after submitting, the order will be sent to the backend ----------------------
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    var url = `${baseAPI}orders/`;
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        shipping_cost: orderData.shipping_cost,
-        totalCost: orderData.totalCost,
-
-        firstName: orderData.firstName,
-        lastName: orderData.lastName,
-        phoneNumberOne: orderData.phoneNumberOne,
-        phoneNumberTwo: orderData.phoneNumberTwo,
-        email: orderData.email,
-        city: orderData.city,
-        street: orderData.street,
-        detailedAddress: orderData.detailedAddress,
-        additionalInformation: orderData.additionalInformation,
-
-        items: orderData.items,
-      }),
-    });
-
-    localStorage.removeItem('cartItems');
-    dispatch(removeAllCartItems());
-    setOrderData(initialOrderState);
-    navigate({
-      pathname: '/',
-    });
-  }
+  }, [formik.values.city]);
 
   return (
     <div className="checkout container">
