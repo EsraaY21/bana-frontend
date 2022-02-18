@@ -4,35 +4,16 @@ import { baseAPI, imageUrl } from '../baseAPI';
 import axios from 'axios';
 import { removeAllCartItems } from '../features/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Checkout = () => {
-  const initialOrderState = {
-    firstName: '',
-    lastName: '',
-    phoneNumberOne: '',
-    phoneNumberTwo: '',
-    email: '',
-    city: '',
-    street: '',
-    detailedAddress: '',
-    additionalInformation: '',
-    totalCost: 0,
-    shipping_cost: 0,
-    items: [],
-  };
+  let selectedCity;
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState(''); // current chosen city
   const [cities, setCities] = useState([]); // all cities fetched from the backend
-  const [orderData, setOrderData] = useState(initialOrderState);
   const navigate = useNavigate();
-
-  // Count Total Cost of the items including shipping -----------------------------
-  const totalCost =
-    cartItems
-      .map((item) => item)
-      .reduce((prev, curr) => prev + curr.quantity * curr.price, 0) +
-    (city.shipping_cost ? city.shipping_cost : 0);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -42,76 +23,109 @@ const Checkout = () => {
     fetchCities();
   }, []);
 
-  // when a city is chosen, it's shipping cost will be displayed and update the order data -----
-  const handleChangeCity = (e) => {
-    let selectedCity;
+  // Count Total Cost of the items including shipping -----------------------------
+  const totalCost =
+    cartItems
+      .map((item) => item)
+      .reduce((prev, curr) => prev + curr.quantity * curr.price, 0) +
+    (city.shipping_cost ? city.shipping_cost : 0);
 
-    if (e.target.value.length < 1) {
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      phoneNumberOne: '',
+      phoneNumberTwo: '',
+      email: '',
+      city: '',
+      street: '',
+      detailedAddress: '',
+      additionalInformation: '',
+    },
+
+    validationSchema: Yup.object({
+      firstName: Yup.string()
+        .max(30, 'Must be 30 characters or less.')
+        .required('Required'),
+
+      lastName: Yup.string()
+        .max(40, 'Must be 40 characters or less.')
+        .required('Required'),
+
+      phoneNumberOne: Yup.string()
+        .min(11, 'This phone number is too short.')
+        .max(11, 'This phone number is too long.')
+        .required('Required'),
+
+      phoneNumberTwo: Yup.string()
+        .min(11, 'This phone number is too short.')
+        .max(11, 'This phone number is too long.'),
+
+      email: Yup.string().email('Invalid Email'),
+
+      city: Yup.string().required('Required'),
+
+      street: Yup.string()
+        .max(50, 'Must be 50 characters or less.')
+        .required('Required'),
+
+      detailedAddress: Yup.string().max(400, 'Must be 400 characters or less.'),
+
+      additionalInformation: Yup.string().max(
+        400,
+        'Must be 400 characters or less.'
+      ),
+    }),
+    onSubmit: (values) => {
+      var url = `${baseAPI}orders/`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          shipping_cost: city.shipping_cost,
+          totalCost: totalCost,
+
+          firstName: values.firstName,
+          lastName: values.lastName,
+          phoneNumberOne: values.phoneNumberOne,
+          phoneNumberTwo: values.phoneNumberTwo,
+          email: values.email,
+          city: values.city,
+          street: values.street,
+          detailedAddress: values.detailedAddress,
+          additionalInformation: values.additionalInformation,
+
+          items: cartItems,
+        }),
+      });
+
+      localStorage.removeItem('cartItems');
+      dispatch(removeAllCartItems());
+      navigate({
+        pathname: '/',
+      });
+    },
+  });
+
+  // when a city is chosen, it's shipping cost will be displayed and update the order data -----
+  useEffect(() => {
+    if (formik.values.city.length < 1) {
       selectedCity = { name: '', shipping_cost: 0 };
     } else {
-      selectedCity = cities.filter((city) => city.name === e.target.value)[0];
+      selectedCity = cities.filter(
+        (city) => city.name === formik.values.city
+      )[0];
     }
     setCity(selectedCity);
-
-    setOrderData((prevOrderData) => {
-      return {
-        ...prevOrderData,
-        city: selectedCity.name,
-        shipping_cost: selectedCity.shipping_cost,
-        totalCost: totalCost,
-        items: cartItems,
-      };
-    });
-  };
-
-  // when an input value is changed, then the order data will be changed ----------------------
-  const handleValueChange = (e) => {
-    setOrderData((prevOrderData) => {
-      return { ...prevOrderData, [e.target.id]: e.target.value };
-    });
-  };
-
-  // after submitting, the order will be sent to the backend ----------------------
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    var url = `${baseAPI}orders/`;
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        shipping_cost: orderData.shipping_cost,
-        totalCost: orderData.totalCost,
-
-        firstName: orderData.firstName,
-        lastName: orderData.lastName,
-        phoneNumberOne: orderData.phoneNumberOne,
-        phoneNumberTwo: orderData.phoneNumberTwo,
-        email: orderData.email,
-        city: orderData.city,
-        street: orderData.street,
-        detailedAddress: orderData.detailedAddress,
-        additionalInformation: orderData.additionalInformation,
-
-        items: orderData.items,
-      }),
-    });
-
-    localStorage.removeItem('cartItems');
-    dispatch(removeAllCartItems());
-    setOrderData(initialOrderState);
-    navigate({
-      pathname: '/',
-    });
-  }
+  }, [formik.values.city]);
 
   return (
     <div className="checkout container">
       <h1 className="mt-5 mb-2 text-center">Checkout</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <main className="row g-5">
           {/* Cart Items ---------------------------------------------- */}
           <div className="col-md-5 col-lg-6 order-md-last">
@@ -180,80 +194,104 @@ const Checkout = () => {
             <div className="row g-3">
               {/* First and Last Name ---- */}
               <div className="col-md-6">
-                <label htmlFor="firstName" className="form-label">
+                <label htmlFor="firstName" className="form-label required">
                   First Name
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control required"
                   id="firstName"
-                  value={orderData.firstName}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.firstName}
+                  //onBlur will know if the input is touched or not, so that we check the error of a specific element only after it is touched
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+
+                {formik.touched.firstName && formik.errors.firstName ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.firstName}
+                  </p>
+                ) : null}
               </div>
 
               <div className="col-md-6">
-                <label htmlFor="lastName" className="form-label">
+                <label htmlFor="lastName" className="form-label required">
                   Last Name
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="lastName"
-                  value={orderData.lastName}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.lastName}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.lastName && formik.errors.lastName ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.lastName}
+                  </p>
+                ) : null}
               </div>
 
               {/* Phone Number ---- */}
               <div className="col-md-6">
-                <label htmlFor="phoneNumberOne" className="form-label">
+                <label htmlFor="phoneNumberOne" className="form-label required">
                   Phone Number 1
                 </label>
                 <input
                   type="tel"
                   className="form-control"
                   id="phoneNumberOne"
-                  value={orderData.phoneNumberOne}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.phoneNumberOne}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.phoneNumberOne &&
+                formik.errors.phoneNumberOne ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.phoneNumberOne}
+                  </p>
+                ) : null}
               </div>
 
               <div className="col-md-6">
                 <label htmlFor="phoneNumberTwo" className="form-label">
-                  Phone Number 2 (Optional)
+                  Phone Number 2
                 </label>
                 <input
                   type="tel"
                   className="form-control"
                   id="phoneNumberTwo"
-                  value={orderData.phoneNumberTwo}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.phoneNumberTwo}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.phoneNumberTwo &&
+                formik.errors.phoneNumberTwo ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.phoneNumberTwo}
+                  </p>
+                ) : null}
               </div>
 
               {/* Email ---- */}
               <div className="col-md-6">
                 <label htmlFor="email" className="form-label">
-                  Email (Optional)
+                  Email
                 </label>
                 <input
                   type="email"
                   className="form-control"
                   id="email"
-                  value={orderData.email}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.email}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.email && formik.errors.email ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.email}
+                  </p>
+                ) : null}
               </div>
             </div>
 
@@ -263,14 +301,15 @@ const Checkout = () => {
             <div className="row g-3">
               {/* City ---- */}
               <div className="col-md-6">
-                <label htmlFor="city" className="form-label">
+                <label htmlFor="city" className="form-label required">
                   City
                 </label>
                 <select
-                  value={orderData.city}
                   className="form-select"
                   id="city"
-                  onChange={handleChangeCity}
+                  value={formik.values.city}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 >
                   <option value="">Choose...</option>
                   {cities.length > 0 &&
@@ -280,22 +319,29 @@ const Checkout = () => {
                       </option>
                     ))}
                 </select>
+                {formik.touched.city && formik.errors.city ? (
+                  <p className="checkout-error-message">{formik.errors.city}</p>
+                ) : null}
               </div>
 
               {/* Street ---- */}
               <div className="col-md-6">
-                <label htmlFor="street" className="form-label">
+                <label htmlFor="street" className="form-label required">
                   Street
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="street"
-                  value={orderData.street}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.street}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.street && formik.errors.street ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.street}
+                  </p>
+                ) : null}
               </div>
 
               {/* Detailed Address ---- */}
@@ -307,11 +353,16 @@ const Checkout = () => {
                   type="text"
                   className="form-control"
                   id="detailedAddress"
-                  value={orderData.detailedAddress}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.detailedAddress}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 />
+                {formik.touched.detailedAddress &&
+                formik.errors.detailedAddress ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.detailedAddress}
+                  </p>
+                ) : null}
               </div>
             </div>
 
@@ -326,11 +377,16 @@ const Checkout = () => {
                   className="form-control"
                   id="additionalInformation"
                   rows="3"
-                  value={orderData.additionalInformation}
-                  onChange={(e) => {
-                    handleValueChange(e);
-                  }}
+                  value={formik.values.additionalInformation}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                 ></textarea>
+                {formik.touched.additionalInformation &&
+                formik.errors.additionalInformation ? (
+                  <p className="checkout-error-message">
+                    {formik.errors.additionalInformation}
+                  </p>
+                ) : null}
               </div>
             </div>
 

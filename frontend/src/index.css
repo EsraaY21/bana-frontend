@@ -371,3 +371,13 @@ a:hover {
 .checkout-count {
   background-color: var(--brown);
 }
+
+.checkout-error-message {
+  color: #dc3545;
+  font-size: 14px;
+}
+
+.required:after {
+  content: ' *';
+  color: #dc3545ed;
+}
