@@ -79,9 +79,9 @@ class ShippingAddress(Entity):
     email = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
     street = models.CharField(max_length=200, null=True, blank=True)
-    detailedAddress = models.CharField(max_length=200, null=True, blank=True)
+    detailedAddress = models.CharField(max_length=400, null=True, blank=True)
     additionalInformation = models.CharField(
-        max_length=200, null=True, blank=True)
+        max_length=400, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Shipping Address'
