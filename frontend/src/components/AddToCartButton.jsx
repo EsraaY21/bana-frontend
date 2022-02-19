@@ -15,7 +15,9 @@ const AddToCartButton = ({ product }) => {
       <button
         onClick={addToCartHandler}
         className={
-          product.countInStock === 0 ? 'btn w-100' : 'btn-blue-dark btn w-100'
+          product.countInStock === 0
+            ? 'btn w-100 out-of-stock-color'
+            : 'btn-blue-dark btn w-100 '
         }
         disabled={product.countInStock === 0}
       >

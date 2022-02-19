@@ -101,20 +101,22 @@ a:hover {
   background-color: var(--blue-dark);
   color: var(--gray-light);
 }
-.btn-blue-dark:hover {
-  background-color: transparent;
-  color: var(--blue-dark);
-}
+
 .btn-blue-dark:hover a {
-  color: var(--blue-dark);
+  /* color: var(--blue-dark); */
 }
 
 /* transition effect on hover */
-.btn-blue-dark:hover,
-.btn-blue-dark {
+.btn-blue-dark:hover {
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
+  color: var(--gray-light);
+  background-color: var(--brown);
+}
+
+.out-of-stock-color {
+  color: #dc3545;
 }
 
 /* NAVBAR -------------------------------------------- */
@@ -248,6 +250,7 @@ a:hover {
 }
 
 /* PRODUCT DETAILS -------------------------------------------- */
+
 .product-col {
   max-height: 60vh;
   border-radius: 4px;

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 import ProductCard from '../components/ProductCard';
 import { imageUrl } from '../baseAPI';
+import ImageModal from '../components/ImageModal';
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.products.value);
@@ -24,23 +25,9 @@ const ProductDetails = () => {
         <div className="container my-5">
           <div className="row container text-center">
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
-              <div className="bg-gray-lightx text-center product-col pb-2 ">
-                <img
-                  src={`${imageUrl}${
-                    [
-                      product.imageOne,
-                      product.imageTwo,
-                      product.imageThree,
-                      product.imageFour,
-                    ][selectedImage]
-                  }`}
-                  alt={product.name}
-                  className="img-fluid product-image"
-                  style={{ width: '100%', objectFit: 'cover' }}
-                />
-              </div>
+              <ImageModal product={product} selectedImage={selectedImage} />
 
-              <div className="small-img-group bg-gray-lightx text-center py-2 row">
+              <div className="small-img-group  text-center py-2 row">
                 {[
                   product.imageOne,
                   product.imageTwo,
