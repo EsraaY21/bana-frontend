@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 import ProductCard from '../components/ProductCard';
 import { imageUrl } from '../baseAPI';
-import ImageModal from '../components/ImageModal';
+import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.products.value);
@@ -19,13 +19,53 @@ const ProductDetails = () => {
   const product = products.filter((x) => x.id === parseInt(productId))[0];
   const categories = useSelector((state) => state.categories.value);
 
+  const lightboxOptions = {
+    settings: {
+      disableKeyboardControls: true,
+      disableWheelControls: true,
+    },
+    buttons: {
+      showAutoplayButton: false,
+      showDownloadButton: true,
+      showFullscreenButton: false,
+      showThumbnailsButton: false,
+      showNextButton: false,
+      showPrevButton: false,
+    },
+    thumbnails: {
+      showThumbnails: false,
+    },
+  };
+
   return (
     <>
       {products.length > 0 && (
         <div className="container my-5">
           <div className="row container text-center">
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
-              <ImageModal product={product} selectedImage={selectedImage} />
+              <div className="bg-gray-light text-center product-col pb-2">
+                <SimpleReactLightbox>
+                  <SRLWrapper options={lightboxOptions}>
+                    <img
+                      src={`${imageUrl}${
+                        [
+                          product.imageOne,
+                          product.imageTwo,
+                          product.imageThree,
+                          product.imageFour,
+                        ][selectedImage]
+                      }`}
+                      alt={product.name}
+                      className="img-fluid product-image"
+                      style={{
+                        width: '100%',
+                        objectFit: 'contain',
+                        cursor: 'pointer',
+                      }}
+                    />
+                  </SRLWrapper>
+                </SimpleReactLightbox>
+              </div>
 
               <div className="small-img-group  text-center py-2 row">
                 {[
@@ -48,6 +88,7 @@ const ProductDetails = () => {
                 ))}
               </div>
             </div>
+
             <div className="col-10 col-sm-12 col-lg-7 text-start pe-5">
               <p className="fs-3 fw-bold color-blue-dark">
                 ${product.price * quantity}
