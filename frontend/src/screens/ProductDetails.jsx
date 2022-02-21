@@ -1,23 +1,51 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 import ProductCard from '../components/ProductCard';
 import { imageUrl } from '../baseAPI';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { useDispatch } from 'react-redux';
+import {
+  fetchAsyncProductDetails,
+  removeProductDetails,
+} from '../features/productDetailsSlice';
 
 const ProductDetails = () => {
+  // all products
   const products = useSelector((state) => state.products.value);
-  const { productId } = useParams(); // productId is a string since it is from the url
+  const productsStatus = useSelector((state) => state.products.status);
+
+  // single product
+  const productDetails = useSelector((state) => state.productDetails.value);
+  const productDetailsStatus = useSelector(
+    (state) => state.productDetails.status
+  );
+
   const [quantity, setQuantity] = useState(1);
+
+  // fetch single product
+  const dispatch = useDispatch();
+  const { productId } = useParams(); // productId is a string since it is from the url
+
+  useEffect(() => {
+    dispatch(fetchAsyncProductDetails(productId));
+    return () => {
+      dispatch(removeProductDetails());
+    };
+  }, [dispatch, productId]);
+
+  // when an image is clicked, it becomes the main image
   const [selectedImage, setSelectedImage] = useState(0);
 
   const handleImageClick = (index) => {
     setSelectedImage(index);
   };
 
-  const product = products.filter((x) => x.id === parseInt(productId))[0];
   const categories = useSelector((state) => state.categories.value);
+  const categoriesStatus = useSelector((state) => state.categories.status);
 
   const lightboxOptions = {
     settings: {
@@ -39,7 +67,11 @@ const ProductDetails = () => {
 
   return (
     <>
-      {products.length > 0 && (
+      {productDetailsStatus === 'loading' ? (
+        <Loader />
+      ) : productDetailsStatus === 'failed' ? (
+        <Message message="Request failed. Please check your internet connection." />
+      ) : (
         <div className="container my-5">
           <div className="row container text-center">
             <div className="col-12 col-sm-12 col-lg-5 text-center ">
@@ -49,13 +81,13 @@ const ProductDetails = () => {
                     <img
                       src={`${imageUrl}${
                         [
-                          product.imageOne,
-                          product.imageTwo,
-                          product.imageThree,
-                          product.imageFour,
+                          productDetails.imageOne,
+                          productDetails.imageTwo,
+                          productDetails.imageThree,
+                          productDetails.imageFour,
                         ][selectedImage]
                       }`}
-                      alt={product.name}
+                      alt={productDetails.name}
                       className="img-fluid product-image"
                       style={{
                         width: '100%',
@@ -69,15 +101,15 @@ const ProductDetails = () => {
 
               <div className="small-img-group  text-center py-2 row">
                 {[
-                  product.imageOne,
-                  product.imageTwo,
-                  product.imageThree,
-                  product.imageFour,
+                  productDetails.imageOne,
+                  productDetails.imageTwo,
+                  productDetails.imageThree,
+                  productDetails.imageFour,
                 ].map((item, index) => (
                   <div className="small-img-col col-3 p-1" key={index}>
                     <img
                       src={`${imageUrl}${item}`}
-                      alt={product.name}
+                      alt={productDetails.name}
                       className={`img-fluid small-image border border-2 ${
                         selectedImage === index ? 'image-active' : ''
                       }`}
@@ -91,30 +123,32 @@ const ProductDetails = () => {
 
             <div className="col-10 col-sm-12 col-lg-7 text-start pe-5">
               <p className="fs-3 fw-bold color-blue-dark">
-                ${product.price * quantity}
+                ${productDetails.price * quantity}
               </p>
               {/* <p className="">17%</p> */}
-              <h1>{product.name}</h1>
-              <p>{product.short_description}</p>
+              <h1>{productDetails.name}</h1>
+              <p>{productDetails.short_description}</p>
               <p className="mt-4">Quantity</p>
               <div className="row">
                 <div className="col-lg-3 p-0 mb-4">
                   <select
-                    disabled={product.countInStock === 0}
+                    disabled={productDetails.countInStock === 0}
                     className="form-select"
                     value={quantity}
                     onChange={(e) => setQuantity(parseInt(e.target.value))}
                   >
-                    {[...Array(product.countInStock).keys()].map((count) => (
-                      <option key={count + 1} value={count + 1}>
-                        {count + 1}
-                      </option>
-                    ))}
+                    {[...Array(productDetails.countInStock).keys()].map(
+                      (count) => (
+                        <option key={count + 1} value={count + 1}>
+                          {count + 1}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
                 <div className="col-lg-5">
                   <AddToCartButton
-                    product={{ ...product, quantity: quantity }}
+                    product={{ ...productDetails, quantity: quantity }}
                   />
                 </div>
               </div>
@@ -122,17 +156,25 @@ const ProductDetails = () => {
               <hr className="mt-3" />
               <p>
                 <strong>SKU: </strong>
-                <span>{product.id}</span>
+                <span>{productDetails.id}</span>
               </p>
               <p>
                 <strong>Category: </strong>
-                <span>
-                  {
-                    categories.filter(
-                      (category) => category.id === product.category
-                    )[0].name
-                  }
-                </span>
+                {categoriesStatus === 'loading' ? (
+                  <Loader />
+                ) : categoriesStatus === 'failed' ? (
+                  <Message message="Request failed. Please check your internet connection." />
+                ) : (
+                  <span>
+                    {categories.filter(
+                      (category) => category.id === productDetails.category
+                    )[0]
+                      ? categories.filter(
+                          (category) => category.id === productDetails.category
+                        )[0].name
+                      : null}
+                  </span>
+                )}
               </p>
             </div>
           </div>
@@ -140,17 +182,25 @@ const ProductDetails = () => {
           <div>
             <hr className="mt-5 mb-4" />
             <h2 className="mb-4">Description</h2>
-            <p>{product.long_description}</p>
+            <p>{productDetails.long_description}</p>
             <hr className="mt-5 mb-4" />
             <h2>Related Products</h2>
             <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
-              {products
-                .filter(
-                  (x) => x.category === product.category && x.id !== product.id
-                )
-                .map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              {productsStatus === 'loading' ? (
+                <Loader />
+              ) : productsStatus === 'failed' ? (
+                <Message message="Request failed. Please check your internet connection." />
+              ) : (
+                products
+                  .filter(
+                    (x) =>
+                      x.category === productDetails.category &&
+                      x.id !== productDetails.id
+                  )
+                  .map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
+              )}
             </div>
           </div>
         </div>
