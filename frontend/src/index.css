@@ -100,19 +100,20 @@ a:hover {
   border: 1px solid var(--blue-dark);
   background-color: var(--blue-dark);
   color: var(--gray-light);
-}
 
-.btn-blue-dark:hover a {
-  /* color: var(--blue-dark); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: box-shadow, transform;
+  transition-property: box-shadow, transform;
 }
 
 /* transition effect on hover */
 .btn-blue-dark:hover {
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
   color: var(--gray-light);
-  background-color: var(--brown);
 }
 
 .out-of-stock-color {
