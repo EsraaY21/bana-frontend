@@ -140,7 +140,7 @@ const FilterColumn = ({
             </div>
 
             <div className=" text-start">
-              <button type="submit" className="btn bg-gray-light">
+              <button type="submit" className="btn bg-pink-light mt-1">
                 Apply
               </button>
             </div>

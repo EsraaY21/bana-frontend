@@ -20,7 +20,11 @@ const initialState = {
 export const productDetails = createSlice({
   name: 'productDetails',
   initialState,
-  reducers: {},
+  reducers: {
+    removeProductDetails: (state) => {
+      state.value = {};
+    },
+  },
   extraReducers: {
     [fetchAsyncProductDetails.pending]: (state, action) => {
       state.status = 'loading';
@@ -36,5 +40,7 @@ export const productDetails = createSlice({
     },
   },
 });
+
+export const { removeProductDetails } = productDetails.actions;
 
 export default productDetails.reducer;
