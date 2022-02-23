@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import { useSelector } from 'react-redux';
+import ProductsCarousel from './ProductsCarousel';
 
 const LatestProducts = () => {
-  let products = useSelector((state) => state.products.value).slice(0, 4);
+  let products = useSelector((state) => state.products.value).slice(0, 5);
 
   return (
     <>
@@ -25,6 +26,7 @@ const LatestProducts = () => {
               <Link to="shop">More Products</Link>
             </button>
           </div>
+          <ProductsCarousel />
         </section>
       )}
     </>

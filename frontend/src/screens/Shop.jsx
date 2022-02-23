@@ -109,7 +109,7 @@ const Shop = () => {
                     </div>
                   </div>
                   <div className=" pb-5">
-                    <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4 mx-auto">
+                    <div className="row center-section row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
                       {filterAndSortedProducts}
                     </div>
                   </div>

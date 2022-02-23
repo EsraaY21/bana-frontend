@@ -101,11 +101,12 @@ a:hover {
 
 /* Buttons -------------------------------------------- */
 .btn-blue-dark {
-  border: 1px solid var(--blue-dark);
+  /* border: 1px solid var(--blue-dark); */
+  border: none;
   background-color: var(--blue-dark);
   color: var(--gray-light);
 
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
   -webkit-transition-property: box-shadow, transform;
@@ -114,17 +115,18 @@ a:hover {
 
 /* transition effect on hover */
 .btn-blue-dark:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   -webkit-transform: scale(1.07);
-  transform: scale(1.07);
+  transform: scale(1.04);
   color: var(--gray-light);
+  background-color: #000000;
 }
 
 .out-of-stock-color {
   color: #dc3545;
 }
 
-/* NAVBAR -------------------------------------------- */
+/* HEADER -------------------------------------------- */
 /* center logo */
 @media (min-width: 768px) {
   .navbar-brand {
@@ -162,6 +164,10 @@ a:hover {
   color: #6c757d;
   margin-right: -25px;
   z-index: 1;
+}
+
+.autosuggestion p:hover {
+  background-color: #f8f8f8;
 }
 
 /* HOME -------------------------------------------- */
