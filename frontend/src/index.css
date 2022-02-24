@@ -194,14 +194,23 @@ a:hover {
   transition: all 0.4s;
 }
 .service-box:hover {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
-  -webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
-  -moz-box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 12px;
+  box-shadow: rgba(149, 157, 165, 0.3) 0px 3px 12px;
+  -webkit-box-shadow: rgba(149, 157, 165, 0.3) 0px 3px 12px;
+  -moz-box-shadow: rgba(149, 157, 165, 0.3) 0px 3px 12px;
 }
 
 /* Categories ---- */
 .categories h4 {
   font-weight: 600;
+}
+
+/* Latest Products ---- */
+.swiper-pagination {
+  bottom: 0px !important;
+}
+
+.swiper {
+  padding-bottom: 15px !important;
 }
 
 /* Director ---- */
@@ -283,6 +292,12 @@ a:hover {
 
 .image-active {
   border-color: var(--brown) !important;
+}
+
+.card-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* About Page */
