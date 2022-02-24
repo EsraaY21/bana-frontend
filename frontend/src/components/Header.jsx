@@ -68,16 +68,17 @@ const Header = () => {
               {/* Search */}
 
               <OverlayTrigger
+                rootClose
                 trigger="click"
                 key="bottom"
                 placement="bottom"
                 overlay={
                   <Popover
                     id="popover-positioned-bottom"
-                    style={{ width: '245px' }}
+                    style={{ width: '240px' }}
                   >
-                    <Popover.Header as="h3">Suggestions</Popover.Header>
-                    <Popover.Body>
+                    {/* <Popover.Header as="h3">Suggestions</Popover.Header> */}
+                    <Popover.Body className="p-0">
                       {products
                         .filter((product) =>
                           product.name
@@ -88,12 +89,26 @@ const Header = () => {
                         )
                         .slice(0, 4)
                         .map((product) => (
-                          <Link key={product.id} to={`/products/${product.id}`}>
-                            <p className="mb-3">{product.name}</p>
+                          <Link
+                            className="autosuggestion"
+                            key={product.id}
+                            to={`/products/${product.id}`}
+                          >
+                            <p className="py-2 px-4 mb-0">{product.name}</p>
                           </Link>
                         ))}
-                      <Link to={`/shop/${searchValue}`}>
-                        <strong>View all results</strong>
+                      <hr
+                        class="dropdown-divider py-0 my-0"
+                        style={{ height: '1px', borderWidth: '0' }}
+                      />
+
+                      <Link
+                        to={`/shop/${searchValue}`}
+                        className="autosuggestion"
+                      >
+                        <p className="py-2 px-4 mb-0">
+                          <strong>View all results</strong>
+                        </p>
                       </Link>
                     </Popover.Body>
                   </Popover>
