@@ -25,7 +25,8 @@ const FilterColumn = ({
   };
 
   const handlePriceChange = (e) => {
-    const newValue = e.target.value.length > 0 ? parseInt(e.target.value) : '';
+    const newValue =
+      e.target.value.length > 0 ? parseInt(e.target.value) : null;
     setPriceSet((prevPriceSet) => {
       return {
         ...prevPriceSet,

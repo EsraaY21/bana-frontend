@@ -7,19 +7,16 @@ import { showHideNotification } from '../features/notificationSlice';
 const ToastNotification = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.notifications.value);
-  useEffect(
-    () => {
-      if (show) {
-        notify();
-        dispatch(showHideNotification(false));
-      }
-    },
-    [show],
-    dispatch
-  );
+
+  useEffect(() => {
+    if (show) {
+      notify();
+      dispatch(showHideNotification(false));
+    }
+  }, [show, dispatch]);
 
   const notify = () =>
-    toast.success('Added successfully', {
+    toast.success('Added successfully!', {
       position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,

@@ -6,6 +6,7 @@ import { removeAllCartItems } from '../features/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { showHideNotification } from '../features/notificationSlice';
 
 const Checkout = () => {
   let selectedCity;
@@ -77,6 +78,7 @@ const Checkout = () => {
       ),
     }),
     onSubmit: (values) => {
+      dispatch(showHideNotification(true));
       var url = `${baseAPI}orders/`;
 
       fetch(url, {

@@ -9,7 +9,7 @@ import Message from '../components/Message';
 const Shop = () => {
   const products = useSelector((state) => state.products.value);
   const productStatus = useSelector((state) => state.products.status);
-  const [sortValue, setSortValue] = useState('date');
+  const [sortValue, setSortValue] = useState('dateNewest');
   const { urlSearchKey } = useParams();
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [priceSet, setPriceSet] = useState({ min: '', max: '' });
@@ -45,17 +45,34 @@ const Shop = () => {
     })
     .sort((productA, productB) => {
       switch (sortValue) {
-        case 'price':
-          return productA.price - productB.price;
-        case 'date':
+        case 'nameA':
+          return productA.name
+            .toLowerCase()
+            .localeCompare(productB.name.toLowerCase());
+
+        case 'nameZ':
+          return productB.name
+            .toLowerCase()
+            .localeCompare(productA.name.toLowerCase());
+
+        case 'dateNewest':
           return (
             new Date(productB.dateCreated) - new Date(productA.dateCreated)
           );
 
+        case 'dateOldest':
+          return (
+            new Date(productA.dateCreated) - new Date(productB.dateCreated)
+          );
+
+        case 'priceHighest':
+          return productB.price - productA.price;
+
+        case 'priceLowest':
+          return productA.price - productB.price;
+
         default:
-          return productA.name
-            .toLowerCase()
-            .localeCompare(productB.name.toLowerCase());
+          return;
       }
     })
     .map((product) => <ProductCard product={product} key={product.id} />);
@@ -101,17 +118,28 @@ const Shop = () => {
                           value={sortValue}
                           onChange={(e) => setSortValue(e.target.value)}
                         >
-                          <option value="name">Name</option>
-                          <option value="date">Date</option>
-                          <option value="price">Price</option>
+                          <option value="nameA">Name: A to Z</option>
+                          <option value="nameZ">Name: Z to A</option>
+                          <option value="dateNewest">Date: Newest</option>
+                          <option value="dateOldest">Date: Oldest</option>
+                          <option value="priceHighest">
+                            Price: Highest to Lowest
+                          </option>
+                          <option value="priceLowest">
+                            Price: Lowest to Highest
+                          </option>
                         </select>
                       </div>
                     </div>
                   </div>
-                  <div className=" pb-5">
-                    <div className="row center-section row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
-                      {filterAndSortedProducts}
-                    </div>
+                  <div className="pb-5">
+                    {filterAndSortedProducts.length > 0 ? (
+                      <div className="row center-section row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mx-auto">
+                        {filterAndSortedProducts}
+                      </div>
+                    ) : (
+                      <p className="text-start mt-5">No products found...</p>
+                    )}
                   </div>
                 </main>
               )}

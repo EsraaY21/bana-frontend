@@ -139,14 +139,6 @@ const Cart = () => {
                       {cartItem.price * cartItem.quantity}$
                     </td>
                     <td className="align-middle">
-                      {/* <FaTrash
-                          style={{
-                            cursor: 'pointer',
-                          }}
-                          onClick={() => {
-                            handleDelete(cartItem);
-                          }}
-                        /> */}
                       <DeleteIcon
                         onClick={() => {
                           handleDelete(cartItem);

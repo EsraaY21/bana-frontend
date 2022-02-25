@@ -116,7 +116,7 @@ a:hover {
 /* transition effect on hover */
 .btn-blue-dark:hover {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  -webkit-transform: scale(1.07);
+  -webkit-transform: scale(1.08);
   transform: scale(1.04);
   color: var(--gray-light);
   background-color: #000000;
@@ -202,6 +202,22 @@ a:hover {
 /* Categories ---- */
 .categories h4 {
   font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.single-category {
+  transition: all 0.3s ease-in-out;
+}
+
+.single-category:hover {
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 4px 12px;
+  -webkit-box-shadow: rgba(149, 157, 165, 0.4) 0px 4px 12px;
+  -moz-box-shadow: rgba(149, 157, 165, 0.4) 0px 4px 12px;
+
+  transform: scale(1.08);
+}
+.single-category:hover + h4 {
+  color: var(--brown);
 }
 
 /* Latest Products ---- */
@@ -210,7 +226,7 @@ a:hover {
 }
 
 .swiper {
-  padding-bottom: 15px !important;
+  padding-bottom: 20px !important;
 }
 
 /* Director ---- */
@@ -409,4 +425,8 @@ a:hover {
 .required:after {
   content: ' *';
   color: #dc3545ed;
+}
+
+image {
+  transition: all 3s ease-in-out;
 }
