@@ -36,6 +36,7 @@ const ProductsCarousel = ({ products }) => {
       >
         {products.map((product) => (
           <SwiperSlide
+            key={product.id}
             style={{
               marginRight: '0px',
               marginLeft: '0px',

@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Notification from '../components/Notification';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import ToastNotification from './ToastNotification';
 
 const Layout = () => {
   const cartItems = useSelector((state) => state.cart.value);
@@ -15,7 +16,8 @@ const Layout = () => {
 
   return (
     <div className="App">
-      <Notification />
+      {/* <Notification /> */}
+      <ToastNotification />
       <Header />
       <Outlet />
       <Footer />
