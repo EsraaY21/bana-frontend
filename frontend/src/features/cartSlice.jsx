@@ -44,7 +44,10 @@ export const cartSlice = createSlice({
       switch (action.payload.operation) {
         case 'add':
           state.value.map((item) =>
-            item.id === action.payload.productId ? (item.quantity += 1) : item
+            item.id === action.payload.productId &&
+            item.countInStock > item.quantity
+              ? (item.quantity += 1)
+              : item
           );
           break;
 

@@ -1,7 +1,6 @@
 import { addToCart } from '../features/cartSlice';
 import { showHideNotification } from '../features/notificationSlice';
 import { useDispatch } from 'react-redux';
-import ToastNotification from './ToastNotification';
 
 const AddToCartButton = ({ product }) => {
   const dispatch = useDispatch();

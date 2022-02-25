@@ -1,8 +1,9 @@
+import ProductCard from '../components/ProductCard';
+// SWIPER
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper';
-import ProductCard from '../components/ProductCard';
 
 const ProductsCarousel = ({ products }) => {
   return (

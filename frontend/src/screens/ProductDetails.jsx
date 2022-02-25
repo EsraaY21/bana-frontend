@@ -111,7 +111,7 @@ const ProductDetails = () => {
                       src={`${imageUrl}${item}`}
                       alt={productDetails.name}
                       className={`img-fluid small-image border border-2 ${
-                        selectedImage === index ? 'image-active' : ''
+                        selectedImage === index ? 'image-active' : null
                       }`}
                       width="100%"
                       onClick={() => handleImageClick(index)}
@@ -197,6 +197,7 @@ const ProductDetails = () => {
                       x.category === productDetails.category &&
                       x.id !== productDetails.id
                   )
+                  .slice(0, 4)
                   .map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))

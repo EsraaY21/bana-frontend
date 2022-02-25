@@ -14,7 +14,7 @@ const Categories = () => {
           <div key={category.name} className="col-lg-3">
             <Link to={`shop/${category.name.toLowerCase()}`}>
               <div
-                className="rounded-circle bg-light mx-auto"
+                className="rounded-circle bg-light mx-auto single-category"
                 style={{ width: '200px', height: '200px' }}
               >
                 <img

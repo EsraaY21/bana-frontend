@@ -15,9 +15,9 @@ const LocationBar = ({ pathName }) => {
           <FaHome className="mb-1" /> <Link to="/">Home</Link>
           <span>
             <Link
-              to={currentLocation ? `${currentLocation.toLowerCase()}` : ''}
+              to={currentLocation ? `${currentLocation.toLowerCase()}` : null}
             >
-              {currentLocation ? ` → ${currentLocation}` : ''}
+              {currentLocation ? ` → ${currentLocation}` : null}
             </Link>
           </span>
         </div>
