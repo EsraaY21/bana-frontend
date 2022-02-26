@@ -94,17 +94,3 @@ class OrderItem(Entity):
     order = models.ForeignKey(
         Order, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True, default=0)
-
-
-# # class ProductImage(Entity):
-# #     product = models.ForeignKey(
-# #         Product, default=None, on_delete=models.CASCADE)
-# #     images = models.FileField(upload_to='')
-
-# #     def __str__(self):
-# #         return self.product.name
-
-
-# # ADD PLACEHOLDER --------------------------------------------
-#     # image = models.ImageField(null=True, blank=True,
-#    #                           default='/placeholder.png')
