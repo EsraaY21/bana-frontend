@@ -42,7 +42,7 @@ def getCities(request):
 @api_view(['GET', 'POST'])
 def createOrder(request):
 
-    print(request.data, 'this is my data')
+    # print(request.data, 'this is my data')
     orderData = request.data
 
     city = City.objects.get(name=orderData['city'])

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 // REDUX TOOLKIT ----
 import { fetchAsyncProducts } from './features/productSlice';
@@ -12,12 +12,14 @@ import Checkout from './screens/Checkout';
 import Contact from './screens/Contact';
 import Home from './screens/Home';
 import ProductDetails from './screens/ProductDetails';
-import Shop from './screens/Shop';
+// import Shop from './screens/Shop';
 import Error from './screens/Error';
 import Dashboard from './screens/Dashboard';
-
 // COMPONENTS ----
 import Layout from './components/Layout';
+import Loader from './components/Loader';
+
+const LazyShop = React.lazy(() => import('./screens/Shop'));
 
 function App() {
   const dispatch = useDispatch();
@@ -36,9 +38,30 @@ function App() {
         <Route index path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="products" element={<Shop />} />
-        <Route path="shop/:urlSearchKey" element={<Shop />} />
+        <Route
+          path="shop"
+          element={
+            <React.Suspense fallback={<Loader />}>
+              <LazyShop />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="products"
+          element={
+            <React.Suspense fallback={<Loader />}>
+              <LazyShop />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="shop/:urlSearchKey"
+          element={
+            <React.Suspense fallback={<Loader />}>
+              <LazyShop />
+            </React.Suspense>
+          }
+        />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="services" element={<Services />} />
