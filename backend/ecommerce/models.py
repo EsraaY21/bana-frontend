@@ -88,7 +88,6 @@ class Address(Entity):
     phoneNumberTwo = models.CharField(
         'phone number two', max_length=11, null=True, blank=True)
     email = models.CharField('email', max_length=200, null=True, blank=True)
-    city = models.CharField('city', max_length=200, null=True, blank=True)
     street = models.CharField('street', max_length=200, null=True, blank=True)
     detailedAddress = models.CharField(
         'detailed address', max_length=400, null=True, blank=True)

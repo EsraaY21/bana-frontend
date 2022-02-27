@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from rest_framework.response import Response
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Address, Product, Category, City, Order, OrderItem, OrderStatus
+from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, OrderItemSerializer, OrderStatusSerializer
 
 
 def getRoutes(request):
@@ -24,68 +24,67 @@ def getProduct(request, pk):
     return Response(serializer.data)
 
 
-# @api_view(['GET'])
-# def getCategories(request):
-#     categories = Category.objects.all()
-#     serializer = CategorySerializer(categories, many=True)
-#     return Response(serializer.data)
+@api_view(['GET'])
+def getCategories(request):
+    categories = Category.objects.all()
+    serializer = CategorySerializer(categories, many=True)
+    return Response(serializer.data)
 
 
-# @api_view(['GET'])
-# def getCities(request):
-#     cities = City.objects.all()
-#     serializer = CitySerializer(cities, many=True)
-#     return Response(serializer.data)
+@api_view(['GET'])
+def getCities(request):
+    cities = City.objects.all()
+    serializer = CitySerializer(cities, many=True)
+    return Response(serializer.data)
 
 
-# # ORDER - -------------------------------------------------------
-# @api_view(['GET', 'POST'])
-# def createOrder(request):
+# ORDER - -------------------------------------------------------
+@api_view(['GET', 'POST'])
+def createOrder(request):
 
-#     print(request.data, 'this is my data')
+    print(request.data, 'this is my data')
+    orderData = request.data
 
-#     orderData = request.data
+    city = City.objects.get(name=orderData['city'])
 
-#     # Create order
+    # Create shipping address
+    address = Address.objects.create(
+        firstName=orderData['firstName'],
+        lastName=orderData['lastName'],
+        phoneNumberOne=orderData['phoneNumberOne'],
+        phoneNumberTwo=orderData['phoneNumberTwo'],
+        email=orderData['email'],
+        street=orderData['street'],
+        detailedAddress=orderData['detailedAddress'],
+        additionalInformation=orderData['additionalInformation'],
+        city=city)
 
-#     order = Order.objects.create(
-#         shipping_cost=orderData['shipping_cost'],
-#         totalCost=orderData['totalCost'],
-#     )
+    # Create order
+    order = Order.objects.create(
+        total=orderData['totalCost'],
+        address=address,
+        status=OrderStatus.objects.get(is_default=True),
+    )
 
-#     # Create shipping address
+    # Create order items
+    orderItems = request.data['items']
 
-#     shipping = ShippingAddress.objects.create(
-#         order=order,
-#         firstName=orderData['firstName'],
-#         lastName=orderData['lastName'],
-#         phoneNumberOne=orderData['phoneNumberOne'],
-#         phoneNumberTwo=orderData['phoneNumberTwo'],
-#         email=orderData['email'],
-#         city=orderData['city'],
-#         street=orderData['street'],
-#         detailedAddress=orderData['detailedAddress'],
-#         additionalInformation=orderData['additionalInformation'],
-#     )
+    for i in orderItems:
 
-#     # Create order items
-#     orderItems = request.data['items']
+        # get the product with the same id as the order item
+        product = Product.objects.get(id=i['id'])
 
-#     for i in orderItems:
+        item = OrderItem.objects.create(
+            product=product,
+            quantity=i['quantity'],
+        )
 
-#         # get the product with the same id as the order item
-#         product = Product.objects.get(id=i['id'])
+        order.items.add(item)
 
-#         item = OrderItem.objects.create(
-#             product=product,
-#             order=order,
-#             quantity=i['quantity'],
-#         )
+        # Update stock
 
-#         # Update stock
+        product.countInStock -= item.quantity
+        product.save()
 
-#         product.countInStock -= item.quantity
-#         product.save()
-
-#     serializer = OrderSerializer(order, many=False)
-#     return Response(serializer.data)
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)
