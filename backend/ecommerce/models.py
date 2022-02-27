@@ -123,4 +123,4 @@ class Order(Entity):
         'ecommerce.OrderItem', verbose_name='order items', related_name='order')
 
     def __str__(self):
-        return f'{self.address.firstName} {self.address.lastName} - {self.address.city.name} - {self.total}$'
+        return f'{self.address.firstName} {self.address.lastName} - {self.address.city.name} - {self.total}$ - {self.status} - Date: {self.dateCreated.date()}'

@@ -1,7 +1,15 @@
+import { Link } from 'react-router-dom';
+
 const Error = () => {
   return (
     <div>
-      <h1>Error page</h1>
+      <p className="ps-5 pt-4">
+        Page not found. Go back to{' '}
+        <Link className="color-brown fw-bold" to="/">
+          Home
+        </Link>
+        .
+      </p>
     </div>
   );
 };

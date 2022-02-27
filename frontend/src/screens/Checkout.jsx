@@ -14,6 +14,7 @@ const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState(''); // current chosen city
   const [cities, setCities] = useState([]); // all cities fetched from the backend
+  const [placeOrderError, setPlaceOrderError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,7 +79,6 @@ const Checkout = () => {
       ),
     }),
     onSubmit: (values) => {
-      dispatch(showHideNotification(true));
       var url = `${baseAPI}create-order/`;
 
       fetch(url, {
@@ -100,13 +100,18 @@ const Checkout = () => {
           additionalInformation: values.additionalInformation,
           items: cartItems,
         }),
-      });
-
-      localStorage.removeItem('cartItems');
-      dispatch(removeAllCartItems());
-      navigate({
-        pathname: '/',
-      });
+      })
+        .then(() => {
+          dispatch(showHideNotification(true));
+          localStorage.removeItem('cartItems');
+          dispatch(removeAllCartItems());
+          navigate({
+            pathname: '/',
+          });
+        })
+        .catch((error) => {
+          setPlaceOrderError(true);
+        });
     },
   });
 
@@ -121,8 +126,6 @@ const Checkout = () => {
     }
     setCity(selectedCity);
   }, [formik.values.city]);
-
-  console.log(formik.values.city);
 
   return (
     <div className="checkout container">
@@ -399,9 +402,15 @@ const Checkout = () => {
                   <button
                     className="btn-blue-dark btn-block btn mb-5 mt-4"
                     type="submit"
+                    disabled={cartItems.length < 1}
                   >
                     Place Order
                   </button>
+                  {placeOrderError ? (
+                    <p className="checkout-error-message fs-5">
+                      Order could not be added. Please try again later
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>

@@ -6,21 +6,21 @@ const services = [
     title: 'Products',
     description: 'Organic products with most affordable prices',
     icon: <FaLeaf />,
-    link: 'shop',
+    link: '/shop',
   },
 
   {
     title: 'Nutrition Coach',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     icon: <FaAppleAlt />,
-    link: 'https://www.instagram.com/',
+    link: 'services',
   },
 
   {
     title: 'Psychotherapy',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     icon: <FaCommentMedical />,
-    link: 'psychotherapy',
+    link: 'services',
   },
 ];
 
@@ -31,7 +31,7 @@ const Services = () => {
         {services.map((service) => (
           <div key={service.title} className="col-lg-4 px-2">
             <div className="p-3 service-box">
-              <Link to="services">
+              <Link to={service.link}>
                 <div className="pb-3">{service.icon}</div>
 
                 <h3 className="color-blue-dark">{service.title}</h3>

@@ -12,6 +12,7 @@ import {
   fetchAsyncProductDetails,
   removeProductDetails,
 } from '../features/productDetailsSlice';
+import { Link } from 'react-router-dom';
 
 const ProductDetails = () => {
   // all products
@@ -70,7 +71,13 @@ const ProductDetails = () => {
       {productDetailsStatus === 'loading' ? (
         <Loader />
       ) : productDetailsStatus === 'failed' ? (
-        <Message message="Request failed. Please check your internet connection." />
+        <p className="ps-5 pt-4">
+          Product not found. Go back to{' '}
+          <Link className="color-brown fw-bold" to="/shop">
+            Shop
+          </Link>
+          .
+        </p>
       ) : (
         <div className="container my-5">
           <div className="row container text-center">

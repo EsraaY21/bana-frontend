@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import ProductCard from './ProductCard';
 import { useSelector } from 'react-redux';
 import ProductsCarousel from './ProductsCarousel';
 
