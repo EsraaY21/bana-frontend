@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from rest_framework.response import Response
-from .models import Product, Category, City, Order
-from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, ShippingAddress, OrderItem
+from .models import Address, Product, Category, City, Order, OrderItem, OrderStatus
+from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, OrderItemSerializer, OrderStatusSerializer
 
 
 def getRoutes(request):
@@ -43,29 +43,27 @@ def getCities(request):
 def createOrder(request):
 
     print(request.data, 'this is my data')
-
     orderData = request.data
 
-    # Create order
-
-    order = Order.objects.create(
-        shipping_cost=orderData['shipping_cost'],
-        totalCost=orderData['totalCost'],
-    )
+    city = City.objects.get(name=orderData['city'])
 
     # Create shipping address
-
-    shipping = ShippingAddress.objects.create(
-        order=order,
+    address = Address.objects.create(
         firstName=orderData['firstName'],
         lastName=orderData['lastName'],
         phoneNumberOne=orderData['phoneNumberOne'],
         phoneNumberTwo=orderData['phoneNumberTwo'],
         email=orderData['email'],
-        city=orderData['city'],
         street=orderData['street'],
         detailedAddress=orderData['detailedAddress'],
         additionalInformation=orderData['additionalInformation'],
+        city=city)
+
+    # Create order
+    order = Order.objects.create(
+        total=orderData['totalCost'],
+        address=address,
+        status=OrderStatus.objects.get(is_default=True),
     )
 
     # Create order items
@@ -78,9 +76,10 @@ def createOrder(request):
 
         item = OrderItem.objects.create(
             product=product,
-            order=order,
             quantity=i['quantity'],
         )
+
+        order.items.add(item)
 
         # Update stock
 

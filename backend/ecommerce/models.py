@@ -1,4 +1,3 @@
-from ctypes import addressof
 from django.db import models
 
 
@@ -13,98 +12,115 @@ class Entity(models.Model):
 
 
 class Product(Entity):
-    name = models.CharField('name', max_length=255)
+    name = models.CharField(verbose_name='name', max_length=255)
     imageOne = models.ImageField(blank=True)
     imageTwo = models.ImageField(blank=True)
     imageThree = models.ImageField(blank=True)
     imageFour = models.ImageField(blank=True)
+    short_description = models.TextField(
+        'short description', null=True, blank=True)
+    long_description = models.TextField(
+        'long description', null=True, blank=True)
+    countInStock = models.IntegerField(
+        'count in stock', default=0)
     price = models.DecimalField('price', max_digits=10, decimal_places=2)
-
     category = models.ForeignKey('ecommerce.Category', verbose_name='category', related_name='products',
                                  null=True,
                                  blank=True,
                                  on_delete=models.SET_NULL)
 
-    countInStock = models.IntegerField('Count In Stock', default=0)
-
-    short_description = models.TextField(
-        'Short Description', null=True, blank=True, max_length=500)
-
-    long_description = models.TextField(
-        'Long Description', null=True, blank=True)
-
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.price}$'
 
 
 class Category(Entity):
     name = models.CharField('name', max_length=255)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField('image', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
 
 
 class City(Entity):
     name = models.CharField('name', max_length=255)
     shipping_cost = models.IntegerField('shipping cost')
 
+    class Meta:
+        verbose_name = 'city'
+        verbose_name_plural = 'cities'
+
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.shipping_cost}$'
+
+
+class OrderStatus(Entity):
+    NEW = 'NEW'
+    PROCESSING = 'PROCESSING'
+    SHIPPED = 'SHIPPED'
+    COMPLETED = 'COMPLETED'
+    REFUNDED = 'REFUNDED'
+
+    title = models.CharField('title', max_length=255, choices=[
+        (NEW, NEW),
+        (PROCESSING, PROCESSING),
+        (SHIPPED, SHIPPED),
+        (COMPLETED, COMPLETED),
+        (REFUNDED, REFUNDED),
+    ])
+    is_default = models.BooleanField('is default')
 
     class Meta:
-        verbose_name = 'City'
-        verbose_name_plural = 'Cities'
+        verbose_name = 'order status'
+        verbose_name_plural = 'order statuses'
+
+    def __str__(self):
+        return self.title
 
 
-class Order(Entity):
-    shipping_cost = models.DecimalField(
-        max_digits=4, decimal_places=2, null=True, blank=True)
-
-    totalCost = models.DecimalField(
-        max_digits=7, decimal_places=2, null=True, blank=True)
-
-
-class ShippingAddress(Entity):
-    order = models.OneToOneField(
-        Order, on_delete=models.CASCADE, null=True, blank=True)
-    firstName = models.CharField(max_length=200, null=True, blank=True)
-    lastName = models.CharField(max_length=200, null=True, blank=True)
-    phoneNumberOne = models.CharField(max_length=200, null=True, blank=True)
-    phoneNumberTwo = models.CharField(max_length=200, null=True, blank=True)
-    email = models.CharField(max_length=200, null=True, blank=True)
-    city = models.CharField(max_length=200, null=True, blank=True)
-    street = models.CharField(max_length=200, null=True, blank=True)
-    detailedAddress = models.CharField(max_length=400, null=True, blank=True)
-    additionalInformation = models.CharField(
-        max_length=400, null=True, blank=True)
+class Address(Entity):
+    firstName = models.CharField('first name', max_length=200)
+    lastName = models.CharField('last name', max_length=200)
+    phoneNumberOne = models.CharField('phone number one', max_length=11)
+    phoneNumberTwo = models.CharField(
+        'phone number two', max_length=11, null=True, blank=True)
+    email = models.CharField('email', max_length=200, null=True, blank=True)
+    street = models.CharField('street', max_length=200, null=True, blank=True)
+    detailedAddress = models.CharField(
+        'detailed address', max_length=400, null=True, blank=True)
+    additionalInformation = models.CharField('additional information',
+                                             max_length=400, null=True, blank=True)
+    city = models.ForeignKey(
+        City, related_name='addresses', on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'Shipping Address'
-        verbose_name_plural = 'Shipping Addresses'
+        verbose_name = 'address'
+        verbose_name_plural = 'addresses'
+
+    def __str__(self):
+        return f'{self.firstName}  {self.lastName} - {self.city} - {self.phoneNumberOne}'
 
 
 class OrderItem(Entity):
-    product = models.ForeignKey(
-        Product, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(
-        Order, on_delete=models.SET_NULL, null=True, blank=True)
-    quantity = models.IntegerField(null=True, blank=True, default=0)
+    product = models.ForeignKey('ecommerce.Product', verbose_name='product',
+                                on_delete=models.CASCADE)
+    quantity = models.IntegerField('item quantity')
+
+    def __str__(self):
+        return f'{self.product.name} - {self.quantity}'
 
 
-# # class ProductImage(Entity):
-# #     product = models.ForeignKey(
-# #         Product, default=None, on_delete=models.CASCADE)
-# #     images = models.FileField(upload_to='')
+class Order(Entity):
+    total = models.DecimalField('total', max_digits=1000, decimal_places=0)
+    address = models.ForeignKey(
+        'ecommerce.Address', verbose_name='address', on_delete=models.CASCADE)
+    status = models.ForeignKey('ecommerce.OrderStatus', verbose_name='status', related_name='orders',
+                               on_delete=models.CASCADE)
+    items = models.ManyToManyField(
+        'ecommerce.OrderItem', verbose_name='order items', related_name='order')
 
-# #     def __str__(self):
-# #         return self.product.name
-
-
-# # ADD PLACEHOLDER --------------------------------------------
-#     # image = models.ImageField(null=True, blank=True,
-#    #                           default='/placeholder.png')
+    def __str__(self):
+        return f'{self.address.firstName} {self.address.lastName} - {self.address.city.name} - {self.total}$'

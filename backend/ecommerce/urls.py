@@ -7,5 +7,5 @@ urlpatterns = [
     path('products/<str:pk>/', views.getProduct, name='product'),
     path('categories/', views.getCategories, name='categories'),
     path('cities/', views.getCities, name='cities'),
-    path('orders/', views.createOrder, name='create_order'),
+    path('create-order/', views.createOrder, name='create_order'),
 ]

@@ -79,7 +79,7 @@ const Checkout = () => {
     }),
     onSubmit: (values) => {
       dispatch(showHideNotification(true));
-      var url = `${baseAPI}orders/`;
+      var url = `${baseAPI}create-order/`;
 
       fetch(url, {
         method: 'POST',
@@ -89,7 +89,6 @@ const Checkout = () => {
         body: JSON.stringify({
           shipping_cost: city.shipping_cost,
           totalCost: totalCost,
-
           firstName: values.firstName,
           lastName: values.lastName,
           phoneNumberOne: values.phoneNumberOne,
@@ -99,7 +98,6 @@ const Checkout = () => {
           street: values.street,
           detailedAddress: values.detailedAddress,
           additionalInformation: values.additionalInformation,
-
           items: cartItems,
         }),
       });
@@ -123,6 +121,8 @@ const Checkout = () => {
     }
     setCity(selectedCity);
   }, [formik.values.city]);
+
+  console.log(formik.values.city);
 
   return (
     <div className="checkout container">
