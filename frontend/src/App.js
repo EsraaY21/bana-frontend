@@ -14,7 +14,6 @@ import Home from './screens/Home';
 import ProductDetails from './screens/ProductDetails';
 // import Shop from './screens/Shop';
 import Error from './screens/Error';
-import Dashboard from './screens/Dashboard';
 // COMPONENTS ----
 import Layout from './components/Layout';
 import Loader from './components/Loader';
@@ -66,7 +65,6 @@ function App() {
         <Route path="checkout" element={<Checkout />} />
         <Route path="services" element={<Services />} />
         <Route path="products/:productId" element={<ProductDetails />} />
-        <Route path="dashboard" element={<Dashboard />} />
         <Route path="*" element={<Error />} />
       </Route>
     </Routes>
