@@ -402,6 +402,7 @@ const Checkout = () => {
                   <button
                     className="btn-blue-dark btn-block btn mb-5 mt-4"
                     type="submit"
+                    disabled={cartItems.length < 1}
                   >
                     Place Order
                   </button>

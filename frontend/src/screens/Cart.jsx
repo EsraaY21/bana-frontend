@@ -56,7 +56,10 @@ const Cart = () => {
             <span className="color-gray-dark mt-3 mb-3">
               Shipping calculated at Checkout
             </span>
-            <button className="btn btn-blue-dark">
+            <button
+              className="btn btn-blue-dark"
+              disabled={cartItems.length < 1}
+            >
               <Link to="/checkout">Proceed to Checkout</Link>
             </button>
           </div>
