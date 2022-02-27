@@ -79,7 +79,7 @@ const Checkout = () => {
     }),
     onSubmit: (values) => {
       dispatch(showHideNotification(true));
-      var url = `${baseAPI}order/`;
+      var url = `${baseAPI}create-order/`;
 
       fetch(url, {
         method: 'POST',
