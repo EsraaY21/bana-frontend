@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from .models import Address, Product, Category, City, Order, OrderItem, OrderStatus
 from .serializers import ProductSerializer, CategorySerializer, CitySerializer, OrderSerializer, OrderItemSerializer, OrderStatusSerializer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def getRoutes(request):
