@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import { showHideNotification } from '../features/notificationSlice';
 
 const Checkout = () => {
-  let selectedCity;
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.value);
   const [city, setCity] = useState(''); // current chosen city
@@ -118,14 +117,11 @@ const Checkout = () => {
   // when a city is chosen, it's shipping cost will be displayed and update the order data -----
   useEffect(() => {
     if (formik.values.city.length < 1) {
-      selectedCity = { name: '', shipping_cost: 0 };
+      setCity({ name: '', shipping_cost: 0 });
     } else {
-      selectedCity = cities.filter(
-        (city) => city.name === formik.values.city
-      )[0];
+      setCity(cities.filter((city) => city.name === formik.values.city)[0]);
     }
-    setCity(selectedCity);
-  }, [formik.values.city]);
+  }, [formik.values.city, cities]);
 
   return (
     <div className="checkout container">
