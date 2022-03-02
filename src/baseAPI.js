@@ -1,3 +1,3 @@
-export const baseAPI = 'http://localhost:8000/api/';
+export const baseAPI = 'https://bana-care.herokuapp.com/api/';
 
-export const imageUrl = 'http://localhost:8000';
+export const imageUrl = 'https://bana-care.herokuapp.com';
