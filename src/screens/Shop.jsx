@@ -31,18 +31,12 @@ const Shop = () => {
         ? product
         : null
     )
-    .filter((currentElement) => {
-      if (applyPriceFilter) {
-        if (
-          parseInt(currentElement.price) >= priceSet.min &&
+    .filter((currentElement) =>
+      applyPriceFilter
+        ? parseInt(currentElement.price) >= priceSet.min &&
           parseInt(currentElement.price) <= priceSet.max
-        ) {
-          return true;
-        }
-      } else {
-        return true;
-      }
-    })
+        : currentElement
+    )
     .sort((productA, productB) => {
       switch (sortValue) {
         case 'nameA':
@@ -72,7 +66,7 @@ const Shop = () => {
           return productA.price - productB.price;
 
         default:
-          return;
+          return 0;
       }
     })
     .map((product) => <ProductCard product={product} key={product.id} />);
