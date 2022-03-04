@@ -1,3 +1,3 @@
-export const baseAPI = 'https://bana-care.herokuapp.com/api/';
+export const baseAPI = 'https://alikhalil.pythonanywhere.com/api/';
 
-export const imageUrl = 'https://bana-care.herokuapp.com';
+export const imageUrl = 'https://alikhalil.pythonanywhere.com';
