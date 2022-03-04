@@ -1,18 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import AddToCartButton from '../components/AddToCartButton';
 import ProductCard from '../components/ProductCard';
 import { imageUrl } from '../baseAPI';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { useDispatch } from 'react-redux';
 import {
   fetchAsyncProductDetails,
   removeProductDetails,
 } from '../features/productDetailsSlice';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 const ProductDetails = () => {
   // all products
@@ -64,6 +64,26 @@ const ProductDetails = () => {
     thumbnails: {
       showThumbnails: false,
     },
+  };
+
+  const handleQuantityChange = (type) => {
+    switch (type) {
+      case 'add':
+        if (quantity < productDetails.countInStock) {
+          setQuantity((prevQuantity) => prevQuantity + 1);
+        }
+
+        break;
+      case 'subtract':
+        if (quantity > 0) {
+          setQuantity((prevQuantity) => prevQuantity - 1);
+        }
+
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -137,21 +157,22 @@ const ProductDetails = () => {
               <p>{productDetails.short_description}</p>
               <p className="mt-4">Quantity</p>
               <div className="row">
-                <div className="col-lg-3 p-0 mb-4">
-                  <select
+                <div className="d-flex align-items-center col-lg-2 p-0 mb-4">
+                  <Button
                     disabled={productDetails.countInStock === 0}
-                    className="form-select"
-                    value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                    variant="light"
+                    onClick={() => handleQuantityChange('add')}
                   >
-                    {[...Array(productDetails.countInStock).keys()].map(
-                      (count) => (
-                        <option key={count + 1} value={count + 1}>
-                          {count + 1}
-                        </option>
-                      )
-                    )}
-                  </select>
+                    +
+                  </Button>
+                  <span className="mx-3">{quantity}</span>
+                  <Button
+                    disabled={productDetails.countInStock === 0}
+                    variant="light"
+                    onClick={() => handleQuantityChange('subtract')}
+                  >
+                    -
+                  </Button>
                 </div>
                 <div className="col-lg-5">
                   <AddToCartButton
