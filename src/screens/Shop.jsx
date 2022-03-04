@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -7,6 +7,10 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const Shop = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const products = useSelector((state) => state.products.value);
   const productStatus = useSelector((state) => state.products.status);
   const [sortValue, setSortValue] = useState('dateNewest');
