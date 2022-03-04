@@ -33,8 +33,10 @@ const Shop = () => {
     )
     .filter((currentElement) =>
       applyPriceFilter
-        ? parseInt(currentElement.price) >= priceSet.min &&
-          parseInt(currentElement.price) <= priceSet.max
+        ? (parseInt(currentElement.price) >= priceSet.min ||
+            priceSet.min === '') &&
+          (parseInt(currentElement.price) <= priceSet.max ||
+            priceSet.max === '')
         : currentElement
     )
     .sort((productA, productB) => {
