@@ -75,41 +75,49 @@ const Header = () => {
                 overlay={
                   <Popover
                     id="popover-positioned-bottom"
-                    style={{ width: '240px' }}
+                    style={{
+                      width: '240px',
+                    }}
                   >
-                    {/* <Popover.Header as="h3">Suggestions</Popover.Header> */}
                     <Popover.Body className="p-0">
-                      {products
-                        .filter((product) =>
-                          product.name
-                            .toLowerCase()
-                            .includes(
-                              searchValue ? searchValue.toLowerCase() : ''
-                            )
-                        )
-                        .slice(0, 4)
-                        .map((product) => (
-                          <Link
-                            className="autosuggestion"
-                            key={product.id}
-                            to={`/products/${product.id}`}
-                          >
-                            <p className="py-2 px-4 mb-0">{product.name}</p>
-                          </Link>
-                        ))}
-                      <hr
-                        class="dropdown-divider py-0 my-0"
-                        style={{ height: '1px', borderWidth: '0' }}
-                      />
-
-                      <Link
-                        to={`/shop/${searchValue}`}
-                        className="autosuggestion"
-                      >
+                      {searchValue === '' ? (
                         <p className="py-2 px-4 mb-0">
-                          <strong>View all results</strong>
+                          Type to search for a product.
                         </p>
-                      </Link>
+                      ) : (
+                        <div>
+                          {products
+                            .filter((product) =>
+                              product.name
+                                .toLowerCase()
+                                .includes(
+                                  searchValue ? searchValue.toLowerCase() : ''
+                                )
+                            )
+                            .slice(0, 4)
+                            .map((product) => (
+                              <Link
+                                className="autosuggestion"
+                                key={product.id}
+                                to={`/products/${product.id}`}
+                              >
+                                <p className="py-2 px-4 mb-0">{product.name}</p>
+                              </Link>
+                            ))}
+                          <hr
+                            class="dropdown-divider py-0 my-0"
+                            style={{ height: '1px', borderWidth: '0' }}
+                          />
+                          <Link
+                            to={`/shop/${searchValue}`}
+                            className="autosuggestion"
+                          >
+                            <p className="py-2 px-4 mb-0">
+                              <strong>View all results</strong>
+                            </p>
+                          </Link>
+                        </div>
+                      )}
                     </Popover.Body>
                   </Popover>
                 }
